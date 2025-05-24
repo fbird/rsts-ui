@@ -1,0 +1,486 @@
+.flex-box {
+  display: flex;
+
+  &.align-items-center {
+    align-items: center;
+  }
+}
+.data-assets-search {
+  .el-form-item {
+    margin-bottom: 0.2rem;
+    margin-right: 0.2rem;
+    .el-form-item__label {
+      font-size: 0.16rem;
+      font-weight: 400;
+      color: #333333;
+    }
+
+  }
+
+}
+
+.text-primary {
+  color: var(--el-color-primary);
+}
+
+.text-tip {
+  color: var(--el-text-color-secondary);
+}
+
+.text-error {
+  color: var(--el-color-error);
+}
+
+.btn-box {
+  text-align: center;
+}
+
+.btn-left-box {
+  text-align: left;
+}
+
+.btn-right-box {
+  text-align: right;
+}
+
+.control-box {
+  .el-input {
+    width: 2rem;
+  }
+}
+
+.display-none {
+  display: none;
+}
+
+.display-block {
+  display: block;
+}
+
+.ellipsis-box {
+  width: calc(100% - 0.16rem);
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.no-data {
+  color: #909399;
+  text-align: center;
+}
+
+.sub-title {
+  color: rgba(40, 40, 40, 1);
+  font-size: 0.16rem;
+  font-weight: 700;
+}
+
+.text-align-rigth {
+  text-align: right;
+}
+
+.text-align-left {
+  text-align: left;
+}
+
+
+// e.g: .btn-box-right / .text-right
+$placements: (top, right, bottom, left, center);
+
+@each $placement in $placements {
+  .btn-box-#{$placement} {
+    text-align: $placement;
+  }
+  .text-#{$placement} {
+    text-align: $placement;
+  }
+}
+
+// e.g: .justify-content-space-between
+$justifyContents: (center, flex-start, flex-end, space-between, space-around, space-evenly);
+
+@each $val in $justifyContents {
+  .justify-content-#{$val} {
+    justify-content: $val;
+  }
+}
+
+// e.g: .p-4 / .p-r-4 / .m-4 / .m-r-4
+@for $num from -20 through 60 {
+  @if $num % 4 == 0 {
+    .p-#{$num} {
+      padding: calc(#{$num}rem / 100);
+    }
+    .p-t-#{$num} {
+      padding-top: calc(#{$num}rem / 100);
+    }
+    .p-r-#{$num} {
+      padding-right: calc(#{$num}rem / 100);
+    }
+    .p-b-#{$num} {
+      padding-bottom: calc(#{$num}rem / 100);
+    }
+    .p-l-#{$num} {
+      padding-left: calc(#{$num}rem / 100);
+    }
+    .p-tb-#{$num} {
+      padding-top: calc(#{$num}rem / 100);
+      padding-bottom: calc(#{$num}rem / 100);
+    }
+    .p-rl-#{$num} {
+      padding-right: calc(#{$num}rem / 100);
+      padding-left: calc(#{$num}rem / 100);
+    }
+
+    .m-#{$num} {
+      margin: calc(#{$num}rem / 100);
+    }
+    .m-t-#{$num} {
+      margin-top: calc(#{$num}rem / 100);
+    }
+    .m-r-#{$num} {
+      margin-right: calc(#{$num}rem / 100);
+    }
+    .m-b-#{$num} {
+      margin-bottom: calc(#{$num}rem / 100);
+    }
+    .m-l-#{$num} {
+      margin-left: calc(#{$num}rem / 100);
+    }
+    .m-tb-#{$num} {
+      margin-top: calc(#{$num}rem / 100);
+      margin-bottom: calc(#{$num}rem / 100);
+    }
+    .m-rl-#{$num} {
+      margin-right: calc(#{$num}rem / 100);
+      margin-left: calc(#{$num}rem / 100);
+    }
+  }
+}
+
+// font-weight : f-b-*
+// [1, 10)
+@for $var from 1 to 10 {
+  .f-b-#{$var*100} {
+    font-weight: $var * 100;
+  }
+}
+
+// transition fade
+.fade-enter-from {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.fade-enter-active {
+  transition: all 0.5s ease;
+}
+
+.fade-leave-active {
+  transition: all 0s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+// end transition fade
+
+// detail message box
+.detail-message-box {
+  .left {
+    width: 1rem;
+    line-height: 0;
+
+    .el-icon {
+      font-size: 0.8rem;
+      color: var(--el-color-primary);
+    }
+  }
+  .center {
+    flex: 1;
+
+    .title {
+      font-size: 0.16rem;
+      font-weight: 600;
+    }
+
+    .el-col {
+      display: flex;
+      margin-bottom: 0.04rem;
+    }
+
+    .is-link {
+      font-size: 0.12rem;
+      padding: 0;
+      border: none;
+    }
+  }
+
+  .right {
+    width: 1.3rem;
+  }
+}
+// end detail message box
+
+// form item width
+$form_item_width: (150, 190, 200, 300);
+@each $width in $form_item_width {
+  .w-#{$width} {
+    &.el-input,
+    &.el-input-number {
+      width: calc(#{$width}rem / 100);
+    }
+
+    &.el-select {
+      .el-input {
+        width: calc(#{$width}rem / 100);
+      }
+    }
+  }
+}
+// end form item width
+.flex-box {
+  display: flex;
+
+  &.align-items-center {
+    align-items: center;
+  }
+}
+.data-assets-search {
+  .el-form-item {
+    margin-bottom: 0.2rem;
+    margin-right: 0.16rem;
+    .el-form-item__label {
+      font-size: 0.16rem;
+      font-weight: 400;
+      color: #333333;
+    }
+
+  }
+
+}
+
+.text-primary {
+  color: var(--el-color-primary);
+}
+
+.text-tip {
+  color: var(--el-text-color-secondary);
+}
+
+.text-error {
+  color: var(--el-color-error);
+}
+
+.btn-box {
+  text-align: center;
+}
+
+.btn-left-box {
+  text-align: left;
+}
+
+.btn-right-box {
+  text-align: right;
+}
+
+.control-box {
+  .el-input {
+    width: 2rem;
+  }
+}
+
+.display-none {
+  display: none;
+}
+
+.display-block {
+  display: block;
+}
+
+.ellipsis-box {
+  width: calc(100% - 0.16rem);
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.no-data {
+  color: #909399;
+  text-align: center;
+}
+
+.sub-title {
+  color: rgba(40, 40, 40, 1);
+  font-size: 0.16rem;
+  font-weight: 700;
+}
+
+.text-align-rigth {
+  text-align: right;
+}
+
+.text-align-left {
+  text-align: left;
+}
+
+
+// e.g: .btn-box-right / .text-right
+$placements: (top, right, bottom, left, center);
+
+@each $placement in $placements {
+  .btn-box-#{$placement} {
+    text-align: $placement;
+  }
+  .text-#{$placement} {
+    text-align: $placement;
+  }
+}
+
+// e.g: .justify-content-space-between
+$justifyContents: (center, flex-start, flex-end, space-between, space-around, space-evenly);
+
+@each $val in $justifyContents {
+  .justify-content-#{$val} {
+    justify-content: $val;
+  }
+}
+
+// e.g: .p-4 / .p-r-4 / .m-4 / .m-r-4
+@for $num from -20 through 60 {
+  @if $num % 4 == 0 {
+    .p-#{$num} {
+      padding: calc(#{$num}rem / 100);
+    }
+    .p-t-#{$num} {
+      padding-top: calc(#{$num}rem / 100);
+    }
+    .p-r-#{$num} {
+      padding-right: calc(#{$num}rem / 100);
+    }
+    .p-b-#{$num} {
+      padding-bottom: calc(#{$num}rem / 100);
+    }
+    .p-l-#{$num} {
+      padding-left: calc(#{$num}rem / 100);
+    }
+    .p-tb-#{$num} {
+      padding-top: calc(#{$num}rem / 100);
+      padding-bottom: calc(#{$num}rem / 100);
+    }
+    .p-rl-#{$num} {
+      padding-right: calc(#{$num}rem / 100);
+      padding-left: calc(#{$num}rem / 100);
+    }
+
+    .m-#{$num} {
+      margin: calc(#{$num}rem / 100);
+    }
+    .m-t-#{$num} {
+      margin-top: calc(#{$num}rem / 100);
+    }
+    .m-r-#{$num} {
+      margin-right: calc(#{$num}rem / 100);
+    }
+    .m-b-#{$num} {
+      margin-bottom: calc(#{$num}rem / 100);
+    }
+    .m-l-#{$num} {
+      margin-left: calc(#{$num}rem / 100);
+    }
+    .m-tb-#{$num} {
+      margin-top: calc(#{$num}rem / 100);
+      margin-bottom: calc(#{$num}rem / 100);
+    }
+    .m-rl-#{$num} {
+      margin-right: calc(#{$num}rem / 100);
+      margin-left: calc(#{$num}rem / 100);
+    }
+  }
+}
+
+// font-weight : f-b-*
+// [1, 10)
+@for $var from 1 to 10 {
+  .f-b-#{$var*100} {
+    font-weight: $var * 100;
+  }
+}
+
+// transition fade
+.fade-enter-from {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.fade-enter-active {
+  transition: all 0.5s ease;
+}
+
+.fade-leave-active {
+  transition: all 0s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+// end transition fade
+
+// detail message box
+.detail-message-box {
+  .left {
+    width: 1rem;
+    line-height: 0;
+
+    .el-icon {
+      font-size: 0.8rem;
+      color: var(--el-color-primary);
+    }
+  }
+  .center {
+    flex: 1;
+
+    .title {
+      font-size: 0.16rem;
+      font-weight: 600;
+    }
+
+    .el-col {
+      display: flex;
+      margin-bottom: 0.04rem;
+    }
+
+    .is-link {
+      font-size: 0.12rem;
+      padding: 0;
+      border: none;
+    }
+  }
+
+  .right {
+    width: 1.3rem;
+  }
+}
+// end detail message box
+
+// form item width
+$form_item_width: (150, 190, 200, 300);
+@each $width in $form_item_width {
+  .w-#{$width} {
+    &.el-input,
+    &.el-input-number {
+      width: calc(#{$width}rem / 100);
+    }
+
+    &.el-select {
+      .el-input {
+        width: calc(#{$width}rem / 100);
+      }
+    }
+  }
+}
+// end form item width

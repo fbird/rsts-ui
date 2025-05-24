@@ -1,0 +1,77 @@
+:root {
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 100px;
+  line-height: 24px;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: #000;
+  background-color: #fff;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+
+  --el-color-success: #19C75D;
+  --el-text-color-primary: black;
+  --el-text-color-regular: black;
+  --el-default-color: black;
+  --el-table-border: 0px;
+  --el-fill-color-blank: none;
+  --el-border-color: rgba(0,0,0, 0.3);
+  --el-text-color-secondary: rgba(0, 0, 0, 0.5);
+  --el-font-size-base: 14px;
+  --el-checkbox-font-size: 10px;
+  --el-color-info: #307BFF;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: gray;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #24527c;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #083967;
+}
+
+body {
+  // min-width: 1366px;
+  // min-height: 768px;
+  height: 100vh;
+  font-size: 0.14rem;
+  background-color: #fff;
+  // background-image: url(@/assets/background.png);
+  // background-image: radial-gradient(circle at 50% 50%, #012659 0%, #021126 64%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: 0;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #000;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+  .el-button--danger{
+    background-color: #f9f9f9;
+    color: #DE2A08;
+  }
+  
+}

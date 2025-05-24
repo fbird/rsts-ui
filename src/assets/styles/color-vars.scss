@@ -1,0 +1,42 @@
+@forward 'element-plus/theme-chalk/src/common/var.scss' with (
+  $colors: (
+    'primary': (
+      'base': #307BFF,
+      'light-9':#ECF7FF
+    ),
+    'danger':(
+      'base':#DE2A08,
+
+    )
+  ),
+  $fill-color:(
+    'light':#ECF7FF 
+  ),
+  $checkbox:(
+    'checked-bg-color': #307BFF,
+    'checked-input-border-color': #307BFF
+  ),
+  $table:(
+    'header-bg-color':#ECF7FF,
+    'row-hover-bg-color':rgba(236,247,255,0.5),
+    'text-color': #323E49
+  ),
+  $text-color:(
+    'regular': #323E49,
+    'placeholder':#546A8D,
+  ),
+  $input:(
+    'placeholder-color':#546A8D,
+    // 'border-color':rgba(48,123,255,0.4),
+    // 'hover-border-color':rgba(48,123,255,0.4),
+    // 'focus-border-color':rgba(48,123,255,0.4)
+    ),
+  $dialog:(
+    'bg-color':#011A3D
+  ),
+  $select-dropdown:(
+    'bg-color': #042A6C,
+  )
+);
+
+@use "element-plus/theme-chalk/src/index.scss" as *;
