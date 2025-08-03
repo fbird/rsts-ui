@@ -42,7 +42,7 @@ const route = useRoute();
 }
 
 .navTitle {
-  width: 1230px;
+  width: 100%;
   position: absolute;
   /* 使文字层位于图片上方 */
   top: 50%;
@@ -57,5 +57,8 @@ const route = useRoute();
   /* 设置文字颜色为白色 */
   z-index: 2;
   /* 确保文字在遮罩层上面 */
+  span{
+    margin-left: 40px;
+  }
 }
 </style>

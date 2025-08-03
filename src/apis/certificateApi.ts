@@ -83,7 +83,7 @@ export const uploadCertificates = () => RSTS_PORTAL_API.value + `/apis/v1/admin/
 
 export const downloadCertificateTemplate = () => RSTS_PORTAL_API.value + `/apis/v1/admin/certificates/template`
 
-export const exportCertificate = (data: any) =>
+export const exportCertificate = (data?: any) =>
   http.post(`/apis/v1/admin/certificates/export`, data, {
     baseURL: RSTS_PORTAL_API.value,
     responseType: 'blob'

@@ -76,40 +76,40 @@ const contactInfo = ref({
 
         <el-col :span="12">
             <h4>Send Us a Message</h4>
-            <el-card style="width: 600px" class="emailBox">
+            <el-card class="emailBox">
                 <el-row>
                     <el-col>
-                        <el-input v-model='contactInfo.firstName' style="width: 560px" placeholder="First Name" />
+                        <el-input v-model='contactInfo.firstName'  placeholder="First Name" />
                     </el-col>
                 </el-row>
 
                 <el-row>
                     <el-col>
-                        <el-input v-model='contactInfo.lastName' style="width: 560px" placeholder="Last Name" />
+                        <el-input v-model='contactInfo.lastName'  placeholder="Last Name" />
                     </el-col>
                 </el-row>
 
                 <el-row>
                     <el-col>
-                        <el-input v-model='contactInfo.company' style="width: 560px" placeholder="Company" />
+                        <el-input v-model='contactInfo.company'  placeholder="Company" />
                     </el-col>
                 </el-row>
 
                 <el-row>
                     <el-col>
-                        <el-input v-model='contactInfo.subject' style="width: 560px" placeholder="Subject" />
+                        <el-input v-model='contactInfo.subject'  placeholder="Subject" />
                     </el-col>
                 </el-row>
 
                 <el-row>
                     <el-col>
-                        <el-input v-model='contactInfo.email' style="width: 560px" placeholder="Email" />
+                        <el-input v-model='contactInfo.email'  placeholder="Email" />
                     </el-col>
                 </el-row>
 
                 <el-row>
                     <el-col>
-                        <el-input v-model='contactInfo.message' style="width: 560px" type="textarea"
+                        <el-input v-model='contactInfo.message'  type="textarea"
                             placeholder="Message" :rows="10" />
                     </el-col>
                 </el-row>

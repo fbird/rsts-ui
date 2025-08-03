@@ -1,43 +1,37 @@
 <template>
     <div class="app-container">
 
-        <el-row :gutter="10" class="m-b-20 buttonGroup">
+        <el-row :gutter="2" class="m-b-20 buttonGroup">
 
-            <el-col :span="1.5">
+            <el-col :span="12">
                 <el-button type="primary" plain :icon="Plus" size="default" @click="handleAdd">Add</el-button>
-            </el-col>
-            <el-col :span="1.5">
                 <el-button type="success" plain :icon="Edit" size="default" :disabled="single"
                     @click="handleUpdate">Edit</el-button>
-            </el-col>
-            <el-col :span="1.5">
                 <el-button type="danger" plain :icon="Close" size="default" :disabled="multiple"
                     @click="handleDelete">Delete</el-button>
-            </el-col>
-            <el-col :span="1.5">
-                <el-button type="info" plain :icon="Upload" size="default" @click="handleUpload">Upload</el-button>
-            </el-col>
-            <el-col :span="1.5">
-                <el-button type="info" plain  size="default" :disabled="multiple"
-                    @click="handleExport">
-                    <FontAwesomeIcon :icon="faTableCells" style="margin-right: 6px" /> Excels
-                </el-button>
+
+                <el-dropdown @command="handleActionCommand" style="margin-left: 10px;">
+                    <el-button type="primary" :icon="Menu">
+                        More Action<el-icon class="el-icon--right"><arrow-down /></el-icon>
+                    </el-button>
+                    <template #dropdown>
+                        <el-dropdown-menu >
+                            <el-dropdown-item :command="{ command: 'upload' }" :icon="Upload">Upload</el-dropdown-item>
+                            <el-dropdown-item :icon="Download" :command="{ command: 'downloadAll' }">Export
+                                All</el-dropdown-item>
+                            <el-dropdown-item :command="{ command: 'downloadExcels' }" :disabled="multiple">
+                                <FontAwesomeIcon :icon="faTableCells" style="margin-right: 6px" /> Export Excels
+                            </el-dropdown-item>
+                            <el-dropdown-item :command="{ command: 'downloadPdfs' }" :disabled="multiple">
+                                <FontAwesomeIcon :icon="faFilePdf" style="margin-right: 6px" />Export Pdfs
+                            </el-dropdown-item>
+                            <el-dropdown-item :command="{ command: 'print' }" :icon="Printer" :disabled="single">Print</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </template>
+                </el-dropdown>
             </el-col>
 
-            <el-col :span="1.5">
-                <el-button type="info" plain  size="default" :disabled="multiple"
-                    @click="handleExportPdfs">
-                    <FontAwesomeIcon :icon="faFilePdf" style="margin-right: 6px" /> Pdfs
-                </el-button>
-            </el-col>
-
-            <el-col :span="1.5">
-                <el-button type="info" plain :icon="Printer" size="default" :disabled="single"
-                    @click="handlePrint">Print</el-button>
-
-            </el-col>
-            
-            <el-col :span="11" style="text-align: right;">
+            <el-col :span="12" style="text-align: right;">
                 <el-input v-model="queryParams.searchKey" style="width: 300px" @change="getList"
                     placeholder="Type Training Name or Certificate">
                     <template #suffix>
@@ -101,13 +95,11 @@
                 <el-input v-model="formData.validityPeriod" placeholder="Please Input Validity Period" />
             </el-form-item>
             <el-form-item label="Issue Date" prop="completionDate">
-                <el-date-picker clearable v-model="formData.completionDate" type="date" 
-                        value-format="YYYY-MM-DD"
+                <el-date-picker clearable v-model="formData.completionDate" type="date" value-format="YYYY-MM-DD"
                     placeholder="Please Select Issue Date" />
             </el-form-item>
             <el-form-item label="Expiring Date" prop="expiringDate">
-                <el-date-picker clearable v-model="formData.expiringDate" type="date" 
-                        value-format="YYYY-MM-DD"
+                <el-date-picker clearable v-model="formData.expiringDate" type="date" value-format="YYYY-MM-DD"
                     placeholder="Please Select Expiring Date" />
             </el-form-item>
             <el-form-item label="Form of Instruction" prop="formOfInstruction">
@@ -162,6 +154,7 @@ import {
     Close,
     Edit,
     Download,
+    Menu,
     Printer,
     Upload
 } from '@element-plus/icons-vue'
@@ -352,7 +345,7 @@ const submitForm = () => {
 const handleDelete = (row: any) => {
     const delIds = row.id || ids.value;
 
-    ElMessageBox.confirm('Really Delete The Selected ' + delIds.length + ' Certificates？'  , 'Warnning', {
+    ElMessageBox.confirm('Really Delete The Selected ' + delIds.length + ' Certificates？', 'Warnning', {
         confirmButtonText: 'Confirm',
         cancelButtonText: 'Cancel'
     }).then(function () {
@@ -362,6 +355,28 @@ const handleDelete = (row: any) => {
         certTblRef.value!.clearSelection();
         ElMessage.success('Delete Success!')
     }).catch(() => { });
+}
+
+const handleExportAll = () => {
+    exportCertificate([]).then((response) => {
+        const blob = new Blob([response.data]); // 创建 Blob 对象
+        const url = window.URL.createObjectURL(blob); // 创建指向 Blob 对象的 URL
+        const link = document.createElement('a'); // 创建隐藏的 <a> 元素
+        link.style.display = 'none';
+        link.href = url;
+
+        // 从响应头或其他来源获取文件名
+        const contentDisposition = response.headers['content-disposition'];
+        let fileName = 'certificates.xlsx';
+
+        link.setAttribute('download', fileName); // 设置下载文件名
+        document.body.appendChild(link);
+        link.click(); // 触发点击事件下载文件
+        document.body.removeChild(link); // 下载完成后移除元素
+        window.URL.revokeObjectURL(url); // 释放 URL 对象
+    }).catch((error) => {
+        console.error('下载文件时出错:', error);
+    });
 }
 /** 导出按钮操作 */
 const handleExport = () => {
@@ -390,51 +405,72 @@ const handleUpload = () => {
     visibleImport.value = true
 }
 
-const handlePrint = (row: any) => {
+const handlePrint = (row?: any) => {
 
-    const id = row.id || ids.value
+    const id = row?.id || ids.value
     downloadPdfById(id).then((response: any) => {
-    const pdfBlob = response.data;
-    const pdfUrl = URL.createObjectURL(pdfBlob);
-    const iframe = document.createElement('iframe');
-      iframe.style.display = 'none';
-      iframe.src = pdfUrl;
-      iframe.onload = () => {
-        iframe.contentWindow!.print();
-        URL.revokeObjectURL(pdfUrl);
-      };
-      document.body.appendChild(iframe);
+        const pdfBlob = response.data;
+        const pdfUrl = URL.createObjectURL(pdfBlob);
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = pdfUrl;
+        iframe.onload = () => {
+            iframe.contentWindow!.print();
+            URL.revokeObjectURL(pdfUrl);
+        };
+        document.body.appendChild(iframe);
 
     }).catch((error: any) => {
         console.error('download error:', error);
     });
 }
 
-const handleExportPdfs = (row: any) =>{
-    const id = row.id || ids.value
+const handleExportPdfs = (row?: any) => {
+    const id = row?.id || ids.value
     downloadPdfById(id).then((response) => {
-      const blob = new Blob([response.data]); // 创建 Blob 对象
-      const url = window.URL.createObjectURL(blob); // 创建指向 Blob 对象的 URL
-      const link = document.createElement('a'); // 创建隐藏的 <a> 元素
-      link.style.display = 'none';
-      link.href = url;
-      let fileName = 'certificates.zip';
-      if(id.length == 1){
-        const selecctItem:any = certificateList.value.find((item: any) =>item.id == id);
-        fileName =  selecctItem!.traineesName + "_" + selecctItem!.certificateId + '.pdf';
-      }
-      
+        const blob = new Blob([response.data]); // 创建 Blob 对象
+        const url = window.URL.createObjectURL(blob); // 创建指向 Blob 对象的 URL
+        const link = document.createElement('a'); // 创建隐藏的 <a> 元素
+        link.style.display = 'none';
+        link.href = url;
+        let fileName = 'certificates.zip';
+        if (id.length == 1) {
+            const selecctItem: any = certificateList.value.find((item: any) => item.id == id);
+            fileName = selecctItem!.traineesName + "_" + selecctItem!.certificateId + '.pdf';
+        }
 
-      link.setAttribute('download', fileName); // 设置下载文件名
-      document.body.appendChild(link);
-      link.click(); // 触发点击事件下载文件
-      document.body.removeChild(link); // 下载完成后移除元素
-      window.URL.revokeObjectURL(url); // 释放 URL 对象
-  }).catch((error) => {
-      console.error('下载文件时出错:', error);
-  });
+
+        link.setAttribute('download', fileName); // 设置下载文件名
+        document.body.appendChild(link);
+        link.click(); // 触发点击事件下载文件
+        document.body.removeChild(link); // 下载完成后移除元素
+        window.URL.revokeObjectURL(url); // 释放 URL 对象
+    }).catch((error) => {
+        console.error('下载文件时出错:', error);
+    });
 }
 
+const handleActionCommand = (cmd: { command: any }) => {
+    switch (cmd.command) {
+        case 'upload':
+            handleUpload();
+            break;
+        case 'downloadAll':
+            handleExportAll();
+            break;
+        case 'downloadExcels':
+            handleExport();
+            break;
+        case 'downloadPdfs':
+            handleExportPdfs();
+            break;
+        case 'print':
+            handlePrint();
+            break;
+        default:
+            break;
+    }
+}
 onMounted(() => {
     getList();
 })
