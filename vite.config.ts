@@ -24,7 +24,7 @@ export default defineConfig({
     cors: true,
     proxy: {
       '/rsts-api': {
-        target: 'http://185.143.220.249:18080',
+        target: 'http://45.129.2.9:18080',
         // target: 'http://localhost:18080',
         changeOrigin: true,
         agent: new http.Agent() // 加这一行

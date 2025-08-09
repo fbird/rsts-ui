@@ -19,7 +19,7 @@
   position: relative;
   /* 让 .navTitle 和 .overlay 在 courseNav 中定位 */
   height: 200px;
-  background-image: url(/images/trainingImages/WellServiceTraining2.jpg);
+  background-image: url(/images/WellServiceTraining2.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   /* 让背景图片完全覆盖容器 */

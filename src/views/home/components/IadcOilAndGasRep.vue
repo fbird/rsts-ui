@@ -1,100 +1,111 @@
 <template>
-    <div class="sec">
-        <!-- <video style="width: 100%; height:100%; object-fit:fill; float: right;" :src="wellCommentingVideo" autoplay
-            muted loop /> -->
-        <el-carousel trigger="click" style="width: 100%; height: 100%;">
-            <el-carousel-item key="1">
-                <el-image :src="iadcOilAndGasRep1" fit="cover" class="img" />
-            </el-carousel-item>
-            <el-carousel-item key="2">
-                <el-image :src="iadcOilAndGasRep2" fit="cover" class="img" />
-            </el-carousel-item>
-            <el-carousel-item key="3">
-                <el-image :src="iadcOilAndGasRep3" fit="cover" class="img" />
-            </el-carousel-item>
+  <div class="sec">
+    <el-carousel trigger="click" style="width: 100%; height: 100%;">
+      <el-carousel-item v-for="(item, index) in imgs" :key="index">
+        <el-image :src="item" fit="cover" class="img" />
+      </el-carousel-item>
+    </el-carousel>
 
-        </el-carousel>
-
-        <div class="courseTitle">
-
-
-            <el-card>
-                <span class="l1">IADC Oil and Gas Operator Representative</span>
-                <span class="l2">This IADC WellSharp™ course curriculum is designed for Oil and Gas Operator
-                    Representatives who are primarily responsible for the oversight of coiled tubing, snubbing,
-                    wireline, and workover operational processes of well control. This curriculum identifies a body of
-                    knowledge and a set of job skills that can be used to provide well control training for Oil and Gas
-                    Operator Representative. IADC recommends that well site supervisory and office-based personnel who
-                    are primarily involved in the operational decision-making process for well control and/or involved
-                    in design of well barriers attend this course.
-                </span>
-            </el-card>
-
+    <div class="courseTitle">
+      <el-card>
+        <span class="l1">IADC WellSharp Oil & Gas Operator Representative (Workover and Intervention)</span>
+        <div class="tags">
+          <el-tag type="info" effect="dark">Baker Eastern S.A.</el-tag>
+          <el-tag type="success" effect="dark" class="date-tag">2025/05/08 - 2025/05/12</el-tag>
         </div>
+        <span class="l2">
+          The IADC WellSharp Oil & Gas Operator Representative (Workover and Intervention) course focuses on equipping personnel with the knowledge and skills needed to oversee workover and intervention operations while ensuring well control. The curriculum covers a range of topics, including risk management, well control principles, barrier systems, influx management, equipment specifics (coiled tubing, snubbing, wireline), and well kill procedures. It emphasizes practical application and is designed for both supervisory and office-based personnel involved in these operations.
+        </span>
+      </el-card>
     </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import iadcOilAndGasRep1 from "/images/trainingImages/iadcOilAndGasRep/IADC Oil & Gas Representative Course 1.jpeg";
-import iadcOilAndGasRep2 from "/images/trainingImages/iadcOilAndGasRep/IADC Oil & Gas Representative Course 2.jpeg";
-import iadcOilAndGasRep3 from "/images/trainingImages/iadcOilAndGasRep/IADC Oil & Gas Representative Course 3.jpeg";
-
+const imgs = [
+  "/images/6. IADC Oil & Gas Operator Representative (Workover and Intervention), Baker Eastern S.A., May 2025/20250501.jpeg",
+  "/images/6. IADC Oil & Gas Operator Representative (Workover and Intervention), Baker Eastern S.A., May 2025/20250502.jpeg",
+  "/images/6. IADC Oil & Gas Operator Representative (Workover and Intervention), Baker Eastern S.A., May 2025/20250503.jpeg",
+];
 </script>
 
 <style lang="scss" scoped>
 .sec {
-    height: 800px;
-    background-color: cyan;
-    position: relative;
+  height: 800px;
+  background: linear-gradient(90deg, #2e3d96, #5367c0); /* 深蓝渐变 */
+  position: relative;
+  overflow: hidden;
 
-    .img {
-        width: 100%;
-        height: 100%;
+  .img {
+    width: 100%;
+    height: 100%;
+    filter: brightness(0.85) contrast(1.05); /* 图片轻微暗调，更突出文字 */
+  }
+
+  ::v-deep(.el-carousel__container) {
+    height: 100%;
+  }
+
+  .courseTitle {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 720px;
+    max-width: 90vw;
+    transform: translate(-50%, -50%);
+
+    .el-card {
+      background-color: rgba(255, 255, 255, 0.88);
+      border: none;
+      height: auto;
+      padding: 40px 50px;
+      border-radius: 16px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      color: #1b2a53;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      user-select: text;
     }
 
-    ::v-deep(.el-carousel__container) {
-        height: 100%;
+    .tags {
+      display: flex;
+      gap: 20px;
+      margin-top: 8px;
+
+      .el-tag {
+        font-weight: 600;
+        font-size: 14px;
+        border-radius: 20px;
+        padding: 6px 14px;
+        user-select: none;
+      }
+
+      .date-tag {
+        background: #4f78d1;
+        color: #f0f4ff !important;
+      }
     }
 
-    .courseTitle {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: 1230px;
-        transform: translate(-50%, -50%);
+    ::v-deep(.el-card__body) {
+      padding: 0;
 
-        .el-card {
+      .l1 {
+        font-size: 38px;
+        font-weight: 800;
+        line-height: 1.15;
+        color: #243a73;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
 
-            // background-color: rgb(255, 255, 255, 0.92);
-            background-color: #fff;
-            opacity: 0.92;
-            border: none;
-            height: 420px;
-            width: 700px;
-
-            border-radius: 10px;
-            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        ::v-deep(.el-card__body) {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            color: #000;
-
-            .l1 {
-                font-size: 32px;
-                font-weight: 800;
-            }
-
-            .l2 {
-                font-size: 18px;
-                margin-top: 40px;
-                line-height: 1.8;
-                font-style: italic;
-            }
-        }
-
+      .l2 {
+        font-size: 18px;
+        line-height: 1.7;
+        font-style: italic;
+        color: #4a5678;
+      }
     }
+  }
 }
 </style>

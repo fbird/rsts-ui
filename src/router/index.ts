@@ -57,11 +57,6 @@ const router = createRouter({
           path: 'search',
           name: 'certificatesSearch',
           component: () => import('@/views/certificates/Search.vue'),
-        },
-        {
-          path: 'detail/:sn',
-          name: 'certificatesDetail',
-          component: () => import('@/views/certificates/Detail.vue'),
         }
       ]
     },

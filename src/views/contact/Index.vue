@@ -4,7 +4,7 @@ import Address from '/images/Address.png'
 import EMail from '/images/E-mail.png'
 import Phone from '/images/Phone.png'
 import Website from '/images/Website.png'
-import contact from '/images/trainingImages/Valve Training.jpg'
+import contact from '/images/Valve Training.jpg'
 import { ref } from 'vue'
 
 const contactInfo = ref({

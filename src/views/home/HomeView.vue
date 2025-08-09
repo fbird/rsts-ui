@@ -1,21 +1,21 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import v1 from '/video/v1.mp4';
-import v1Poster from '/images/v1-poster.png';
 import videoSrc from '/video/v2.mp4';
+import v1Poster from '/images/v1-poster.png';
+import v2Poster from "/images/image.png";
+import profile from "/files/RSTS - Company Profile v2.pdf";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faArrowRightLong } from "@fortawesome/free-solid-svg-icons";
-import profile from "/files/RSTS - Company Profile v2.pdf";
-import v2Poster from "/images/image.png";
-import { ref } from 'vue';
 
+
+import DetAPost from './components/DetAPost.vue'
+import IwcfL3 from './components/IwcfL3.vue'
+import WcAWst from './components/WcAWst.vue'
+import IwcfDwc from './components/IwcfDwc.vue'
+import H2S from './components/H2S.vue'
 import IadaOilAndGasRep from "./components/IadcOilAndGasRep.vue"
-import IWCF from "./components/IWCF.vue"
-import IWCFL4 from "./components/IWCFL4.vue"
-import Drilling from "./components/Drilling.vue"
-import WellComenthing from "./components/WellComenting.vue"
-import H2S from "./components/H2S.vue"
-import WAH from "./components/WorkAtHeight.vue"
 import IadcWellSharp from "./components/IadcWellSharp.vue"
 
 library.add(faArrowRightLong);
@@ -24,6 +24,24 @@ const openProfile = () => {
 
   window.open(profile, "_blank");
 }
+
+const banners = ref<Array<any>>(
+  [
+    { img: "/images/rolling/1.png" },
+    { img: "/images/rolling/2.png" },
+    { img: "/images/rolling/3.png" },
+    { img: "/images/rolling/4.png" },
+    { img: "/images/rolling/5.png" },
+    { img: "/images/rolling/6.png" },
+    { img: "/images/rolling/7.png" },
+    { img: "/images/rolling/8.png" },
+    { img: "/images/rolling/9.png" },
+    { img: "/images/rolling/10.png" },
+    { img: "/images/rolling/11.png" },
+    { img: "/images/rolling/12.png" },
+    { img: "/images/rolling/13.png" }
+  ]
+)
 
 const dialogVisible = ref(false);
 const videoPlayer = ref<any>();
@@ -38,62 +56,75 @@ const handleDialogClose = () => {
   videoPlayer.value.currentTime = 0; // 重置视频播放进度
 };
 
-
 </script>
 
 <template>
-  <div class="sec1">
-    <video width="100%"  autoplay muted loop :poster="v1Poster">
-      <source :src="v1" type="video/mp4">
-    </video>
-    <!-- <video width="100%" :src="v1" autoplay muted loop /> -->
-    <div class="sec1Wrapper">
-      <div class="sec1Title">
-        <span class="level1Title">Welcome To RSTS Academy</span>
-        <p class="welcomContent">
-          Rainbow Star Training Service LLC, is a leading integrated training service supplier in the oil and gas
-          industry to provide a full range and levels of in-depth training programs based on the extensive, proprietary
-          research. We are authorized to issue the general certificate of attendance and international accreditation
-          qualification certificate. A regular competency assessment is carried out to revise the training plan and make
-          trainees fully equipped with enhancing professional attitude, skills and expertise knowledge to face the
-          challenges of their role at the work. We aim to constantly be creative and innovative in our training programs
-          to set a peerless benchmark.
-        </p>
-        <el-button @click="openProfile">
-          <span style="margin-right: 5px;">
-            Profile
-          </span>
-          <font-awesome-icon :icon="['fas', 'arrow-right-long']" />
-        </el-button>
-      </div>
+  <div class="home-container">
+    <!-- 轮播图 -->
+    <el-carousel height="320px" indicator-position="outside" type="card">
+      <el-carousel-item v-for="(item, index) in banners" :key="index">
+        <el-image style="width: 100%; height: 100%" :src="item.img" fit="scale-down" show-progress>
+        </el-image>
+      </el-carousel-item>
+    </el-carousel>
 
+    <div class="sec1">
+      <video width="100%" autoplay muted loop :poster="v1Poster">
+        <source :src="v1" type="video/mp4">
+      </video>
+      <!-- <video width="100%" :src="v1" autoplay muted loop /> -->
+      <div class="sec1Wrapper">
+        <div class="sec1Title">
+          <span class="level1Title">Welcome To RSTS Academy</span>
+          <p class="welcomContent">
+            Rainbow Star Training Service LLC, is a leading integrated training service supplier in the oil and gas
+            industry to provide a full range and levels of in-depth training programs based on the extensive,
+            proprietary
+            research. We are authorized to issue the general certificate of attendance and international accreditation
+            qualification certificate. A regular competency assessment is carried out to revise the training plan and
+            make
+            trainees fully equipped with enhancing professional attitude, skills and expertise knowledge to face the
+            challenges of their role at the work. We aim to constantly be creative and innovative in our training
+            programs
+            to set a peerless benchmark.
+          </p>
+          <el-button @click="openProfile">
+            <span style="margin-right: 5px;">
+              Profile
+            </span>
+            <font-awesome-icon :icon="['fas', 'arrow-right-long']" />
+          </el-button>
+        </div>
+
+      </div>
     </div>
-  </div>
 
-  <div class="secTWrapper">
-    <div class="secTB">
-      <div class="secTBLeft">
-        <el-image :src="v2Poster" class="secTBLeftImg"></el-image>
-      </div>
+    <div class="secTWrapper">
+      <div class="secTB">
+        <div class="secTBLeft">
+          <el-image :src="v2Poster" class="secTBLeftImg"></el-image>
+        </div>
 
-      <div class="secTBRight">
-        <span class="secDesTitle">Integrated Training Sollutions and Service for Oil and Gas Industry</span>
+        <div class="secTBRight">
+          <span class="secDesTitle">Integrated Training Sollutions and Service for Oil and Gas Industry</span>
+        </div>
       </div>
+      <el-button class="play-button" type="primary" @click="playVideo" circle size="large">
+        <el-icon>
+          <VideoPlay />
+        </el-icon>
+      </el-button>
     </div>
-    <el-button class="play-button" type="primary" @click="playVideo" circle size="large">
-      <el-icon>
-        <VideoPlay />
-      </el-icon>
-    </el-button>
+
+
+    <DetAPost />
+  <IwcfL3 />
+    <IwcfDwc />
+    <WcAWst />
+        <H2S />
+    <IadaOilAndGasRep />
+    <IadcWellSharp />
   </div>
-  <WellComenthing />
-  <Drilling />
-  <IWCF />
-  <IWCFL4 />
-  <WAH />
-  <H2S />
-  <IadaOilAndGasRep />
-  <IadcWellSharp />
 
   <el-dialog v-model="dialogVisible" title="Integrated Training Sollutions and Service for Oil and Gas Industry"
     @close="handleDialogClose" align-center :style="{ padding: '8px' }" class="video-dialog" width="70%">
@@ -102,16 +133,31 @@ const handleDialogClose = () => {
 </template>
 
 
-<style lang="scss" scoped>
-.level1Title {
-  font-weight: 700;
-  font-size: 48px;
+<style scoped>
+::v-deep(.el-carousel__arrow) {
+  border-radius: 0%;
+}
+
+.home-container {
+  background: #f5f6fa;
+}
+
+.collapse-content {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .sec1 {
   position: relative;
   width: 100%;
-  height: auto;
+  height: 900px;
   margin: auto;
   display: flex;
   flex-direction: row;
@@ -150,7 +196,6 @@ const handleDialogClose = () => {
       /* 水平居中 */
       color: white;
       text-align: left;
-      // margin: auto;
 
       .level1Title {
         font-weight: 700;
@@ -243,87 +288,6 @@ const handleDialogClose = () => {
     }
   }
 }
-
-.secRollBlue {
-  background-color: #2e3d96 !important;
-}
-
-
-.secRoll {
-  width: 100%;
-  height: 600px;
-  background-color: rgba(105, 179, 254, 0.09);
-
-  .secRollWrapper {
-    width: 1230px;
-    height: 100%;
-    margin: auto;
-    display: flex;
-    justify-content: left;
-    /* 让两个 div 之间有间隔 */
-    align-items: center;
-    // padding: 10px 0px;
-
-
-    .secRollDecLeft {
-      padding-right: 30px;
-    }
-
-    .secRollDecRight {
-      padding-left: 30px;
-      color: #fff !important;
-    }
-
-    .secRollDes {
-      width: 40%;
-      position: relative;
-      text-align: left;
-      color: black;
-      display: flex;
-      flex-direction: column;
-
-
-      .secRollDesTitle {
-        font-size: 32px;
-        font-weight: 800;
-        color: black;
-      }
-
-      .secRollSubDesTitle {
-        font-size: 18px;
-        color: black;
-        margin-top: 10px;
-        line-height: 1.8;
-        font-style: italic;
-      }
-    }
-
-    .secRollContent {
-      width: 60%;
-
-      .carousel-image {
-        width: 100%;
-        /* 让图片宽度自适应 */
-        height: 100%;
-        /* 让图片高度自适应 */
-        object-fit: cover;
-        /* 保持图片比例，确保不裁剪 */
-      }
-
-      .el-carousel {
-        width: 100%;
-        /* 容器宽度自适应 */
-        height: 520px;
-        /* 可以根据需要调整高度 */
-        border-radius: 10px;
-        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
-      }
-    }
-
-  }
-}
-
-
 
 .video-dialog {
   height: 70vh;

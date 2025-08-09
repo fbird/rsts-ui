@@ -97,7 +97,7 @@
 
 <style lang="scss" scoped>
 .footer {
-    width: 100%;
+    // width: 100%;
     margin: auto;
     padding: 0 20px;
     color: #fff;
