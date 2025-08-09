@@ -296,7 +296,7 @@ const handleDialogClose = () => {
   align-items: center;
   justify-content: center;
 
-  ::deep().el-dialog__body {
+  ::v-deep(.el-dialog__body) {
     padding: 0px !important;
     /* 移除对话框的内边距 */
   }
