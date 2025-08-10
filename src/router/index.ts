@@ -54,9 +54,14 @@ const router = createRouter({
           component: () => import('@/views/certificates/Index.vue'),
         },
         {
-          path: 'search',
-          name: 'certificatesSearch',
-          component: () => import('@/views/certificates/Search.vue'),
+          path: 'search-result',
+          name: 'certificatesSearchResult',
+          component: () => import('@/views/certificates/SearchResult.vue'),
+        },
+        {
+          path: 'search-result/m',
+          name: 'certificatesSearchResultM',
+          component: () => import('@/views/certificates/mobile/SearchResult.vue'),
         }
       ]
     },
@@ -69,6 +74,11 @@ const router = createRouter({
       path: '/about',
       name: 'about',
       component: () => import('@/views/about/Index.vue')
+    },
+    {
+      path: '/about/m',
+      name: 'aboutM',
+      component: () => import('@/views/about/mobile/Index.vue')
     },
 
     {

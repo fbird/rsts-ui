@@ -14,7 +14,7 @@ const doQuery = () => {
         return;
     }
     router.push({
-        name: "certificatesSearch",
+        name: "certificatesSearchResult",
         query: { query: searchData.value }
     });
 }
