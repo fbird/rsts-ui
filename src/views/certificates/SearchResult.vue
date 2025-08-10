@@ -6,9 +6,9 @@ import { getCertificateDetailByCertificateId, downloadCertificatePdf } from '@/a
 import QrcodeVue from 'qrcode.vue'
 
 import {
-    Download,
-    Printer,
-    Back
+  Download,
+  Printer,
+  Back
 } from '@element-plus/icons-vue'
 
 const selectedCertificateData = ref<any>({
@@ -37,7 +37,7 @@ onMounted(() => {
   getCertificateDetailByCertificateId(certificateId.value).then((resp) => {
     if (!resp) return;
     selectedCertificateData.value = resp;
-    qrCode.value = "http://www.rstsacademy.com/certificates/search?query=" + certificateId.value
+    qrCode.value = "http://www.rstsacademy.com/certificates/search-result/m?query=" + certificateId.value
     hasCertificate.value = true;
   }).catch((exe) => {
     console.error(exe)
@@ -67,49 +67,49 @@ const downloadCertificate = () => {
   downloadLoading.value = true;
 
   downloadCertificatePdf(certificateId.value).then((response) => {
-        const blob = new Blob([response.data]); // 创建 Blob 对象
-        const url = window.URL.createObjectURL(blob); // 创建指向 Blob 对象的 URL
-        const link = document.createElement('a'); // 创建隐藏的 <a> 元素
-        link.style.display = 'none';
-        link.href = url;
+    const blob = new Blob([response.data]); // 创建 Blob 对象
+    const url = window.URL.createObjectURL(blob); // 创建指向 Blob 对象的 URL
+    const link = document.createElement('a'); // 创建隐藏的 <a> 元素
+    link.style.display = 'none';
+    link.href = url;
 
-        // 从响应头或其他来源获取文件名
-        const contentDisposition = response.headers['content-disposition'];
-        let fileName = `${selectedCertificateData.value.traineesName + '_' + certificateId.value}.pdf`;
+    // 从响应头或其他来源获取文件名
+    const contentDisposition = response.headers['content-disposition'];
+    let fileName = `${selectedCertificateData.value.traineesName + '_' + certificateId.value}.pdf`;
 
-        link.setAttribute('download', fileName); // 设置下载文件名
-        document.body.appendChild(link);
-        link.click(); // 触发点击事件下载文件
-        document.body.removeChild(link); // 下载完成后移除元素
-        window.URL.revokeObjectURL(url); // 释放 URL 对象
-    }).catch((error) => {
-        console.error('下载文件时出错:', error);
-    }).finally(() =>{
-      downloadLoading.value = false;
-    });
+    link.setAttribute('download', fileName); // 设置下载文件名
+    document.body.appendChild(link);
+    link.click(); // 触发点击事件下载文件
+    document.body.removeChild(link); // 下载完成后移除元素
+    window.URL.revokeObjectURL(url); // 释放 URL 对象
+  }).catch((error) => {
+    console.error('下载文件时出错:', error);
+  }).finally(() => {
+    downloadLoading.value = false;
+  });
 
 
 }
 
-const printPdf =  () => {
+const printPdf = () => {
   printLoading.value = true;
   downloadCertificatePdf(certificateId.value).then((response) => {
     const pdfBlob = response.data;
     const pdfUrl = URL.createObjectURL(pdfBlob);
     const iframe = document.createElement('iframe');
-      iframe.style.display = 'none';
-      iframe.src = pdfUrl;
-      iframe.onload = () => {
-        iframe.contentWindow!.print();
-        URL.revokeObjectURL(pdfUrl);
-      };
-      document.body.appendChild(iframe);
+    iframe.style.display = 'none';
+    iframe.src = pdfUrl;
+    iframe.onload = () => {
+      iframe.contentWindow!.print();
+      URL.revokeObjectURL(pdfUrl);
+    };
+    document.body.appendChild(iframe);
 
-    }).catch((error) => {
-        console.error('下载文件时出错:', error);
-    }).finally(() =>{
-      printLoading.value = false;
-    });
+  }).catch((error) => {
+    console.error('下载文件时出错:', error);
+  }).finally(() => {
+    printLoading.value = false;
+  });
 
 }
 </script>
@@ -120,11 +120,13 @@ const printPdf =  () => {
       <div class="certifiateId">
         <h1 style="margin: 0px; text-align: left;">RSTS Certification Validation System</h1>
         <div>
-          <el-button :icon="Back"  style="font-weight: 500;" type="primary" link @click="backToIndex">Back</el-button>
-          <el-button :icon="Download" :loading="downloadLoading" :disabled="!hasCertificate" link type="primary" style="height: 40px" @click="downloadCertificate">Download</el-button>
-          <el-button :icon="Printer"  :loading="printLoading" :disabled="!hasCertificate" link type="primary" style=" height: 40px" @click="printPdf">Print</el-button>
+          <el-button :icon="Back" style="font-weight: 500;" type="primary" link @click="backToIndex">Back</el-button>
+          <el-button :icon="Download" :loading="downloadLoading" :disabled="!hasCertificate" link type="primary"
+            style="height: 40px" @click="downloadCertificate">Download</el-button>
+          <el-button :icon="Printer" :loading="printLoading" :disabled="!hasCertificate" link type="primary"
+            style=" height: 40px" @click="printPdf">Print</el-button>
         </div>
-       
+
       </div>
     </template>
     <div class="content" v-if="hasCertificate">
@@ -153,24 +155,24 @@ const printPdf =  () => {
         <!-- <el-descriptions-item label="Certificate SN">{{ selectedCertificateData.sn }}</el-descriptions-item> -->
         <el-descriptions-item label="Certificate ID">{{ selectedCertificateData.certificateId }}</el-descriptions-item>
         <el-descriptions-item label="Validity Period">{{ selectedCertificateData.validityPeriod
-          }}</el-descriptions-item>
+        }}</el-descriptions-item>
         <el-descriptions-item label="Issue Date">{{ formatDate(selectedCertificateData.completionDate)
-          }}</el-descriptions-item>
+        }}</el-descriptions-item>
         <el-descriptions-item label="Expiring Date">{{ formatDate(selectedCertificateData.expiringDate)
-          }}</el-descriptions-item>
+        }}</el-descriptions-item>
       </el-descriptions>
 
       <!-- 培训信息组 -->
       <el-descriptions title="Training Information" :column="2" label-width="150px">
 
         <el-descriptions-item label="Course Name">{{ selectedCertificateData.courseName
-          }}</el-descriptions-item>
+        }}</el-descriptions-item>
         <el-descriptions-item label="Form of Instruction">{{ selectedCertificateData.formOfInstruction
-          }}</el-descriptions-item>
+        }}</el-descriptions-item>
         <el-descriptions-item label="Reference Standards">{{ selectedCertificateData.referenceStandards
-          }}</el-descriptions-item>
+        }}</el-descriptions-item>
         <el-descriptions-item label="Training Hours">{{ selectedCertificateData.trainingHours
-          }}</el-descriptions-item>
+        }}</el-descriptions-item>
 
 
 
@@ -180,14 +182,14 @@ const printPdf =  () => {
       <el-descriptions title="Awarding Body Information" :column="2" label-width="150px">
         <el-descriptions-item label="Trainer Name">{{ selectedCertificateData.trainerName }}</el-descriptions-item>
         <el-descriptions-item label="Coordinator Name">{{ selectedCertificateData.coordinatorName
-          }}</el-descriptions-item>
+        }}</el-descriptions-item>
         <el-descriptions-item label="Exam Invigilator Name">{{ selectedCertificateData.examInvigilatorName
-          }}</el-descriptions-item>
+        }}</el-descriptions-item>
         <el-descriptions-item label="Issuer Name">{{ selectedCertificateData.issuerName }}</el-descriptions-item>
         <el-descriptions-item label="Approver Name">{{ selectedCertificateData.approverName
-          }}</el-descriptions-item>
+        }}</el-descriptions-item>
         <el-descriptions-item label="Awarding Body">{{ selectedCertificateData.awardingBody
-          }}</el-descriptions-item>
+        }}</el-descriptions-item>
 
 
       </el-descriptions>
@@ -265,7 +267,7 @@ const printPdf =  () => {
   ::v-deep(.el-card__body) {
 
     min-height: calc(100vh - 400px);
-}
+  }
 
 
   ::v-deep(.el-card__body) {
