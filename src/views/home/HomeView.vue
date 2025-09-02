@@ -126,10 +126,10 @@ const handleDialogClose = () => {
     <IadcWellSharp />
   </div>
 
-  <el-dialog v-model="dialogVisible" title="Integrated Training Sollutions and Service for Oil and Gas Industry"
-    @close="handleDialogClose" align-center :style="{ padding: '8px' }" class="video-dialog" width="70%">
-    <video v-if="dialogVisible" ref="videoPlayer" :src="videoSrc" autoplay controls class="video-player"></video>
-  </el-dialog>
+    <el-dialog v-model="dialogVisible" title="Integrated Training Sollutions and Service for Oil and Gas Industry"
+      @close="handleDialogClose" align-center :style="{ padding: '8px' }" class="video-dialog" width="70%">
+      <video v-if="dialogVisible" ref="videoPlayer" :src="videoSrc" autoplay controls class="video-player"></video>
+    </el-dialog>
 </template>
 
 

@@ -62,6 +62,11 @@ const router = createRouter({
           path: 'search-result/m',
           name: 'certificatesSearchResultM',
           component: () => import('@/views/certificates/mobile/SearchResult.vue'),
+        },
+        {
+          path: 'search',
+          name: 'certificatesSearch',
+          component: () => import('@/views/certificates/mobile/SearchResult.vue'),
         }
       ]
     },

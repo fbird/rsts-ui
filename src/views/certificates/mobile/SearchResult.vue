@@ -79,9 +79,14 @@ const printPdf = () => {
 }
 
 const formatDate = (dateStr: any) => {
-  const options = ref<any>({ day: '2-digit', month: 'short', year: 'numeric' });
-  const formattedDate = new Date(dateStr).toLocaleDateString('en-GB', options.value);
-  return formattedDate.replace(/\s/g, '-');
+  const d = new Date(dateStr);
+
+  // en-US 会返回 Sep, 而不是 Sept
+  const month = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(d);
+  const day = String(d.getDate()).padStart(2, '0');
+  const year = d.getFullYear();
+
+  return `${day}-${month}-${year}`;
 }
 
 onMounted(() => {

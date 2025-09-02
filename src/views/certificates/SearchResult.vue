@@ -46,11 +46,14 @@ onMounted(() => {
 })
 
 const formatDate = (dateStr: any) => {
-  const options = ref<any>({ day: '2-digit', month: 'short', year: 'numeric' });
+  const d = new Date(dateStr);
 
-  const formattedDate = new Date(dateStr).toLocaleDateString('en-GB', options.value);
+  // en-US 会返回 Sep, 而不是 Sept
+  const month = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(d);
+  const day = String(d.getDate()).padStart(2, '0');
+  const year = d.getFullYear();
 
-  return formattedDate.replace(/\s/g, '-');
+  return `${day}-${month}-${year}`;
 }
 
 
