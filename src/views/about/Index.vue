@@ -16,7 +16,7 @@ import qualityPlus from '/images/companyQualification/Quality plus_Logo.png'
 <template>
     <h4>About Us</h4>
     <section>
-        Rainbow Star Training Service LLC, is a leading integrated training service supplier in the oil and gas industry
+        Rainbow Star Training Services LLC, is a leading integrated training service supplier in the oil and gas industry
         to provide a full range and levels of in-depth training programs based on the extensive, proprietary research.
         We are authorized to issue the general certificate of attendance and international accreditation qualification
         certificate. A regular competency assessment is carried out to revise the training plan and make trainees fully

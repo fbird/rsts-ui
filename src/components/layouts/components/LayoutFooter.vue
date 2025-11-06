@@ -4,9 +4,9 @@
 <template>
     <div class="footer">
         <el-row>
-            <el-col :span="4">
+            <el-col :span="8">
                 <h4 class="logoText">
-                    <span>Rainbow Star</span>
+                    <span>Rainbow Star Training Services LLC</span>
                     <span class="copyRight">®</span>
                 </h4>
             </el-col>
@@ -14,7 +14,7 @@
         <el-divider class="divider" />
         <el-row class="footerContent">
             <el-col :span="10">
-                <h4 style="font-weight: bold; font-size: 16px;">Rainbow Star Abu Dhabi Office. </h4>
+                <h4 style="font-weight: bold; font-size: 16px;">Rainbow Star Training Services LLC Abu Dhabi Office. </h4>
                 <el-row>
                     <el-col :span="6" style="font-weight: bold;">
                         Address
@@ -85,7 +85,7 @@
             </el-col>
             <el-col :span="6">
                 <h4 style="font-weight: bold; font-size: 16px;">Copyright.</h4>
-                Copyright © 2025 Rainbow Star Training Service LLC(RSTS). All Rights Reserved.
+                Copyright © 2025 Rainbow Star Training Services LLC(RSTS). All Rights Reserved.
             </el-col>
         </el-row>
         <el-row>

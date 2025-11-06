@@ -3,7 +3,7 @@
         <el-row>
             <el-col :xs="24" :sm="12" :md="4">
                 <h4 class="logoText">
-                    <span>Rainbow Star</span>
+                    <span>Rainbow Star Training Services LLC</span>
                     <span class="copyRight">®</span>
                 </h4>
             </el-col>
@@ -14,7 +14,7 @@
         <el-row class="footerContent" :gutter="20">
             <!-- 地址信息 -->
             <el-col :xs="24" :sm="12" :md="10">
-                <h4 class="sectionTitle">Rainbow Star Abu Dhabi Office.</h4>
+                <h4 class="sectionTitle">Rainbow Star Training Services LLC Abu Dhabi Office.</h4>
                 <el-row>
                     <el-col :xs="8" :sm="6" class="label">Address</el-col>
                     <el-col :xs="16" :sm="18">
@@ -66,7 +66,7 @@
             <!-- 版权信息 -->
             <el-col :xs="24" :sm="24" :md="6">
                 <h4 class="sectionTitle">Copyright.</h4>
-                Copyright © 2025 Rainbow Star Training Service LLC(RSTS). All Rights Reserved.
+                Copyright © 2025 Rainbow Star Training Services LLC(RSTS). All Rights Reserved.
             </el-col>
         </el-row>
     </div>

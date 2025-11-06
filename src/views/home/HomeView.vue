@@ -77,7 +77,7 @@ const handleDialogClose = () => {
         <div class="sec1Title">
           <span class="level1Title">Welcome To RSTS Academy</span>
           <p class="welcomContent">
-            Rainbow Star Training Service LLC, is a leading integrated training service supplier in the oil and gas
+            Rainbow Star Training Services LLC, is a leading integrated training service supplier in the oil and gas
             industry to provide a full range and levels of in-depth training programs based on the extensive,
             proprietary
             research. We are authorized to issue the general certificate of attendance and international accreditation

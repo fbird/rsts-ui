@@ -23,7 +23,7 @@ const defaultActive = computed(() => {
     <div class="left">
       <div class="title-text">
         <div style="font-size: 20px;">RAINBOW STAR</div>
-        <div style="font-size: 18px;">TRAINNING SERVICE LLC</div>
+        <div style="font-size: 18px;">TRAINING SERVICES LLC</div>
       </div>
     </div>
 
