@@ -14,7 +14,8 @@
         <el-divider class="divider" />
         <el-row class="footerContent">
             <el-col :span="10">
-                <h4 style="font-weight: bold; font-size: 16px;">Rainbow Star Training Services LLC Abu Dhabi Office. </h4>
+                <h4 style="font-weight: bold; font-size: 16px;">Rainbow Star Training Services LLC Abu Dhabi Office.
+                </h4>
                 <el-row>
                     <el-col :span="6" style="font-weight: bold;">
                         Address
@@ -51,7 +52,7 @@
                     <el-col :span="16">
                         <el-row>
                             <el-col>
-                                +971 58-124-3299
+                                +971 55-446-9950
                             </el-col>
                             <el-col>
                                 +971 54-449-4027
@@ -66,7 +67,7 @@
                     <el-col :span="16">
                         <el-row>
                             <el-col>
-                                +971 58-124-3299
+                                +971 55-446-9950
                             </el-col>
                             <el-col>
                                 +971 54-449-4027

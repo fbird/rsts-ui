@@ -55,7 +55,7 @@ const contactInfo = ref({
                     <el-image :src="Phone" fit="scale-down" style="height: 20px; width: 20px;" />
                 </el-col>
                 <el-col :span="22">
-                    <span>+971 58-124-3299</span>
+                    <span>+971 55-446-9950</span>
                     <el-divider direction="vertical" style="margin: 0px 20px" />
                     <span>+971 54-449-4027</span>
                 </el-col>
@@ -79,38 +79,37 @@ const contactInfo = ref({
             <el-card class="emailBox">
                 <el-row>
                     <el-col>
-                        <el-input v-model='contactInfo.firstName'  placeholder="First Name" />
+                        <el-input v-model='contactInfo.firstName' placeholder="First Name" />
                     </el-col>
                 </el-row>
 
                 <el-row>
                     <el-col>
-                        <el-input v-model='contactInfo.lastName'  placeholder="Last Name" />
+                        <el-input v-model='contactInfo.lastName' placeholder="Last Name" />
                     </el-col>
                 </el-row>
 
                 <el-row>
                     <el-col>
-                        <el-input v-model='contactInfo.company'  placeholder="Company" />
+                        <el-input v-model='contactInfo.company' placeholder="Company" />
                     </el-col>
                 </el-row>
 
                 <el-row>
                     <el-col>
-                        <el-input v-model='contactInfo.subject'  placeholder="Subject" />
+                        <el-input v-model='contactInfo.subject' placeholder="Subject" />
                     </el-col>
                 </el-row>
 
                 <el-row>
                     <el-col>
-                        <el-input v-model='contactInfo.email'  placeholder="Email" />
+                        <el-input v-model='contactInfo.email' placeholder="Email" />
                     </el-col>
                 </el-row>
 
                 <el-row>
                     <el-col>
-                        <el-input v-model='contactInfo.message'  type="textarea"
-                            placeholder="Message" :rows="10" />
+                        <el-input v-model='contactInfo.message' type="textarea" placeholder="Message" :rows="10" />
                     </el-col>
                 </el-row>
 

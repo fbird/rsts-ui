@@ -46,14 +46,14 @@
                 <el-row>
                     <el-col :xs="8" :sm="6" class="label">Mobile</el-col>
                     <el-col :xs="16" :sm="18">
-                        <div>+971 58-124-3299</div>
+                        <div>+971 55-446-9950</div>
                         <div>+971 54-449-4027</div>
                     </el-col>
                 </el-row>
                 <el-row>
                     <el-col :xs="8" :sm="6" class="label">WhatsApp</el-col>
                     <el-col :xs="16" :sm="18">
-                        <div>+971 58-124-3299</div>
+                        <div>+971 55-446-9950</div>
                         <div>+971 54-449-4027</div>
                     </el-col>
                 </el-row>
