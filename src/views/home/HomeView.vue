@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, defineAsyncComponent } from 'vue';
 import v1 from '/video/v1.mp4';
 import videoSrc from '/video/v2.mp4';
 import v1Poster from '/images/v1-poster.png';
@@ -8,15 +8,15 @@ import profile from "/files/RSTS - Company Profile v2.pdf";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faArrowRightLong } from "@fortawesome/free-solid-svg-icons";
+import LazySection from '@/components/LazySection.vue'
 
-
-import DetAPost from './components/DetAPost.vue'
-import IwcfL3 from './components/IwcfL3.vue'
-import WcAWst from './components/WcAWst.vue'
-import IwcfDwc from './components/IwcfDwc.vue'
-import H2S from './components/H2S.vue'
-import IadaOilAndGasRep from "./components/IadcOilAndGasRep.vue"
-import IadcWellSharp from "./components/IadcWellSharp.vue"
+const DetAPost = defineAsyncComponent(() => import('./components/DetAPost.vue'))
+const IwcfL3 = defineAsyncComponent(() => import('./components/IwcfL3.vue'))
+const IwcfDwc = defineAsyncComponent(() => import('./components/IwcfDwc.vue'))
+const WcAWst = defineAsyncComponent(() => import('./components/WcAWst.vue'))
+const H2S = defineAsyncComponent(() => import('./components/H2S.vue'))
+const IadaOilAndGasRep = defineAsyncComponent(() => import('./components/IadcOilAndGasRep.vue'))
+const IadcWellSharp = defineAsyncComponent(() => import('./components/IadcWellSharp.vue'))
 
 library.add(faArrowRightLong);
 
@@ -63,15 +63,17 @@ const handleDialogClose = () => {
     <!-- 轮播图 -->
     <el-carousel height="320px" indicator-position="outside" type="card">
       <el-carousel-item v-for="(item, index) in banners" :key="index">
-        <el-image style="width: 100%; height: 100%" :src="item.img" fit="scale-down" show-progress>
+        <el-image style="width: 100%; height: 100%" :src="item.img" fit="scale-down" show-progress loading="lazy">
         </el-image>
       </el-carousel-item>
     </el-carousel>
 
     <div class="sec1">
-      <video width="100%" autoplay muted loop :poster="v1Poster">
-        <source :src="v1" type="video/mp4">
+
+      <video width="100%" autoplay muted loop playsinline preload="metadata" :poster="v1Poster">
+        <source :src="v1" type="video/mp4" />
       </video>
+
       <!-- <video width="100%" :src="v1" autoplay muted loop /> -->
       <div class="sec1Wrapper">
         <div class="sec1Title">
@@ -117,19 +119,39 @@ const handleDialogClose = () => {
     </div>
 
 
-    <DetAPost />
-  <IwcfL3 />
-    <IwcfDwc />
-    <WcAWst />
-        <H2S />
-    <IadaOilAndGasRep />
-    <IadcWellSharp />
+    <LazySection>
+      <DetAPost />
+    </LazySection>
+
+    <LazySection>
+      <IwcfL3 />
+    </LazySection>
+
+    <LazySection>
+      <IwcfDwc />
+    </LazySection>
+
+    <LazySection>
+      <WcAWst />
+    </LazySection>
+
+    <LazySection>
+      <H2S />
+    </LazySection>
+
+    <LazySection>
+      <IadaOilAndGasRep />
+    </LazySection>
+
+    <LazySection>
+      <IadcWellSharp />
+    </LazySection>
   </div>
 
-    <el-dialog v-model="dialogVisible" title="Integrated Training Sollutions and Service for Oil and Gas Industry"
-      @close="handleDialogClose" align-center :style="{ padding: '8px' }" class="video-dialog" width="70%">
-      <video v-if="dialogVisible" ref="videoPlayer" :src="videoSrc" autoplay controls class="video-player"></video>
-    </el-dialog>
+  <el-dialog v-model="dialogVisible" title="Integrated Training Sollutions and Service for Oil and Gas Industry"
+    @close="handleDialogClose" align-center :style="{ padding: '8px' }" class="video-dialog" width="70%">
+    <video v-if="dialogVisible" ref="videoPlayer" :src="videoSrc" autoplay controls class="video-player"></video>
+  </el-dialog>
 </template>
 
 

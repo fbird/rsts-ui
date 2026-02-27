@@ -163,8 +163,11 @@ import { ElMessage, ElMessageBox, ElTable } from "element-plus";
 import { formatDate } from '@/utils'
 import { ref, onMounted } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faTableCells, faFilePdf } from "@fortawesome/free-solid-svg-icons";
+import { faTableCells } from "@fortawesome/free-solid-svg-icons/faTableCells";
+import { faFilePdf } from "@fortawesome/free-solid-svg-icons/faFilePdf";
+import { library } from "@fortawesome/fontawesome-svg-core";
 
+library.add(faTableCells, faFilePdf);
 
 const certTblRef = ref<InstanceType<typeof ElTable>>();
 // 选中数组
