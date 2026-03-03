@@ -5,11 +5,16 @@
         <div class="content-left">
           <h1 class="course-title">IWCF Drilling Well Control Well Site Supervisor Training</h1>
           <p class="course-desc">
-            The IWCF Drilling Well Control Level 4 (Supervisor) training is designed for personnel in wellsite supervisory roles and those involved in the operational decision-making process, such as Drilling Supervisors, Superintendents, and Company Men. This advanced course builds upon Level 3 content, focusing on more complex aspects of well control and well kill methodology. It is a five-day program that includes both practical assessments and written tests on equipment, principles, and procedures.
+            The IWCF Drilling Well Control Level 4 (Supervisor) training is designed for personnel
+            in wellsite supervisory roles and those involved in the operational decision-making
+            process, such as Drilling Supervisors, Superintendents, and Company Men. This advanced
+            course builds upon Level 3 content, focusing on more complex aspects of well control and
+            well kill methodology. It is a five-day program that includes both practical assessments
+            and written tests on equipment, principles, and procedures.
           </p>
         </div>
         <div class="content-right">
-          <el-carousel style="width: 100%;height: 500px;" indicator-position="outside">
+          <el-carousel style="width: 100%; height: 500px" indicator-position="outside">
             <el-carousel-item
               v-for="(item, index) in trainningClients[currentIndex].images"
               :key="index"
@@ -34,7 +39,11 @@
           </el-carousel>
 
           <div class="thumbs">
-            <div v-for="(trainningClient, idx) in trainningClients" :key="idx" style="width: calc(33% - 6px)">
+            <div
+              v-for="(trainningClient, idx) in trainningClients"
+              :key="idx"
+              style="width: calc(33% - 6px)"
+            >
               <img
                 :src="trainningClient.images[0]"
                 :class="['thumb-image', { active: currentIndex === idx }]"
@@ -51,47 +60,51 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref } from 'vue'
 
 const trainningClients = ref<any[]>([
   {
-    client: "Individual Candidate",
-    date: "2024/12/10 - 2024/12/14",
+    client: 'Individual Candidate',
+    date: '2024/12/10 - 2024/12/14',
     images: [
-      "/images/2. IWCF Drilling Well Control Well Site Supervisor Training, Individual candidate, Dec 2024/20241201.jpg",
-      "/images/2. IWCF Drilling Well Control Well Site Supervisor Training, Individual candidate, Dec 2024/20241202.jpg",
-      "/images/2. IWCF Drilling Well Control Well Site Supervisor Training, Individual candidate, Dec 2024/20241203.jpg",
+      '/images/2. IWCF Drilling Well Control Well Site Supervisor Training, Individual candidate, Dec 2024/20241201.jpg',
+      '/images/2. IWCF Drilling Well Control Well Site Supervisor Training, Individual candidate, Dec 2024/20241202.jpg',
+      '/images/2. IWCF Drilling Well Control Well Site Supervisor Training, Individual candidate, Dec 2024/20241203.jpg',
     ],
   },
   {
-    client: "Northern Offshore Drilling Operations Ltd",
-    date: "2025/01/06 - 2025/01/10",
+    client: 'Northern Offshore Drilling Operations Ltd',
+    date: '2025/01/06 - 2025/01/10',
     images: [
-      "/images/3. IWCF Drilling Well Control Well Site Supervisor Training, Northern Offshore Drilling Operations Ltd., Jan 2025/20250101.jpg",
-      "/images/3. IWCF Drilling Well Control Well Site Supervisor Training, Northern Offshore Drilling Operations Ltd., Jan 2025/20250102.jpg",
-      "/images/3. IWCF Drilling Well Control Well Site Supervisor Training, Northern Offshore Drilling Operations Ltd., Jan 2025/20250103.jpg",
-      "/images/3. IWCF Drilling Well Control Well Site Supervisor Training, Northern Offshore Drilling Operations Ltd., Jan 2025/20250104.png",
-      "/images/3. IWCF Drilling Well Control Well Site Supervisor Training, Northern Offshore Drilling Operations Ltd., Jan 2025/20250105.png",
+      '/images/3. IWCF Drilling Well Control Well Site Supervisor Training, Northern Offshore Drilling Operations Ltd., Jan 2025/20250101.jpg',
+      '/images/3. IWCF Drilling Well Control Well Site Supervisor Training, Northern Offshore Drilling Operations Ltd., Jan 2025/20250102.jpg',
+      '/images/3. IWCF Drilling Well Control Well Site Supervisor Training, Northern Offshore Drilling Operations Ltd., Jan 2025/20250103.jpg',
+      '/images/3. IWCF Drilling Well Control Well Site Supervisor Training, Northern Offshore Drilling Operations Ltd., Jan 2025/20250104.png',
+      '/images/3. IWCF Drilling Well Control Well Site Supervisor Training, Northern Offshore Drilling Operations Ltd., Jan 2025/20250105.png',
     ],
   },
   {
-    client: "Baker Eastern S.A.",
-    date: "2025/06/20 - 2025/06/24",
+    client: 'Baker Eastern S.A.',
+    date: '2025/06/20 - 2025/06/24',
     images: [
-        "/images/8. IWCF Drilling Well Control Well Site Supervisor Training, Baker Eastern S.A., June 2025/20250604.jpeg",
-      "/images/8. IWCF Drilling Well Control Well Site Supervisor Training, Baker Eastern S.A., June 2025/20250601.mp4",
-      "/images/8. IWCF Drilling Well Control Well Site Supervisor Training, Baker Eastern S.A., June 2025/20250602.mp4",
-      "/images/8. IWCF Drilling Well Control Well Site Supervisor Training, Baker Eastern S.A., June 2025/20250603.jpeg",
-      "/images/8. IWCF Drilling Well Control Well Site Supervisor Training, Baker Eastern S.A., June 2025/20250605.jpg",
+      '/images/8. IWCF Drilling Well Control Well Site Supervisor Training, Baker Eastern S.A., June 2025/20250604.jpeg',
+      '/images/8. IWCF Drilling Well Control Well Site Supervisor Training, Baker Eastern S.A., June 2025/20250601.mp4',
+      '/images/8. IWCF Drilling Well Control Well Site Supervisor Training, Baker Eastern S.A., June 2025/20250602.mp4',
+      '/images/8. IWCF Drilling Well Control Well Site Supervisor Training, Baker Eastern S.A., June 2025/20250603.jpeg',
+      '/images/8. IWCF Drilling Well Control Well Site Supervisor Training, Baker Eastern S.A., June 2025/20250605.jpg',
     ],
   },
-]);
+])
 
-const currentIndex = ref<number>(0);
+const currentIndex = ref<number>(0)
 
 const isVideo = (url: string) => {
-  return url.toLowerCase().endsWith(".mp4") || url.toLowerCase().endsWith(".webm") || url.toLowerCase().endsWith(".ogg");
-};
+  return (
+    url.toLowerCase().endsWith('.mp4') ||
+    url.toLowerCase().endsWith('.webm') ||
+    url.toLowerCase().endsWith('.ogg')
+  )
+}
 </script>
 
 <style scoped>
@@ -142,7 +155,6 @@ const isVideo = (url: string) => {
 .content-left .course-desc {
   font-size: 18px;
   line-height: 1.4;
-  font-style: italic;
   margin: 0;
 }
 
@@ -217,7 +229,9 @@ const isVideo = (url: string) => {
   border-radius: 8px;
   cursor: pointer;
   object-fit: cover;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .thumb-image:hover {
@@ -240,7 +254,6 @@ const isVideo = (url: string) => {
 .thumb-date {
   font-size: 14px;
   color: #d0e4ff;
-  font-style: italic;
   transition: all 0.3s ease;
 }
 </style>

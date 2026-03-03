@@ -30,7 +30,7 @@
                     </el-col>
                     <el-col :span="16">
                         <el-link type="primary" href="https://maps.app.goo.gl/dLAtRu9MdQJGf1VS8" target="_blank"
-                            :underline="false">https://maps.app.goo.gl/dLAtRu9MdQJGf1VS8</el-link>
+                            underline="never">https://maps.app.goo.gl/dLAtRu9MdQJGf1VS8</el-link>
                     </el-col>
                 </el-row>
                 <el-row>
@@ -39,7 +39,7 @@
                     </el-col>
                     <el-col :span="16">
                         <el-link type="primary" href="http://www.rstsacademy.com" target="_blank"
-                            :underline="false">http://www.rstsacademy.com</el-link>
+                            underline="never">http://www.rstsacademy.com</el-link>
                     </el-col>
                 </el-row>
             </el-col>

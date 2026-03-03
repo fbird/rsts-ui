@@ -57,7 +57,7 @@ onMounted(async () => {
 
             </el-col>
             <el-col :span="2">
-                <el-link type="primary" :underline="false">
+                <el-link type="primary" underline="never">
                     Detail
                 </el-link>
             </el-col>

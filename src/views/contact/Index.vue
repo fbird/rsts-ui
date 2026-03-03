@@ -38,7 +38,7 @@ const contactInfo = ref({
                 </el-col>
                 <el-col :span="22">
                     <el-link type="primary" href="https://maps.app.goo.gl/dLAtRu9MdQJGf1VS8" target="_blank"
-                        :underline="false">Unit 501 Abdulla Darwish Building - 802 Hamdan Bin Mohammed St - Al Zahiyah -
+                        underline="never">Unit 501 Abdulla Darwish Building - 802 Hamdan Bin Mohammed St - Al Zahiyah -
                         Abu Dhabi</el-link>
                 </el-col>
             </el-row>
@@ -65,7 +65,7 @@ const contactInfo = ref({
                     <el-image :src="Website" fit="scale-down" style="height: 20px; width: 20px;" />
                 </el-col>
                 <el-col :span="22">
-                    <el-link type="primary" href=" http://www.rstsacademy.com" target="_blank" :underline="false">
+                    <el-link type="primary" href=" http://www.rstsacademy.com" target="_blank" underline="never">
                         http://www.rstsacademy.com</el-link>
                 </el-col>
             </el-row>

@@ -1,6 +1,6 @@
 <template>
   <div class="sec">
-    <el-carousel trigger="click" style="width: 100%; height: 100%;">
+    <el-carousel trigger="click" style="width: 100%; height: 100%">
       <el-carousel-item v-for="(item, index) in imgs" :key="index">
         <el-image :src="item" fit="cover" class="img" />
       </el-carousel-item>
@@ -8,13 +8,21 @@
 
     <div class="courseTitle">
       <el-card>
-        <span class="l1">IADC WellSharp Oil & Gas Operator Representative (Workover and Intervention)</span>
+        <span class="l1"
+          >IADC WellSharp Oil & Gas Operator Representative (Workover and Intervention)</span
+        >
         <div class="tags">
           <el-tag type="info" effect="dark">Baker Eastern S.A.</el-tag>
           <el-tag type="success" effect="dark" class="date-tag">2025/05/08 - 2025/05/12</el-tag>
         </div>
         <span class="l2">
-          The IADC WellSharp Oil & Gas Operator Representative (Workover and Intervention) course focuses on equipping personnel with the knowledge and skills needed to oversee workover and intervention operations while ensuring well control. The curriculum covers a range of topics, including risk management, well control principles, barrier systems, influx management, equipment specifics (coiled tubing, snubbing, wireline), and well kill procedures. It emphasizes practical application and is designed for both supervisory and office-based personnel involved in these operations.
+          The IADC WellSharp Oil & Gas Operator Representative (Workover and Intervention) course
+          focuses on equipping personnel with the knowledge and skills needed to oversee workover
+          and intervention operations while ensuring well control. The curriculum covers a range of
+          topics, including risk management, well control principles, barrier systems, influx
+          management, equipment specifics (coiled tubing, snubbing, wireline), and well kill
+          procedures. It emphasizes practical application and is designed for both supervisory and
+          office-based personnel involved in these operations.
         </span>
       </el-card>
     </div>
@@ -23,10 +31,10 @@
 
 <script setup lang="ts">
 const imgs = [
-  "/images/6. IADC Oil & Gas Operator Representative (Workover and Intervention), Baker Eastern S.A., May 2025/20250501.jpeg",
-  "/images/6. IADC Oil & Gas Operator Representative (Workover and Intervention), Baker Eastern S.A., May 2025/20250502.jpeg",
-  "/images/6. IADC Oil & Gas Operator Representative (Workover and Intervention), Baker Eastern S.A., May 2025/20250503.jpeg",
-];
+  '/images/6. IADC Oil & Gas Operator Representative (Workover and Intervention), Baker Eastern S.A., May 2025/20250501.jpeg',
+  '/images/6. IADC Oil & Gas Operator Representative (Workover and Intervention), Baker Eastern S.A., May 2025/20250502.jpeg',
+  '/images/6. IADC Oil & Gas Operator Representative (Workover and Intervention), Baker Eastern S.A., May 2025/20250503.jpeg',
+]
 </script>
 
 <style lang="scss" scoped>
@@ -102,7 +110,6 @@ const imgs = [
       .l2 {
         font-size: 18px;
         line-height: 1.7;
-        font-style: italic;
         color: #4a5678;
       }
     }

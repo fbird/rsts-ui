@@ -25,7 +25,7 @@
                     <el-col :xs="8" :sm="6" class="label">Google Address</el-col>
                     <el-col :xs="16" :sm="18">
                         <el-link type="primary" href="https://maps.app.goo.gl/dLAtRu9MdQJGf1VS8" target="_blank"
-                            :underline="false" class="break-link">
+                            underline="never" class="break-link">
                             https://maps.app.goo.gl/dLAtRu9MdQJGf1VS8
                         </el-link>
                     </el-col>
@@ -33,7 +33,7 @@
                 <el-row>
                     <el-col :xs="8" :sm="6" class="label">Website</el-col>
                     <el-col :xs="16" :sm="18">
-                        <el-link type="primary" href="http://www.rstsacademy.com" target="_blank" :underline="false">
+                        <el-link type="primary" href="http://www.rstsacademy.com" target="_blank" underline="never">
                             http://www.rstsacademy.com
                         </el-link>
                     </el-col>
