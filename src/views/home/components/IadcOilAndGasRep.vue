@@ -1,30 +1,30 @@
 <template>
   <div class="sec">
-    <el-carousel trigger="click" style="width: 100%; height: 100%">
-      <el-carousel-item v-for="(item, index) in imgs" :key="index">
-        <el-image :src="item" fit="cover" class="img" />
-      </el-carousel-item>
-    </el-carousel>
+    <div class="bg-carousel">
+      <el-carousel :interval="5000" arrow="never" indicator-position="none" height="100%">
+        <el-carousel-item v-for="(item, index) in imgs" :key="index">
+          <img :src="item" class="bg-image" />
+        </el-carousel-item>
+      </el-carousel>
+      <div class="bg-overlay"></div>
+    </div>
 
-    <div class="courseTitle">
-      <el-card>
-        <span class="l1"
-          >IADC WellSharp Oil & Gas Operator Representative (Workover and Intervention)</span
-        >
-        <div class="tags">
-          <el-tag type="info" effect="dark">Baker Eastern S.A.</el-tag>
+    <div class="content-wrapper">
+      <div class="content-bar">
+        <h1 class="course-title">IADC WellSharp Oil & Gas Operator Representative</h1>
+        <div class="course-meta">
+          <el-tag type="info" effect="dark" class="client-tag">Baker Eastern S.A.</el-tag>
           <el-tag type="success" effect="dark" class="date-tag">2025/05/08 - 2025/05/12</el-tag>
         </div>
-        <span class="l2">
-          The IADC WellSharp Oil & Gas Operator Representative (Workover and Intervention) course
-          focuses on equipping personnel with the knowledge and skills needed to oversee workover
-          and intervention operations while ensuring well control. The curriculum covers a range of
-          topics, including risk management, well control principles, barrier systems, influx
-          management, equipment specifics (coiled tubing, snubbing, wireline), and well kill
-          procedures. It emphasizes practical application and is designed for both supervisory and
-          office-based personnel involved in these operations.
-        </span>
-      </el-card>
+        <p class="course-desc">
+          The IADC WellSharp Oil & Gas Operator Representative (Workover and Intervention) course focuses on equipping
+          personnel with the knowledge and skills needed to oversee workover and intervention operations while ensuring
+          well control. The curriculum covers a range of topics, including risk management, well control principles,
+          barrier systems, influx management, equipment specifics (coiled tubing, snubbing, wireline), and well kill
+          procedures. It emphasizes practical application and is designed for both supervisory and office-based
+          personnel involved in these operations.
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -39,80 +39,105 @@ const imgs = [
 
 <style lang="scss" scoped>
 .sec {
-  height: 800px;
-  background: linear-gradient(90deg, #2e3d96, #5367c0); /* 深蓝渐变 */
+  height: 700px;
   position: relative;
   overflow: hidden;
+  background: #0d1525;
 
-  .img {
+  .bg-carousel {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    filter: brightness(0.85) contrast(1.05); /* 图片轻微暗调，更突出文字 */
+
+    :deep(.el-carousel) {
+      height: 100%;
+    }
+
+    :deep(.el-carousel__container) {
+      height: 100%;
+    }
+
+    :deep(.el-carousel__item) {
+      height: 100%;
+    }
+
+    .bg-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .bg-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right,
+          rgba(13, 21, 37, 0.75) 0%,
+          rgba(13, 21, 37, 0.35) 45%,
+          transparent 100%);
+    }
   }
 
-  ::v-deep(.el-carousel__container) {
+  .content-wrapper {
+    position: relative;
+    z-index: 1;
     height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 80px;
+    box-sizing: border-box;
   }
 
-  .courseTitle {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 720px;
-    max-width: 90vw;
-    transform: translate(-50%, -50%);
+  .content-bar {
+    max-width: 680px;
+  }
 
-    .el-card {
-      background-color: rgba(255, 255, 255, 0.88);
-      border: none;
-      height: auto;
-      padding: 40px 50px;
-      border-radius: 16px;
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      color: #1b2a53;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      user-select: text;
+  .course-title {
+    font-size: 44px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 20px;
+    line-height: 1.2;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  }
+
+  .course-meta {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+
+    .client-tag {
+      background-color: #455a64 !important;
+      color: #fff !important;
+      font-weight: 600;
+      font-size: 13px;
+      border-radius: 20px;
+      padding: 6px 16px;
+      border: none !important;
     }
 
-    .tags {
-      display: flex;
-      gap: 20px;
-      margin-top: 8px;
-
-      .el-tag {
-        font-weight: 600;
-        font-size: 14px;
-        border-radius: 20px;
-        padding: 6px 14px;
-        user-select: none;
-      }
-
-      .date-tag {
-        background: #4f78d1;
-        color: #f0f4ff !important;
-      }
+    .date-tag {
+      background-color: #f0a500 !important;
+      color: #fff !important;
+      font-weight: 600;
+      font-size: 13px;
+      border-radius: 20px;
+      padding: 6px 16px;
+      border: none !important;
     }
+  }
 
-    ::v-deep(.el-card__body) {
-      padding: 0;
-
-      .l1 {
-        font-size: 38px;
-        font-weight: 800;
-        line-height: 1.15;
-        color: #243a73;
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-      }
-
-      .l2 {
-        font-size: 18px;
-        line-height: 1.7;
-        color: #4a5678;
-      }
-    }
+  .course-desc {
+    font-size: 17px;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0;
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
   }
 }
 </style>

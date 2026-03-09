@@ -120,18 +120,17 @@ const imgs = [
 
     .course-title {
       display: block;
-      font-size: 52px;
+      font-size: 44px;
       font-weight: 700;
       color: #f7c948;
-      margin: 0 0 32px;
-      line-height: 1.1;
-      text-shadow: 0 2px 15px rgba(247, 201, 72, 0.35);
+      margin: 0 0 20px;
+      line-height: 1.2;
     }
 
     .tags {
       display: flex;
-      gap: 18px;
-      margin-bottom: 32px;
+      gap: 14px;
+      margin-bottom: 20px;
       flex-wrap: wrap;
 
       .client-tag {
@@ -139,10 +138,9 @@ const imgs = [
         color: #a8c0ff !important;
         border: none !important;
         font-weight: 600;
-        font-size: 15px;
-        border-radius: 24px;
-        padding: 10px 24px;
-        cursor: default;
+        font-size: 13px;
+        border-radius: 20px;
+        padding: 6px 16px;
       }
 
       .date-tag {
@@ -150,17 +148,16 @@ const imgs = [
         color: #fff !important;
         border: none !important;
         font-weight: 600;
-        font-size: 15px;
-        border-radius: 24px;
-        padding: 10px 24px;
-        cursor: default;
+        font-size: 13px;
+        border-radius: 20px;
+        padding: 6px 16px;
       }
     }
 
     .course-desc {
-      font-size: 20px;
-      line-height: 1.9;
-      color: rgba(232, 236, 244, 0.92);
+      font-size: 17px;
+      line-height: 1.8;
+      color: rgba(232, 236, 244, 0.9);
       margin: 0;
     }
   }

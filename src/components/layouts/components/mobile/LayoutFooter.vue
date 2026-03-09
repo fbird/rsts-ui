@@ -33,8 +33,8 @@
                 <el-row>
                     <el-col :xs="8" :sm="6" class="label">Website</el-col>
                     <el-col :xs="16" :sm="18">
-                        <el-link type="primary" href="http://www.rstsacademy.com" target="_blank" underline="never">
-                            http://www.rstsacademy.com
+                        <el-link type="primary" href="https://www.rstsacademy.com" target="_blank" underline="never">
+                            https://www.rstsacademy.com
                         </el-link>
                     </el-col>
                 </el-row>

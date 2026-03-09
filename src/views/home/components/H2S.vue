@@ -1,26 +1,28 @@
 <template>
   <div class="sec">
-    <div class="left">
-      <el-carousel trigger="click" height="100%">
-        <el-carousel-item v-for="(item, index) in imgs" :key="index">
-          <el-image :src="item" fit="cover" class="carousel-image" />
-        </el-carousel-item>
-      </el-carousel>
-    </div>
+    <div class="content-wrapper">
+      <div class="content-left">
+        <el-carousel :interval="5000" arrow="never" indicator-position="outside" height="100%">
+          <el-carousel-item v-for="(item, index) in imgs" :key="index">
+            <img :src="item" class="carousel-img" />
+          </el-carousel-item>
+        </el-carousel>
+      </div>
 
-    <div class="right">
-      <div class="contentWrapper">
-        <h1 class="title">H2S Safety Awareness Training</h1>
-        <div class="tags">
-          <el-tag class="client-tag">Western Atlas International, Inc.</el-tag>
-          <el-tag class="date-tag">2025/02/02 - 2025/02/02</el-tag>
+      <div class="content-right">
+        <div class="course-card">
+          <h1 class="course-title">H2S Safety Awareness Training</h1>
+          <div class="tags">
+            <el-tag class="client-tag">Western Atlas International, Inc.</el-tag>
+            <el-tag class="date-tag">2025/02/02 - 2025/02/02</el-tag>
+          </div>
+          <p class="course-desc">
+            An H2S safety awareness training outline typically covers the properties of hydrogen
+            sulfide (H2S), its dangers, and how to respond to potential exposure. Key topics include
+            understanding H2S properties, health effects, detection methods, and emergency
+            procedures, with a focus on prevention and personal protective equipment (PPE).
+          </p>
         </div>
-        <p class="desc">
-          An H2S safety awareness training outline typically covers the properties of hydrogen
-          sulfide (H2S), its dangers, and how to respond to potential exposure. Key topics include
-          understanding H2S properties, health effects, detection methods, and emergency procedures,
-          with a focus on prevention and personal protective equipment (PPE).
-        </p>
       </div>
     </div>
   </div>
@@ -37,117 +39,104 @@ const imgs = ref<string[]>([
 
 <style scoped lang="scss">
 .sec {
-  display: flex;
-  width: 100%;
-  height: 650px;
-  background: linear-gradient(135deg, #1c2757, #3a4a91);
-  box-sizing: border-box;
-  padding: 0 40px;
+  height: 700px;
+  position: relative;
   overflow: hidden;
+  background: linear-gradient(135deg, #0d1525 0%, #1a2744 100%);
 
-  .left {
-    flex: 1.1;
-    padding-right: 30px;
+  .content-wrapper {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+  }
 
-    .carousel-image {
+  .content-left {
+    flex: 1;
+    height: 100%;
+    overflow: hidden;
+    box-shadow: 0 35px 90px rgba(0, 0, 0, 0.6);
+
+    :deep(.el-carousel) {
+      height: 100%;
+    }
+
+    :deep(.el-carousel__container) {
+      height: 100%;
+    }
+
+    .carousel-img {
       width: 100%;
-      height: 600px;
-      border-radius: 16px;
-      box-shadow: 0 25px 50px rgba(0, 0, 40, 0.6);
+      height: 100%;
       object-fit: cover;
-      filter: brightness(0.75) saturate(1.1);
-      transition:
-        filter 0.3s ease,
-        transform 0.3s ease;
-      cursor: pointer;
-    }
-
-    .carousel-image:hover {
-      filter: brightness(0.9) saturate(1.2);
-      transform: scale(1.02);
-      box-shadow: 0 30px 60px rgba(0, 0, 40, 0.8);
-    }
-
-    .el-carousel {
-      width: 100%;
-      height: 600px;
-      border-radius: 16px;
-      overflow: hidden;
+      display: block;
     }
   }
 
-  .right {
+  .content-right {
     flex: 1;
-    color: #e1e9ff;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-left: 30px;
-    text-shadow: 0 2px 6px rgba(10, 15, 50, 0.8);
-    user-select: none;
+    height: 100%;
+    padding: 0 100px;
+    background: linear-gradient(145deg, rgba(20, 50, 110, 0.95), rgba(15, 40, 90, 0.98));
+    box-sizing: border-box;
+  }
 
-    .contentWrapper {
-      max-width: 480px;
+  .course-card {
+    background: transparent;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+    color: #e8ecf4;
+    width: 100%;
+    max-width: 680px;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .course-title {
+      font-size: 44px;
+      font-weight: 700;
+      color: #f7c948;
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    .tags {
       display: flex;
-      flex-direction: column;
-      gap: 28px;
+      gap: 14px;
+      flex-wrap: wrap;
 
-      .title {
-        font-size: 44px;
-        font-weight: 900;
-        color: #e1e9ff;
-        letter-spacing: 2px;
-        line-height: 1.1;
-        margin: 0;
+      .client-tag {
+        background-color: #00897b !important;
+        color: #fff !important;
+        border: none !important;
+        font-weight: 600;
+        font-size: 13px;
+        border-radius: 20px;
+        padding: 6px 16px;
       }
 
-      .tags {
-        display: flex;
-        gap: 18px;
-
-        .client-tag {
-          background-color: #00897b !important;
-          /* 青绿色 */
-          color: #fff !important;
-          border: none !important;
-          font-weight: 700;
-          font-size: 14px;
-          border-radius: 20px;
-          padding: 8px 20px;
-          user-select: none;
-          cursor: default;
-          transition: box-shadow 0.3s ease;
-        }
-
-        .date-tag {
-          background-color: #ffeb3b !important;
-          /* 明黄 */
-          color: #4a6a34 !important;
-          /* 深绿 */
-          border: none !important;
-          font-weight: 700;
-          font-size: 14px;
-          border-radius: 20px;
-          user-select: none;
-          padding: 8px 20px;
-          cursor: default;
-          transition: box-shadow 0.3s ease;
-
-          text-shadow: none !important;
-          /* 取消文字阴影 */
-        }
+      .date-tag {
+        background-color: #ffeb3b !important;
+        color: #4a6a34 !important;
+        border: none !important;
+        font-weight: 600;
+        font-size: 13px;
+        border-radius: 20px;
+        padding: 6px 16px;
       }
+    }
 
-      .desc {
-        font-size: 18px;
-        line-height: 1.7;
-        font-weight: 400;
-        color: rgba(225, 233, 255, 0.85);
-        user-select: text;
-      }
+    .course-desc {
+      font-size: 17px;
+      line-height: 1.7;
+      color: rgba(232, 236, 244, 0.9);
+      margin: 0;
     }
   }
 }

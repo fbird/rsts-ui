@@ -37,7 +37,7 @@ onMounted(() => {
   getCertificateDetailByCertificateId(certificateId.value).then((resp) => {
     if (!resp) return;
     selectedCertificateData.value = resp;
-    qrCode.value = "http://www.rstsacademy.com/certificates/search-result/m?query=" + certificateId.value
+    qrCode.value = "https://www.rstsacademy.com/certificates/search-result/m?query=" + certificateId.value
     hasCertificate.value = true;
   }).catch((exe) => {
     console.error(exe)
@@ -158,24 +158,24 @@ const printPdf = () => {
         <!-- <el-descriptions-item label="Certificate SN">{{ selectedCertificateData.sn }}</el-descriptions-item> -->
         <el-descriptions-item label="Certificate ID">{{ selectedCertificateData.certificateId }}</el-descriptions-item>
         <el-descriptions-item label="Validity Period">{{ selectedCertificateData.validityPeriod
-        }}</el-descriptions-item>
+          }}</el-descriptions-item>
         <el-descriptions-item label="Issue Date">{{ formatDate(selectedCertificateData.completionDate)
-        }}</el-descriptions-item>
+          }}</el-descriptions-item>
         <el-descriptions-item label="Expiring Date">{{ formatDate(selectedCertificateData.expiringDate)
-        }}</el-descriptions-item>
+          }}</el-descriptions-item>
       </el-descriptions>
 
       <!-- 培训信息组 -->
       <el-descriptions title="Training Information" :column="2" label-width="150px">
 
         <el-descriptions-item label="Course Name">{{ selectedCertificateData.courseName
-        }}</el-descriptions-item>
+          }}</el-descriptions-item>
         <el-descriptions-item label="Form of Instruction">{{ selectedCertificateData.formOfInstruction
-        }}</el-descriptions-item>
+          }}</el-descriptions-item>
         <el-descriptions-item label="Reference Standards">{{ selectedCertificateData.referenceStandards
-        }}</el-descriptions-item>
+          }}</el-descriptions-item>
         <el-descriptions-item label="Training Hours">{{ selectedCertificateData.trainingHours
-        }}</el-descriptions-item>
+          }}</el-descriptions-item>
 
 
 
@@ -185,14 +185,14 @@ const printPdf = () => {
       <el-descriptions title="Awarding Body Information" :column="2" label-width="150px">
         <el-descriptions-item label="Trainer Name">{{ selectedCertificateData.trainerName }}</el-descriptions-item>
         <el-descriptions-item label="Coordinator Name">{{ selectedCertificateData.coordinatorName
-        }}</el-descriptions-item>
+          }}</el-descriptions-item>
         <el-descriptions-item label="Exam Invigilator Name">{{ selectedCertificateData.examInvigilatorName
-        }}</el-descriptions-item>
+          }}</el-descriptions-item>
         <el-descriptions-item label="Issuer Name">{{ selectedCertificateData.issuerName }}</el-descriptions-item>
         <el-descriptions-item label="Approver Name">{{ selectedCertificateData.approverName
-        }}</el-descriptions-item>
+          }}</el-descriptions-item>
         <el-descriptions-item label="Awarding Body">{{ selectedCertificateData.awardingBody
-        }}</el-descriptions-item>
+          }}</el-descriptions-item>
 
 
       </el-descriptions>

@@ -38,8 +38,8 @@
                         Website
                     </el-col>
                     <el-col :span="16">
-                        <el-link type="primary" href="http://www.rstsacademy.com" target="_blank"
-                            underline="never">http://www.rstsacademy.com</el-link>
+                        <el-link type="primary" href="https://www.rstsacademy.com" target="_blank"
+                            underline="never">https://www.rstsacademy.com</el-link>
                     </el-col>
                 </el-row>
             </el-col>
