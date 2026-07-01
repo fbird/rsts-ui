@@ -43,12 +43,12 @@ const defaultActive = computed(() => {
 
 <template>
   <div class="header">
-    <div class="left">
+    <button class="left" type="button" @click="toPage('/home')" aria-label="Go to homepage">
       <div class="title-text">
-        <div style="font-size: 20px;">RAINBOW STAR</div>
-        <div style="font-size: 18px;">TRAINING SERVICES LLC</div>
+        <span>RSTS</span>
+        <strong>Rainbow Star Training Services LLC</strong>
       </div>
-    </div>
+    </button>
 
     <!-- Desktop Menu -->
     <div class="right" v-if="!isMobile">
@@ -63,8 +63,8 @@ const defaultActive = computed(() => {
         <el-menu-item index="/home">Home</el-menu-item>
         <el-menu-item index="/course">Courses</el-menu-item>
         <el-menu-item index="/certificates">Certificates</el-menu-item>
-        <el-menu-item index="/contact">Contact Us</el-menu-item>
         <el-menu-item index="/about">About Us</el-menu-item>
+        <el-menu-item index="/contact">Contact Us</el-menu-item>
         <el-menu-item index="/admin/login" v-if="!tokenStore.token">Login</el-menu-item>
         <el-sub-menu index="/admin" v-else>
           <template #title>
@@ -110,27 +110,50 @@ const defaultActive = computed(() => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 80px;
+  height: 96px;
   width: 100%;
-  max-width: 1230px;
+  max-width: 1280px;
   margin: auto;
-  padding: 0 16px;
+  padding: 0 28px;
   box-sizing: border-box;
 
   .left {
     display: flex;
     align-items: center;
-    padding-left: 110px;
-    background-image: url(/images/logo.jpg);
+    min-height: 64px;
+    padding: 0 0 0 84px;
+    border: 0;
+    background-color: transparent;
+    background-image: url(/images/logo.jpg.webp);
     background-repeat: no-repeat;
-    background-size: contain;
-    text-shadow: 0px 2px 6px rgba(6, 15, 34, 0.54);
-    font-weight: bold;
+    background-position: left center;
+    background-size: 64px auto;
     color: #fff;
+    cursor: pointer;
+    font: inherit;
 
     .title-text {
-      text-align: center;
+      display: grid;
+      gap: 2px;
+      text-align: left;
       color: #fff;
+
+      span {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 30px;
+        font-weight: 600;
+        letter-spacing: 0;
+        line-height: 1;
+      }
+
+      strong {
+        color: rgba(255, 255, 255, 0.66);
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+        line-height: 1.2;
+        text-transform: uppercase;
+      }
     }
   }
 
@@ -139,35 +162,50 @@ const defaultActive = computed(() => {
     align-items: center;
 
     .el-menu-nav {
-      height: 80px;
+      height: 96px;
+      border: 0;
+      background: transparent;
 
       ::v-deep(.el-menu-item) {
-        font-size: 18px;
+        height: 96px;
+        padding: 0 16px;
+        border-bottom: 0;
         color: #fff !important;
         background: transparent;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
       }
 
       ::v-deep(.el-sub-menu__title) {
-        font-size: 18px;
+        height: 96px;
+        border-bottom: 0;
         color: #fff !important;
+        background: transparent;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
       }
 
       .el-menu-item:hover,
       .el-sub-menu:hover {
         background-color: transparent;
-        color: #fff !important;
-        border-bottom: 2px solid #fff;
+        color: #f2b544 !important;
+        border-bottom: 0;
       }
 
       .el-menu-item.is-active,
       .el-sub-menu.is-active {
-        background-color: #2e3d96;
-        border-bottom: 2px solid #fff;
-        color: rgb(243, 198, 50) !important;
+        background-color: transparent;
+        border-bottom: 0;
+        color: #f2b544 !important;
       }
 
       ::v-deep(.el-sub-menu.is-active .el-sub-menu__title) {
         border-bottom: none;
+        color: #f2b544 !important;
       }
     }
   }
@@ -189,8 +227,20 @@ const defaultActive = computed(() => {
     }
 
     .left {
-      padding-left: 60px;
-      background-size: 60px auto;
+      min-height: 48px;
+      padding-left: 58px;
+      background-size: 46px auto;
+
+      .title-text {
+        span {
+          font-size: 22px;
+        }
+
+        strong {
+          max-width: 180px;
+          font-size: 10px;
+        }
+      }
     }
   }
 }

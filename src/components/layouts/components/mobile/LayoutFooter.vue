@@ -1,116 +1,218 @@
+<script setup lang="ts">
+import { Collection, DocumentChecked, Link, Location, Message, OfficeBuilding, Phone, School } from '@element-plus/icons-vue'
+
+const year = new Date().getFullYear()
+</script>
+
 <template>
-    <div class="footer">
-        <el-row>
-            <el-col :xs="24" :sm="12" :md="4">
-                <h4 class="logoText">
-                    <span>Rainbow Star Training Services LLC</span>
-                    <span class="copyRight">®</span>
-                </h4>
-            </el-col>
-        </el-row>
+    <footer class="footer">
+        <div class="footer-shell">
+            <h2>RSTS Academy</h2>
+            <p class="brand">Rainbow Star Training Services LLC</p>
 
-        <el-divider class="divider" />
+            <div class="footer-block">
+                <h3>
+                    <span class="footer-icon">
+                        <el-icon>
+                            <OfficeBuilding />
+                        </el-icon>
+                    </span>
+                    Abu Dhabi Office
+                </h3>
+                <p class="footer-line">
+                    <el-icon>
+                        <Location />
+                    </el-icon>
+                    <span>Unit 501 Abdulla Darwish Building, 802 Hamdan Bin Mohammed St, Al Zahiyah, Abu Dhabi</span>
+                </p>
+                <el-link class="footer-link" type="primary" href="https://maps.app.goo.gl/dLAtRu9MdQJGf1VS8"
+                    target="_blank" :underline="false">
+                    <el-icon>
+                        <Location />
+                    </el-icon>
+                    Google Maps
+                </el-link>
+            </div>
 
-        <el-row class="footerContent" :gutter="20">
-            <!-- 地址信息 -->
-            <el-col :xs="24" :sm="12" :md="10">
-                <h4 class="sectionTitle">Rainbow Star Training Services LLC Abu Dhabi Office.</h4>
-                <el-row>
-                    <el-col :xs="8" :sm="6" class="label">Address</el-col>
-                    <el-col :xs="16" :sm="18">
-                        Unit 501 Abdulla Darwish Building - 802 Hamdan Bin Mohammed St - Al Zahiyah - Abu Dhabi
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :xs="8" :sm="6" class="label">Google Address</el-col>
-                    <el-col :xs="16" :sm="18">
-                        <el-link type="primary" href="https://maps.app.goo.gl/dLAtRu9MdQJGf1VS8" target="_blank"
-                            underline="never" class="break-link">
-                            https://maps.app.goo.gl/dLAtRu9MdQJGf1VS8
-                        </el-link>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :xs="8" :sm="6" class="label">Website</el-col>
-                    <el-col :xs="16" :sm="18">
-                        <el-link type="primary" href="https://www.rstsacademy.com" target="_blank" underline="never">
-                            https://www.rstsacademy.com
-                        </el-link>
-                    </el-col>
-                </el-row>
-            </el-col>
+            <div class="footer-block">
+                <h3>
+                    <span class="footer-icon">
+                        <el-icon>
+                            <Phone />
+                        </el-icon>
+                    </span>
+                    Start a Conversation
+                </h3>
+                <p class="footer-line">
+                    <el-icon>
+                        <Phone />
+                    </el-icon>
+                    <span>+971 55-446-9950<br />+971 54-449-4027</span>
+                </p>
+                <p class="footer-line">
+                    <el-icon>
+                        <Message />
+                    </el-icon>
+                    <span>info@rainbowstar1.com</span>
+                </p>
+            </div>
 
-            <!-- 联系信息 -->
-            <el-col :xs="24" :sm="12" :md="8">
-                <h4 class="sectionTitle">Start a Conversation.</h4>
-                <el-row>
-                    <el-col :xs="8" :sm="6" class="label">Mobile</el-col>
-                    <el-col :xs="16" :sm="18">
-                        <div>+971 55-446-9950</div>
-                        <div>+971 54-449-4027</div>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :xs="8" :sm="6" class="label">WhatsApp</el-col>
-                    <el-col :xs="16" :sm="18">
-                        <div>+971 55-446-9950</div>
-                        <div>+971 54-449-4027</div>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :xs="8" :sm="6" class="label">E-mail</el-col>
-                    <el-col :xs="16" :sm="18">info@rainbowstar1.com</el-col>
-                </el-row>
-            </el-col>
+            <div class="footer-links">
+                <router-link to="/course/catalog">
+                    <el-icon>
+                        <Collection />
+                    </el-icon>
+                    Courses
+                </router-link>
+                <router-link to="/certificates/index">
+                    <el-icon>
+                        <DocumentChecked />
+                    </el-icon>
+                    Certificates
+                </router-link>
+                <router-link to="/about/m">
+                    <el-icon>
+                        <School />
+                    </el-icon>
+                    About Us
+                </router-link>
+                <router-link to="/contact">
+                    <el-icon>
+                        <Link />
+                    </el-icon>
+                    Contact Us
+                </router-link>
+            </div>
 
-            <!-- 版权信息 -->
-            <el-col :xs="24" :sm="24" :md="6">
-                <h4 class="sectionTitle">Copyright.</h4>
-                Copyright © 2025 Rainbow Star Training Services LLC(RSTS). All Rights Reserved.
-            </el-col>
-        </el-row>
-    </div>
+            <p class="copyright">Copyright © {{ year }} Rainbow Star Training Services LLC(RSTS). All Rights Reserved.
+            </p>
+        </div>
+    </footer>
 </template>
 
 <style lang="scss" scoped>
 .footer {
-    padding: 0 20px;
     color: #fff;
+    padding: 42px 0 28px;
+}
 
-    .logoText {
-        font-size: 24px;
-        font-weight: 700;
+.footer-shell {
+    width: min(100% - 32px, 560px);
+    margin: 0 auto;
+}
 
-        .copyRight {
-            font-size: 12px;
-            vertical-align: top;
+h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 45px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 0.96;
+    margin: 0;
+}
+
+.brand {
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    margin: 10px 0 32px;
+    text-transform: uppercase;
+}
+
+.footer-block {
+    padding: 24px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+
+    h3 {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        color: #f2b544;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        margin: 0 0 10px;
+        text-transform: uppercase;
+    }
+
+    p {
+        color: rgba(255, 255, 255, 0.72);
+        font-size: 15px;
+        line-height: 1.62;
+        margin: 0 0 10px;
+    }
+}
+
+.footer-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border: 1px solid rgba(242, 181, 68, 0.34);
+    color: #f2b544;
+
+    .el-icon {
+        font-size: 14px;
+    }
+}
+
+.footer-line,
+.footer-link,
+:deep(.footer-link .el-link__inner) {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.footer-line {
+    .el-icon {
+        margin-top: 4px;
+        color: #f2b544;
+        font-size: 15px;
+        flex: 0 0 auto;
+    }
+}
+
+.footer-link {
+    align-items: center;
+
+    .el-icon {
+        color: #f2b544;
+        font-size: 15px;
+        flex: 0 0 auto;
+    }
+}
+
+.footer-links {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 24px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+
+    a {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: rgba(255, 255, 255, 0.72);
+        font-weight: 800;
+        text-decoration: none;
+
+        .el-icon {
+            color: #f2b544;
+            font-size: 15px;
+            flex: 0 0 auto;
         }
     }
+}
 
-    .divider {
-        border-top: 1px solid rgba(255, 255, 255, 0.2);
-        margin: 0 0 10px 0;
-    }
-
-    .sectionTitle {
-        font-weight: bold;
-        font-size: 16px;
-        margin-bottom: 6px;
-    }
-
-    .label {
-        font-weight: bold;
-    }
-
-    .footerContent .el-row {
-        margin-bottom: 6px;
-    }
-
-    .break-link {
-        white-space: normal;
-        /* 允许换行 */
-        word-break: break-all;
-        /* 单词或长链接在任意位置断行 */
-    }
+.copyright {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 13px;
+    line-height: 1.55;
+    margin: 0;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
 }
 </style>

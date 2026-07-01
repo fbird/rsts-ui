@@ -1,15 +1,26 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useTokenStore } from '@/stores/token';
+import { doLogout } from '@/apis/userApi';
 import { Menu } from '@element-plus/icons-vue';
 
 const router = useRouter();
+const tokenStore = useTokenStore();
 const showDrawer = ref(false);
 
 
 const toPage = (index: string) => {
   showDrawer.value = false;
-  router.push({ path: index });
+  if (index === '/admin/logout') {
+    doLogout(null).then(() => {
+      tokenStore.callbackUrl = null;
+      tokenStore.token = null;
+      router.push({ name: 'home' });
+    });
+  } else {
+    router.push({ path: index });
+  }
 };
 
 const defaultActive = computed(() => {
@@ -20,12 +31,12 @@ const defaultActive = computed(() => {
 
 <template>
   <div class="header">
-    <div class="left">
+    <button class="left" type="button" @click="toPage('/home')" aria-label="Go to homepage">
       <div class="title-text">
-        <div style="font-size: 20px;">RAINBOW STAR</div>
-        <div style="font-size: 18px;">TRAINING SERVICES LLC</div>
+        <span>RSTS</span>
+        <strong>Rainbow Star Training Services</strong>
       </div>
-    </div>
+    </button>
 
 
     <!-- Mobile Burger -->
@@ -38,7 +49,17 @@ const defaultActive = computed(() => {
     <!-- Mobile Drawer -->
     <el-drawer v-model="showDrawer" direction="ltr" size="220px" title="Menu" :with-header="false">
       <el-menu class="mobile-menu" mode="vertical" :default-active="defaultActive" @select="toPage">
+        <el-menu-item index="/home">Home</el-menu-item>
+        <el-menu-item index="/course">Courses</el-menu-item>
+        <el-menu-item index="/certificates">Certificates</el-menu-item>
         <el-menu-item index="/about/m">About Us</el-menu-item>
+        <el-menu-item index="/contact">Contact Us</el-menu-item>
+        <el-menu-item index="/admin/login" v-if="!tokenStore.token">Login</el-menu-item>
+        <el-sub-menu index="/admin" v-else>
+          <template #title>Admin</template>
+          <el-menu-item index="/admin/certificate">Certificate</el-menu-item>
+          <el-menu-item index="/admin/logout">Logout</el-menu-item>
+        </el-sub-menu>
       </el-menu>
     </el-drawer>
   </div>
@@ -49,7 +70,7 @@ const defaultActive = computed(() => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 80px;
+  height: 64px;
   width: 100%;
   max-width: 1230px;
   margin: auto;
@@ -59,17 +80,41 @@ const defaultActive = computed(() => {
   .left {
     display: flex;
     align-items: center;
-    padding-left: 60px;
-    background-image: url(/images/logo.jpg);
+    min-height: 48px;
+    padding: 0 0 0 58px;
+    border: 0;
+    background-color: transparent;
+    background-image: url(/images/logo.jpg.webp);
     background-repeat: no-repeat;
-    background-size: contain;
-    text-shadow: 0px 2px 6px rgba(6, 15, 34, 0.54);
-    font-weight: bold;
+    background-position: left center;
+    background-size: 46px auto;
     color: #fff;
+    cursor: pointer;
+    font: inherit;
 
     .title-text {
-      text-align: center;
+      display: grid;
+      gap: 2px;
+      text-align: left;
       color: #fff;
+
+      span {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: 0;
+        line-height: 1;
+      }
+
+      strong {
+        color: rgba(255, 255, 255, 0.66);
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        line-height: 1.2;
+        max-width: 180px;
+        text-transform: uppercase;
+      }
     }
   }
 

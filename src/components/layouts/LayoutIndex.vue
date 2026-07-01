@@ -31,12 +31,14 @@ import Footer from './components/LayoutFooter.vue';
 #layout {
     height: 100vh;
     width: 100%;
-    background-color: #fff;
+    background-color: #f5f7f4;
 
     .layoutHeader {
         width: 100%;
-        background-color: #2e3d96;
-        height: 80px;
+        background-color: #071827;
+        height: 96px;
+        padding: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
     }
 
     .layoutContent {
@@ -46,8 +48,8 @@ import Footer from './components/LayoutFooter.vue';
 
         .contentWrapper {
             width: 100%;
-            background-color: #fff;
-            min-height: calc(100vh - 80px - 150px); // header + footer
+            background-color: #f5f7f4;
+            min-height: calc(100vh - 96px - 150px); // header + footer
 
             .fullSecContent {
                 width: 100%;
@@ -60,31 +62,32 @@ import Footer from './components/LayoutFooter.vue';
                 width: 100%;
                 // max-width: 1230px;
                 margin: auto;
-                padding: 0 16px;
+                padding: 0;
                 box-sizing: border-box;
             }
         }
 
         .footerWrapper {
             width: 100%;
-            height: 400px;
-            background-color: #2b3445;
+            min-height: 360px;
+            height: auto;
+            background-color: #071827;
         }
     }
 
     // ✅ 响应式：小屏幕优化
     @media (max-width: 768px) {
         .layoutHeader {
-            height: 60px;
+            height: 64px;
         }
 
         .layoutContent {
             .contentWrapper {
-                min-height: calc(100vh - 60px - 300px); // 可根据移动端 footer 适当调节高度
+                min-height: calc(100vh - 64px - 300px); // 可根据移动端 footer 适当调节高度
             }
 
             .footerWrapper {
-                height: 300px;
+                min-height: 300px;
             }
         }
     }
