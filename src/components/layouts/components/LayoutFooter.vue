@@ -8,7 +8,7 @@ const year = new Date().getFullYear()
     <footer class="footer">
         <div class="footer-shell">
             <div class="footer-brand">
-                <h2>RSTS Academy</h2>
+                <h2>RSTS</h2>
                 <p>Rainbow Star Training Services LLC</p>
             </div>
 

@@ -7,7 +7,7 @@ const year = new Date().getFullYear()
 <template>
     <footer class="footer">
         <div class="footer-shell">
-            <h2>RSTS Academy</h2>
+            <h2>RSTS</h2>
             <p class="brand">Rainbow Star Training Services LLC</p>
 
             <div class="footer-block">
@@ -137,7 +137,7 @@ h2 {
 
     p {
         color: rgba(255, 255, 255, 0.72);
-        font-size: 15px;
+        font-size: 16px;
         line-height: 1.62;
         margin: 0 0 10px;
     }
@@ -192,6 +192,7 @@ h2 {
     border-top: 1px solid rgba(255, 255, 255, 0.14);
 
     a {
+        min-height: 44px;
         display: inline-flex;
         align-items: center;
         gap: 8px;

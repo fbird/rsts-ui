@@ -1,7 +1,25 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { ArrowRight, DocumentChecked, VideoPlay } from '@element-plus/icons-vue'
-
+import { ref, type Component } from 'vue'
+import {
+  Aim,
+  ArrowRight,
+  Connection,
+  DataAnalysis,
+  DocumentChecked,
+  Finished,
+  FirstAidKit,
+  Location,
+  Management,
+  Monitor,
+  Operation,
+  School,
+  Search,
+  SetUp,
+  Tools,
+  User,
+  VideoPlay,
+  Warning,
+} from '@element-plus/icons-vue'
 import companyProfile from '/files/RSTS - Company Profile v2.pdf'
 import introVideo from '/video/v2.mp4'
 
@@ -15,35 +33,48 @@ type PartnerLogo = {
   image: string
 }
 
-type Course = {
-  index: string
+type Capability = {
+  icon: Component
+  label: string
   title: string
-  focus: string
-  pathway: string
   description: string
   image: string
-  catalog: string
-  featured?: boolean
+  imageAlt: string
+  items: string[]
 }
 
-type DeliveryPoint = {
+type Pathway = {
+  label: string
   title: string
   description: string
   image: string
+  imageAlt: string
 }
 
 type FieldStory = {
+  icon: Component
   title: string
   meta: string
-  image: string
-  large?: boolean
+  description: string
+}
+
+type RigService = {
+  icon: Component
+  title: string
+  description: string
+}
+
+type DeliveryMode = {
+  icon: Component
+  title: string
+  description: string
 }
 
 const dialogVisible = ref(false)
 const videoPlayer = ref<HTMLVideoElement | null>(null)
 
 const metrics: Metric[] = [
-  { value: '19', label: 'Curriculum categories' },
+  { value: 'Since 2019', label: 'Oil and gas competence development' },
   { value: 'IWCF / IADC', label: 'Well control and WellSharp pathways' },
   { value: 'Abu Dhabi', label: 'Regional delivery base' },
 ]
@@ -53,133 +84,172 @@ const partnerLogos: PartnerLogo[] = [
   { name: 'IWCF', image: '/images/companyQualification/IWCF.png.webp' },
   { name: 'Highfield', image: '/images/companyQualification/Highfield.png.webp' },
   { name: 'ACTVET', image: '/images/companyQualification/ActvetLogo.png.webp' },
-  { name: 'ISO 9001', image: '/images/companyQualification/QRS-ISO-9001-2015-Certified-Logo-Vector.png.webp' },
+  {
+    name: 'ISO 9001',
+    image: '/images/companyQualification/QRS-ISO-9001-2015-Certified-Logo-Vector.png.webp',
+  },
   { name: 'DAC', image: '/images/companyQualification/DAC Logo.png.webp' },
 ]
 
-const courses: Course[] = [
+const capabilities: Capability[] = [
   {
-    index: '01',
-    title: 'Drilling Equipment, Techniques and Procedures On-Site Training',
-    focus: 'On-site drilling operations',
-    pathway: 'Rig crew / field technician readiness',
-    description: 'Equipment recognition, rig-floor workflow, drilling sequence control and procedural communication for teams assigned to active wellsite operations.',
-    image: '/images/5. Drilling Equpiment, Techniques and Procedures On Site Training, TPIC, Apr 2025/20250401.jpg.webp',
-    catalog: 'Well Construction/Drilling',
-    featured: true,
+    icon: Aim,
+    label: 'Accredited well control',
+    title: 'Control begins with prepared decisions.',
+    description:
+      'Role-aligned IWCF and IADC pathways connect influx detection, shut-in discipline and supervisory judgement to recognised assessment.',
+    image: '/images/rsts-capability-well-control-v2.webp',
+    imageAlt: 'Illustrative well control training scenario',
+    items: ['Foundation personnel', 'Drillers', 'Supervisors and wellsite leaders'],
   },
   {
-    index: '02',
-    title: 'IWCF Drilling Well Control Driller Training',
-    focus: 'IWCF driller pathway',
-    pathway: 'Driller-level well control competency',
-    description: 'Kick detection, shut-in discipline, pressure interpretation and immediate well control response for personnel responsible for driller actions.',
-    image: '/images/2. IWCF Drilling Well Control Well Site Supervisor Training, Individual candidate, Dec 2024/20241201.jpg.webp',
-    catalog: 'Well Construction/Drilling',
+    icon: Tools,
+    label: 'Technical training',
+    title: 'Technical depth across the well lifecycle.',
+    description:
+      'Drilling, completions, production and surface-facility programmes translate engineering principles into operating practice.',
+    image:
+      '/images/13. Well Completion and Well Service Training, Daqing, Jul 2025/20250728.png.webp',
+    imageAlt: 'RSTS instructor leading a technical training session for an operating team',
+    items: [
+      'Drilling and well construction',
+      'Completions and well service',
+      'Production facilities',
+    ],
   },
   {
-    index: '03',
-    title: 'IWCF Drilling Well Control Well Site Supervisor Training',
-    focus: 'IWCF supervisor pathway',
-    pathway: 'Well site supervisor decision control',
-    description: 'Barrier management, kill method selection, well control coordination and operational command for supervisors accountable for wellsite decisions.',
-    image: '/images/8. IWCF Drilling Well Control Well Site Supervisor Training, Baker Eastern S.A., June 2025/20250604.jpeg.webp',
-    catalog: 'Well Construction/Drilling',
-    featured: true,
+    icon: FirstAidKit,
+    label: 'HSE and safety',
+    title: 'Safety behaviour for demanding environments.',
+    description:
+      'Practical HSE programmes develop hazard recognition, emergency response and disciplined execution around high-risk work.',
+    image:
+      '/images/8. IWCF Drilling Well Control Well Site Supervisor Training, Baker Eastern S.A., June 2025/20250604.jpeg.webp',
+    imageAlt: 'RSTS instructor working directly with a participant during classroom training',
+    items: ['H2S and RigPass', 'Emergency response', 'Lifting and high-risk work'],
   },
   {
-    index: '04',
-    title: 'Well Completion & Well Service Training',
-    focus: 'Completion and servicing',
-    pathway: 'Completion / workover execution teams',
-    description: 'Completion workflow, well service sequence, intervention readiness and procedural control for crews working after drilling handover.',
-    image: '/images/10. Well Completion and Well Service Training, Kerui Oilfield Service Iraqi Branch, Jul 2025/20250714.jpeg.webp',
-    catalog: 'Completions Engineering',
-  },
-  {
-    index: '05',
-    title: 'H2S Safety Awareness Training',
-    focus: 'H2S hazard response',
-    pathway: 'Field personnel safety awareness',
-    description: 'Hazard recognition, alarm response, escape behavior, respiratory protection awareness and site discipline around potential H2S exposure.',
-    image: '/images/4. H2S Safety Awareness Training, Western Atlas International, Inc., Feb 2025/20250202.jpg.webp',
-    catalog: 'Health, Safety, Environment',
-  },
-  {
-    index: '06',
-    title: 'IADC WellSharp Oil & Gas Operator Representative',
-    focus: 'IADC WellSharp operator representative',
-    pathway: 'Operator oversight and intervention control',
-    description: 'Workover and intervention oversight, contractor coordination, pressure-control awareness and service-quality review for operator representatives.',
-    image: '/images/6. IADC Oil & Gas Operator Representative (Workover and Intervention), Baker Eastern S.A., May 2025/20250501.jpeg.webp',
-    catalog: 'Workover and Well intervention',
-  },
-  {
-    index: '07',
-    title: 'IADC WellSharp Well Servicing Coiled Tubing',
-    focus: 'IADC WellSharp well servicing',
-    pathway: 'Coiled tubing pressure-control pathway',
-    description: 'Well servicing pressure control, coiled tubing operating awareness and risk recognition for crews supporting intervention activities.',
-    image: '/images/1. IADC WellSharp Well Servicing Coiled Tubing Courses, Individual Candidate, Dec 2023/20231201.png.webp',
-    catalog: 'Workover and Well intervention',
+    icon: Finished,
+    label: 'Rig assurance service',
+    title: 'Independent attention to asset readiness.',
+    description:
+      'DROPS surveys, rig inspection, technical audit and commissioning support help teams identify risk before operations demand a response.',
+    image:
+      '/images/2. IWCF Drilling Well Control Well Site Supervisor Training, Individual candidate, Dec 2024/20241202.jpg.webp',
+    imageAlt: 'Participants completing equipment-based simulation at an RSTS training facility',
+    items: ['DROPS management', 'Inspection and audit', 'Commissioning support'],
   },
 ]
 
-const deliveryPoints: DeliveryPoint[] = [
+const pathways: Pathway[] = [
   {
-    title: 'Role-based training paths',
-    description: 'Programs are organized around the work performed by drillers, supervisors, operator representatives and well service crews.',
-    image: '/images/3. IWCF Drilling Well Control Well Site Supervisor Training, Northern Offshore Drilling Operations Ltd., Jan 2025/20250101.jpg.webp',
+    label: 'Foundation personnel',
+    title: 'Recognise the signs. Understand the barriers.',
+    description:
+      'For personnel whose work contributes to influx detection, wellsite awareness and the first line of well control discipline.',
+    image: '/images/rsts-capability-technical-v2.webp',
+    imageAlt: 'Illustrative technical training environment for foundation personnel',
   },
   {
-    title: 'Instructor-led field context',
-    description: 'Training sessions connect procedures, equipment, hazards and communication to the decisions teams make on site.',
-    image: '/images/8. IWCF Drilling Well Control Well Site Supervisor Training, Baker Eastern S.A., June 2025/20250603.jpeg.webp',
+    label: 'Drillers',
+    title: 'Detect, shut in and stabilise.',
+    description:
+      'For personnel responsible for recognising a kick, executing the shut-in and maintaining control through the initial response.',
+    image: '/images/rsts-exploration-hero.webp',
+    imageAlt: 'Illustrative drilling operation representing driller responsibility',
   },
   {
-    title: 'Records ready for review',
-    description: 'Participants and clients can use training records and certificate verification for competency review and audit preparation.',
-    image: '/images/certificate-verificate.webp',
+    label: 'Supervisors and wellsite leaders',
+    title: 'Lead the decision when complexity rises.',
+    description:
+      'For personnel accountable for well design, kill strategy, operational oversight and coordinated supervisory decisions.',
+    image:
+      '/images/11. Well Completion and Well Service Training, Cener Middle East FZE, Jul 2025/20250718.jpeg.webp',
+    imageAlt: 'RSTS instructor supporting participants during a technical programme',
   },
 ]
 
 const fieldStories: FieldStory[] = [
   {
-    title: 'On-site drilling procedures',
-    meta: 'TPIC / Apr 2025',
-    image: '/images/5. Drilling Equpiment, Techniques and Procedures On Site Training, TPIC, Apr 2025/20250402.jpg.webp',
-    large: true,
+    icon: Tools,
+    title: 'Drilling equipment and procedures',
+    meta: 'Client-site delivery / 2025',
+    description:
+      'Equipment recognition, operating sequence and crew communication in field context.',
   },
   {
-    title: 'Well control delivery',
-    meta: 'Baker Eastern S.A. / Jun 2025',
-    image: '/images/8. IWCF Drilling Well Control Well Site Supervisor Training, Baker Eastern S.A., June 2025/20250605.jpg.webp',
+    icon: Management,
+    title: 'Supervisor well control',
+    meta: 'Accredited pathway / 2025',
+    description:
+      'Decision-led well control development for personnel carrying supervisory responsibility.',
   },
   {
+    icon: Connection,
     title: 'Completion and well service',
-    meta: 'Kerui Oilfield Service / Jul 2025',
-    image: '/images/10. Well Completion and Well Service Training, Kerui Oilfield Service Iraqi Branch, Jul 2025/20250710.jpeg.webp',
-  },
-  {
-    title: 'H2S safety awareness',
-    meta: 'Western Atlas International / Feb 2025',
-    image: '/images/4. H2S Safety Awareness Training, Western Atlas International, Inc., Feb 2025/20250203.jpg.webp',
-  },
-  {
-    title: 'Operator representative',
-    meta: 'IADC WellSharp / May 2025',
-    image: '/images/6. IADC Oil & Gas Operator Representative (Workover and Intervention), Baker Eastern S.A., May 2025/20250503.jpeg.webp',
-  },
-  {
-    title: 'Coiled tubing servicing',
-    meta: 'IADC WellSharp / Dec 2023',
-    image: '/images/1. IADC WellSharp Well Servicing Coiled Tubing Courses, Individual Candidate, Dec 2023/20231204.jpg.webp',
+    meta: 'Technical programme / 2025',
+    description: 'Completion workflow and well-service readiness for operating and service teams.',
   },
 ]
 
-const openProfile = () => {
-  window.open(companyProfile, '_blank', 'noopener,noreferrer')
-}
+const rigServices: RigService[] = [
+  {
+    icon: Warning,
+    title: 'DROPS surveys',
+    description:
+      'Baseline surveys, securing-method review and practical close-out support at height.',
+  },
+  {
+    icon: Search,
+    title: 'Rig inspection',
+    description:
+      'Structured inspection of drilling assets against the agreed work scope and operating context.',
+  },
+  {
+    icon: DataAnalysis,
+    title: 'Technical audit',
+    description:
+      'Focused review of equipment condition, systems and readiness against client requirements.',
+  },
+  {
+    icon: SetUp,
+    title: 'Commissioning support',
+    description:
+      'Independent support as machinery, equipment and critical systems move toward operation.',
+  },
+]
+
+const deliveryModes: DeliveryMode[] = [
+  {
+    icon: School,
+    title: 'Centre-based learning',
+    description: 'Instructor-led programmes delivered in a focused training environment.',
+  },
+  {
+    icon: Monitor,
+    title: 'Portable simulation',
+    description: 'Practical simulation capability positioned closer to crews and operating teams.',
+  },
+  {
+    icon: Location,
+    title: 'Client-site delivery',
+    description: 'Technical and safety programmes mobilised to the location where teams work.',
+  },
+  {
+    icon: Operation,
+    title: 'Tailored team pathways',
+    description:
+      'Content, scenarios and delivery format aligned to roles and company requirements.',
+  },
+  {
+    icon: User,
+    title: 'Candidate coordination',
+    description: 'Practical support around programme selection and attendance requirements.',
+  },
+]
+
+const fieldEvidenceImage =
+  '/images/11. Well Completion and Well Service Training, Cener Middle East FZE, Jul 2025/20250718.jpeg.webp'
 
 const openVideo = () => {
   dialogVisible.value = true
@@ -194,58 +264,62 @@ const handleDialogClose = () => {
 
 <template>
   <main class="home-page">
-    <section class="hero-section" aria-label="RSTS Academy">
+    <section class="hero-section" aria-labelledby="hero-title">
       <picture class="hero-media">
         <source srcset="/images/v1-poster.png.webp" type="image/webp" />
-        <img src="/images/v1-poster.png" alt="RSTS Academy oil and gas training environment" fetchpriority="high"
-          decoding="async" />
+        <img src="/images/v1-poster.png" alt="Oil and gas drilling operation supported by RSTS competence services"
+          width="1920" height="1080" fetchpriority="high" decoding="async" />
       </picture>
-      <span class="hero-shade"></span>
+      <span class="hero-shade" aria-hidden="true"></span>
       <span class="hero-lines" aria-hidden="true"></span>
 
       <div class="hero-shell">
-        <div class="hero-copy">
-          <p class="section-eyebrow">Rainbow Star Training Services LLC</p>
-          <h1>RSTS Academy</h1>
-          <p class="hero-statement">
-            Oil and gas training for exploration, drilling, well control and well service teams responsible for
-            operating discipline in the field.
-          </p>
-          <div class="hero-actions" aria-label="Primary actions">
-            <router-link class="primary-action" to="/course/catalog">
-              Explore programs
-              <el-icon>
-                <ArrowRight />
-              </el-icon>
-            </router-link>
-            <button class="ghost-action" type="button" @click="openProfile">Company profile</button>
-          </div>
+        <div class="hero-composition">
+          <header class="hero-copy">
+            <p class="section-eyebrow">Rainbow Star Training Services LLC</p>
+            <h1 id="hero-title"><span>RSTS</span><span>Academy</span></h1>
+            <p class="hero-statement">
+              Oil and gas training for exploration, drilling, well control and well service teams
+              responsible for operating discipline in the field.
+            </p>
+            <div class="hero-actions" aria-label="Explore RSTS">
+              <router-link class="primary-action" to="/course/catalog">
+                Explore programs
+                <el-icon>
+                  <ArrowRight />
+                </el-icon>
+              </router-link>
+              <a class="profile-action" :href="companyProfile" target="_blank" rel="noopener noreferrer">
+                <img
+                  class="profile-pdf-icon"
+                  src="/images/adobe-acrobat-reader.svg"
+                  alt=""
+                  width="22"
+                  height="22"
+                />
+                <span>Company profile</span>
+              </a>
+            </div>
+          </header>
+
+          <button class="hero-film" type="button" aria-label="Play the RSTS company overview video" @click="openVideo">
+            <span class="hero-film-frame" aria-hidden="true">
+              <img src="/images/v2-poster.png.webp" alt="" width="1920" height="1080" decoding="async" />
+              <span class="hero-film-shade"></span>
+              <span class="hero-film-play"><el-icon>
+                  <VideoPlay />
+                </el-icon></span>
+            </span>
+            <span class="hero-film-copy">
+              <span class="hero-film-copy-text">
+                <small>RSTS Academy film</small>
+                <strong>Integrated training solutions for field-ready oil and gas teams.</strong>
+              </span>
+            </span>
+          </button>
         </div>
 
-        <button class="hero-video-panel" type="button" @click="openVideo" aria-label="Watch academy overview video">
-          <picture>
-            <source srcset="/images/v2-poster.png.webp" type="image/webp" />
-            <img src="/images/v2-poster.png" alt="RSTS Academy overview video preview" loading="eager"
-              decoding="async" />
-          </picture>
-          <span class="video-panel-shade"></span>
-          <span class="video-panel-rail">
-            <span>RSTS Academy film</span>
-            <span>Oil and gas training</span>
-          </span>
-          <span class="video-panel-content">
-            <span class="video-panel-play">
-              <el-icon>
-                <VideoPlay />
-              </el-icon>
-            </span>
-            <span class="video-panel-copy">
-              <strong>Integrated training solutions for field-ready oil and gas teams.</strong>
-            </span>
-          </span>
-        </button>
-
-        <div class="hero-metrics" aria-label="RSTS Academy highlights">
+        <div class="hero-metrics" aria-label="RSTS highlights">
           <div v-for="metric in metrics" :key="metric.label" class="metric-item">
             <strong>{{ metric.value }}</strong>
             <span>{{ metric.label }}</span>
@@ -254,174 +328,291 @@ const handleDialogClose = () => {
       </div>
     </section>
 
-    <section class="recognition-section" aria-label="Recognitions and qualifications">
+    <section class="recognition-section" aria-labelledby="recognition-title">
       <div class="recognition-shell">
         <div class="recognition-copy">
           <span class="section-eyebrow">Recognition network</span>
-          <p>Internationally aligned training programs, regional delivery in Abu Dhabi, and certificate records prepared
-            for client review.</p>
+          <h2 id="recognition-title">Standards made visible.</h2>
+          <p>Recognition marks represented across RSTS training and quality systems.</p>
         </div>
-        <div class="recognition-logos">
+        <div class="recognition-logos" aria-label="RSTS recognition marks">
           <div v-for="partner in partnerLogos" :key="partner.name" class="logo-cell">
-            <img :src="partner.image" :alt="partner.name" loading="lazy" decoding="async" />
+            <img :src="partner.image" :alt="`${partner.name} recognition mark`" width="110" height="64" loading="lazy"
+              decoding="async" />
           </div>
         </div>
       </div>
     </section>
-
-    <section class="position-section" aria-labelledby="position-title">
-      <div class="section-shell position-layout">
-        <div class="position-copy">
-          <span class="section-eyebrow">Competency position</span>
-          <h2 id="position-title">Role-based training for controlled wellsite execution.</h2>
-          <div class="position-brief">
-            <span>Operational competency framework</span>
-            <strong>RSTS aligns drilling equipment, IWCF well control, well service, H2S awareness and IADC WellSharp
-              pathways with the responsibilities carried on site.</strong>
-          </div>
-          <p>
-            Programs are structured for the personnel who identify abnormal conditions, apply pressure-control
-            discipline, follow completion and service procedures, respond to H2S exposure risk and maintain competency
-            evidence for client and audit review.
-          </p>
-          <div class="position-tracks" aria-label="Training pathways">
-            <span>Drilling equipment</span>
-            <span>IWCF well control</span>
-            <span>Well service</span>
-            <span>H2S safety</span>
-            <span>IADC WellSharp</span>
-          </div>
-        </div>
-        <figure class="position-visual">
-          <img src="/images/WellServiceTraining2.jpg.webp"
-            alt="Oil and gas operator working with well service control equipment" loading="lazy" decoding="async" />
+    <section class="pathways-section" aria-labelledby="pathways-title">
+      <div class="section-shell pathways-layout">
+        <figure class="pathways-visual">
+          <img src="/images/rsts-capability-hse-v2.webp"
+            alt="Illustrative role-aligned safety and operational training scenario" width="1133" height="1600"
+            loading="lazy" decoding="async" />
           <figcaption>
-            <span>Field execution context</span>
-            <strong>Practical scenarios connect equipment condition, procedural control and safety response to the
-              decisions made during drilling and well service operations.</strong>
+            <span>Role-aligned progression</span>
+            <strong>From awareness to operational leadership.</strong>
           </figcaption>
         </figure>
-        <div class="position-body">
-          <div class="position-points">
-            <div class="point-item">
-              <strong>Drilling and service personnel</strong>
-              <span>Equipment recognition, drilling procedures, completion workflow and coiled tubing service awareness
-                for personnel working close to active operations.</span>
-            </div>
-            <div class="point-item">
-              <strong>Drillers and supervisors</strong>
-              <span>IWCF and IADC WellSharp pathways strengthen shut-in discipline, well control decision-making,
-                communication and procedural accountability.</span>
-            </div>
-            <div class="point-item">
-              <strong>Operators and client teams</strong>
-              <span>Training records, certificate verification and role-based outcomes support competency assurance,
-                mobilization readiness and external review.</span>
-            </div>
+
+        <div class="pathways-content">
+          <header class="pathways-copy">
+            <span class="section-eyebrow">Accredited pathways</span>
+            <h2 id="pathways-title">Responsibility changes. The standard remains.</h2>
+            <p>
+              Well control development aligned to what personnel must recognise, execute and lead at
+              each level of operational responsibility.
+            </p>
+            <router-link class="inline-action" to="/course/catalog">
+              Find a programme
+              <el-icon>
+                <ArrowRight />
+              </el-icon>
+            </router-link>
+          </header>
+
+          <div class="pathway-list">
+            <article v-for="pathway in pathways" :key="pathway.title" class="pathway-item">
+              <img class="pathway-image" :src="pathway.image" :alt="pathway.imageAlt" width="160" height="108"
+                loading="lazy" decoding="async" />
+              <div class="pathway-body">
+                <span class="pathway-label">{{ pathway.label }}</span>
+                <h3>{{ pathway.title }}</h3>
+                <p>{{ pathway.description }}</p>
+              </div>
+            </article>
           </div>
         </div>
       </div>
     </section>
-
-    <section class="portfolio-section" aria-labelledby="portfolio-title">
-      <div class="section-shell portfolio-heading">
-        <div class="portfolio-kicker">
-          <span class="section-eyebrow">Courses curriculum</span>
-          <strong>Core oil and gas training lines</strong>
-        </div>
-        <h2 id="portfolio-title">Structured pathways for drilling, well control, well service and field safety
-          competency.</h2>
-        <p>
-          RSTS Academy organizes its curriculum around the responsibilities carried by crews, drillers, supervisors,
-          operator representatives and servicing personnel working across wellsite operations.
-        </p>
-        <router-link class="inline-action" to="/course/catalog">
-          Full catalog
-          <el-icon>
-            <ArrowRight />
+    <section class="capabilities-section" aria-labelledby="capabilities-title">
+      <div class="section-shell capabilities-heading">
+        <div class="capability-signature">
+          <el-icon class="semantic-icon" aria-hidden="true">
+            <Connection />
           </el-icon>
-        </router-link>
+          <span class="section-eyebrow">Integrated capability</span>
+          <strong>People.<br />Decisions.<br />Assets.</strong>
+        </div>
+        <div class="capability-heading-main">
+          <h2 id="capabilities-title">Capability across the operating lifecycle.</h2>
+          <div class="capability-heading-summary">
+            <p>
+              One partner for accredited competence, technical development, safety behaviour and
+              operational assurance.
+            </p>
+            <router-link class="inline-action light" to="/course/catalog">
+              Explore the catalogue
+              <el-icon>
+                <ArrowRight />
+              </el-icon>
+            </router-link>
+          </div>
+        </div>
       </div>
 
-      <div class="section-shell portfolio-grid">
-        <router-link v-for="course in courses" :key="course.title" class="course-tile"
-          :class="{ featured: course.featured }" :to="{ name: 'catalogDetail', params: { name: course.catalog } }">
-          <img :src="course.image" :alt="course.title" loading="lazy" decoding="async" />
-          <span class="course-index">{{ course.index }}</span>
-          <span class="course-content">
-            <strong>{{ course.title }}</strong>
-            <b>{{ course.pathway }}</b>
-            <small>{{ course.description }}</small>
-          </span>
-        </router-link>
+      <div class="section-shell capability-stage">
+        <article class="capability-lead">
+          <img :src="capabilities[0].image" :alt="capabilities[0].imageAlt" width="860" height="720" loading="lazy"
+            decoding="async" />
+          <span class="capability-lead-shade" aria-hidden="true"></span>
+          <div class="capability-lead-copy">
+            <div class="capability-kicker">
+              <el-icon class="semantic-icon" aria-hidden="true">
+                <component :is="capabilities[0].icon" />
+              </el-icon>
+              <span>{{ capabilities[0].label }}</span>
+            </div>
+            <h3>{{ capabilities[0].title }}</h3>
+            <p>{{ capabilities[0].description }}</p>
+            <ul>
+              <li v-for="item in capabilities[0].items" :key="item">{{ item }}</li>
+            </ul>
+          </div>
+        </article>
+
+        <div class="capability-index">
+          <article v-for="capability in capabilities.slice(1)" :key="capability.title" class="capability-row">
+            <figure>
+              <img :src="capability.image" :alt="capability.imageAlt" width="260" height="180" loading="lazy"
+                decoding="async" />
+              <figcaption aria-hidden="true">
+                <el-icon class="semantic-icon">
+                  <component :is="capability.icon" />
+                </el-icon>
+              </figcaption>
+            </figure>
+            <div>
+              <span>{{ capability.label }}</span>
+              <h3>{{ capability.title }}</h3>
+              <p>{{ capability.description }}</p>
+              <ul>
+                <li v-for="item in capability.items" :key="item">{{ item }}</li>
+              </ul>
+            </div>
+          </article>
+        </div>
       </div>
     </section>
 
-    <section class="delivery-section" aria-labelledby="delivery-title">
-      <div class="section-shell delivery-layout">
-        <div class="delivery-visual">
-          <img
-            src="/images/8. IWCF Drilling Well Control Well Site Supervisor Training, Baker Eastern S.A., June 2025/20250604.jpeg.webp"
-            alt="Instructor-led oil and gas training session" loading="lazy" decoding="async" />
+    <section class="evidence-section" aria-labelledby="evidence-title">
+      <div class="section-shell evidence-heading">
+        <div class="evidence-heading-copy">
+          <span class="section-eyebrow">Operational evidence</span>
+          <h2 id="evidence-title">Training becomes credible where the work is visible.</h2>
         </div>
-        <div class="delivery-copy">
-          <span class="section-eyebrow">How training is delivered</span>
-          <h2 id="delivery-title">From classroom instruction to wellsite decision quality.</h2>
+        <div class="evidence-principle">
+          <el-icon class="semantic-icon" aria-hidden="true">
+            <DataAnalysis />
+          </el-icon>
           <p>
-            Training is planned around job roles, operating exposure and company priorities. The result is a cleaner
-            path from required standards to practical readiness for personnel on drilling and well service assignments.
+            Practical delivery connects standards to equipment, decisions and the communication
+            expected in the field.
           </p>
-          <div class="delivery-list">
-            <article v-for="point in deliveryPoints" :key="point.title" class="delivery-item">
-              <img :src="point.image" :alt="point.title" loading="lazy" decoding="async" />
-              <span>
-                <strong>{{ point.title }}</strong>
-                <small>{{ point.description }}</small>
-              </span>
+        </div>
+      </div>
+
+      <div class="section-shell evidence-layout">
+        <figure class="evidence-media">
+          <img :src="fieldEvidenceImage"
+            alt="Instructor distributing technical learning material during an RSTS programme" width="900" height="680"
+            loading="lazy" decoding="async" />
+          <figcaption>
+            <span>Applied technical delivery</span>
+            <strong>Standards connected to equipment, sequence and crew communication.</strong>
+          </figcaption>
+        </figure>
+
+        <div class="evidence-log" aria-label="Recent RSTS programme evidence">
+          <article v-for="story in fieldStories" :key="story.title" class="evidence-entry">
+            <el-icon class="semantic-icon evidence-icon" aria-hidden="true">
+              <component :is="story.icon" />
+            </el-icon>
+            <div>
+              <small>{{ story.meta }}</small>
+              <h3>{{ story.title }}</h3>
+              <p>{{ story.description }}</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="rig-section" aria-labelledby="rig-title">
+      <div class="rig-layout">
+        <figure class="rig-visual">
+          <img src="/images/rsts-rig-assurance.webp"
+            alt="Illustrative rig assurance inspection scenario on a drilling asset" width="1920" height="1080"
+            loading="lazy" decoding="async" />
+          <figcaption>Asset readiness / independent field attention</figcaption>
+        </figure>
+
+        <div class="rig-content">
+          <header class="rig-copy">
+            <span class="section-eyebrow">Rig assurance</span>
+            <h2 id="rig-title">Readiness is inspected, not assumed.</h2>
+            <p>
+              Independent field attention for drilling assets, critical equipment and the controls
+              that support safer mobilisation and operation.
+            </p>
+            <router-link class="primary-action compact" to="/contact">
+              Discuss rig assurance
+              <el-icon>
+                <ArrowRight />
+              </el-icon>
+            </router-link>
+          </header>
+
+          <div class="rig-services">
+            <article v-for="service in rigServices" :key="service.title" class="rig-service">
+              <el-icon class="semantic-icon rig-service-icon" aria-hidden="true">
+                <component :is="service.icon" />
+              </el-icon>
+              <div>
+                <h3>{{ service.title }}</h3>
+                <p>{{ service.description }}</p>
+              </div>
             </article>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="field-section" aria-labelledby="field-title">
-      <div class="section-shell field-heading">
-        <span class="section-eyebrow">Field evidence</span>
-        <h2 id="field-title">Recent training delivery across drilling, well control, HSE and well servicing.</h2>
-      </div>
-      <div class="section-shell field-grid">
-        <figure v-for="story in fieldStories" :key="story.image" class="field-tile" :class="{ large: story.large }">
-          <img :src="story.image" :alt="story.title" loading="lazy" decoding="async" />
-          <figcaption>
-            <span>{{ story.meta }}</span>
-            <strong>{{ story.title }}</strong>
-          </figcaption>
-        </figure>
+    <section class="delivery-section" aria-labelledby="delivery-title">
+      <div class="section-shell delivery-layout">
+        <header class="delivery-copy">
+          <span class="section-eyebrow">Flexible by design</span>
+          <h2 id="delivery-title">The same standard, closer to your operation.</h2>
+          <p>
+            Choose a focused training environment or bring RSTS closer to the team. Delivery is
+            shaped around role, location and operating context without duplicating the learning
+            purpose.
+          </p>
+          <figure class="section-visual delivery-visual">
+            <img src="/images/rsts-delivery-client-site-v2.webp"
+              alt="Illustrative client-site technical training scenario" width="1086" height="1448" loading="lazy"
+              decoding="async" />
+            <figcaption>
+              <span>Delivery model</span>
+              <strong>Capability brought closer to the team.</strong>
+            </figcaption>
+          </figure>
+        </header>
+
+        <div class="delivery-modes" aria-label="RSTS delivery modes">
+          <article v-for="mode in deliveryModes" :key="mode.title" class="delivery-mode">
+            <el-icon class="semantic-icon delivery-icon" aria-hidden="true">
+              <component :is="mode.icon" />
+            </el-icon>
+            <h3>{{ mode.title }}</h3>
+            <p>{{ mode.description }}</p>
+          </article>
+        </div>
       </div>
     </section>
 
-    <section class="records-section" aria-labelledby="records-title">
-      <div class="section-shell records-layout">
-        <div class="records-copy">
-          <span class="section-eyebrow">Certificate records</span>
-          <h2 id="records-title">Authorized programs with traceable training outcomes.</h2>
+    <section class="closing-section" aria-labelledby="closing-title">
+      <div class="section-shell assurance-panel">
+        <div class="assurance-copy">
+          <span class="section-eyebrow">Training assurance</span>
+          <h2>Competence records remain visible after the course.</h2>
           <p>
-            Participants can verify certificates online, while companies keep clearer records for IWCF, IADC WellSharp,
-            H2S and practical site training programs.
+            Certificate verification supports candidate records, company review and audit
+            preparation across completed programmes.
           </p>
+          <router-link class="verify-action" to="/certificates/index">
+            Verify a certificate
+            <el-icon>
+              <DocumentChecked />
+            </el-icon>
+          </router-link>
         </div>
-        <router-link class="records-action" to="/certificates/index">
-          Verify certificates
-          <el-icon>
-            <DocumentChecked />
-          </el-icon>
-        </router-link>
+
+        <div class="closing-copy">
+          <span class="section-eyebrow">Plan the next requirement</span>
+          <h2 id="closing-title">Build capability before the operation demands it.</h2>
+          <p>
+            Select an accredited pathway, shape a team programme or discuss an assurance scope with
+            RSTS.
+          </p>
+          <div class="closing-actions">
+            <router-link class="primary-action compact" to="/contact">
+              Talk to RSTS
+              <el-icon>
+                <ArrowRight />
+              </el-icon>
+            </router-link>
+            <router-link class="ghost-action compact" to="/course/catalog">
+              Explore programmes
+            </router-link>
+          </div>
+        </div>
       </div>
     </section>
   </main>
 
-  <el-dialog v-model="dialogVisible" title="Integrated Training Solutions and Service for Oil and Gas Industry"
-    align-center class="video-dialog" width="min(980px, 92vw)" @close="handleDialogClose">
+  <el-dialog v-model="dialogVisible" title="RSTS: Training and Assurance for Oil and Gas Operations" align-center
+    class="video-dialog" width="min(980px, 92vw)" @close="handleDialogClose">
     <video v-if="dialogVisible" ref="videoPlayer" class="video-player" :src="introVideo" autoplay controls playsinline
       preload="metadata"></video>
   </el-dialog>
@@ -429,46 +620,41 @@ const handleDialogClose = () => {
 
 <style scoped lang="scss">
 .home-page {
-  --ink: #101820;
+  --ink: #182630;
   --muted: #62707a;
-  --deep: #071522;
-  --navy: #0b2234;
-  --steel: #d8dedc;
-  --field: #e9ece5;
+  --deep: #061726;
+  --petrol: #0a2b35;
+  --petrol-light: #17434d;
+  --mineral: #edf1f2;
+  --ivory: #f7f8f7;
   --paper: #ffffff;
-  --accent: #c99c5e;
-  --champagne: #d9bd7a;
-  --ivory: #f7f5ee;
-  --ivory-deep: #ebe6da;
-  --charcoal: #11181f;
-  --petrol: #0b2e36;
-  --line: rgba(16, 24, 32, 0.14);
+  --copper: #c45f45;
+  --copper-dark: #97412f;
+  --line: rgba(24, 38, 48, 0.15);
   --line-light: rgba(255, 255, 255, 0.22);
   --white: #ffffff;
-
+  --display-font: 'Avenir Next', 'Aptos Display', 'Segoe UI', sans-serif;
   overflow: hidden;
-  background: var(--field);
+  background: var(--ivory);
   color: var(--ink);
-  font-family:
-    Aptos,
-    "Gill Sans",
-    "Trebuchet MS",
-    sans-serif;
+  font-family: Aptos, 'Gill Sans', 'Trebuchet MS', sans-serif;
 }
 
-.section-shell {
-  width: min(1240px, calc(100% - 56px));
+.section-shell,
+.hero-shell,
+.recognition-shell {
+  width: min(1280px, calc(100% - 72px));
   margin: 0 auto;
 }
 
 .section-eyebrow {
   display: inline-flex;
-  color: var(--accent);
-  font-size: 12px;
+  margin: 0;
+  color: var(--copper);
+  font-size: 11px;
   font-weight: 800;
-  letter-spacing: 0.12em;
-  line-height: 1;
-  margin-bottom: 18px;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
   text-transform: uppercase;
 }
 
@@ -477,8 +663,8 @@ const handleDialogClose = () => {
   min-height: min(890px, calc(100svh - 76px));
   display: grid;
   isolation: isolate;
-  background: var(--deep);
   overflow: hidden;
+  background: var(--deep);
 }
 
 .hero-media,
@@ -496,8 +682,7 @@ const handleDialogClose = () => {
     height: 100%;
     display: block;
     object-fit: cover;
-    object-position: center 40%;
-    transform: scale(1.06);
+    object-position: center 42%;
     animation: hero-drift 18s ease-in-out infinite alternate;
   }
 }
@@ -505,10 +690,11 @@ const handleDialogClose = () => {
 .hero-shade {
   z-index: -2;
   background:
-    radial-gradient(circle at 78% 22%, rgba(23, 125, 120, 0.22), transparent 34%),
-    linear-gradient(180deg, rgba(5, 13, 22, 0) 66%, rgba(5, 13, 22, 0.96) 100%),
-    linear-gradient(90deg, rgba(5, 13, 22, 0.98), rgba(5, 13, 22, 0.76) 42%, rgba(5, 13, 22, 0.18)),
-    linear-gradient(0deg, rgba(5, 13, 22, 0.98), rgba(5, 13, 22, 0.18) 72%);
+    linear-gradient(180deg, rgba(4, 16, 24, 0.02) 58%, rgba(4, 16, 24, 0.98) 100%),
+    linear-gradient(90deg,
+      rgba(4, 16, 24, 0.98) 0%,
+      rgba(4, 16, 24, 0.78) 48%,
+      rgba(4, 16, 24, 0.16) 100%);
 }
 
 .hero-lines {
@@ -517,105 +703,294 @@ const handleDialogClose = () => {
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.24) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.18) 1px, transparent 1px);
-  background-size: 25% 100%, 25% 100%;
+  background-size:
+    25% 100%,
+    25% 100%;
 }
 
 .hero-shell {
-  width: min(1240px, calc(100% - 56px));
-  margin: 0 auto;
-  padding: 92px 0 32px;
+  width: min(1240px, calc(100% - 72px));
+  min-height: inherit;
   display: grid;
-  grid-template-columns: minmax(620px, 1fr) minmax(430px, 0.52fr);
-  grid-template-rows: 1fr auto;
-  gap: 52px 72px;
-  align-items: end;
+  grid-template-rows: minmax(642px, 1fr) 150px;
+  align-content: start;
   color: var(--white);
 }
 
+.hero-composition {
+  display: grid;
+  grid-template-columns: minmax(0, 660px) minmax(420px, 520px);
+  gap: 60px;
+  align-items: end;
+  padding: 0 0 52px;
+}
+
 .hero-copy {
-  max-width: 940px;
+  max-width: 738px;
 
   .section-eyebrow {
     color: rgba(255, 255, 255, 0.72);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    line-height: 1;
+    transform: translateY(5px);
   }
 
   h1 {
-    margin: 0;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: clamp(96px, 8.8vw, 144px);
+    margin: 18px 0 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 144px;
     font-weight: 500;
     letter-spacing: 0;
     line-height: 0.84;
+
+    span {
+      display: block;
+    }
   }
 }
 
 .hero-statement {
-  max-width: 780px;
+  max-width: 738px;
   margin: 28px 0 0;
   color: rgba(255, 255, 255, 0.82);
   font-size: 25px;
   line-height: 1.44;
 }
 
-.hero-actions {
+.hero-actions,
+.closing-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+  margin-top: 32px;
+}
+
+.hero-actions {
   margin-top: 34px;
 }
 
 .primary-action,
 .ghost-action,
-.inline-action,
-.records-action {
+.verify-action {
   min-height: 52px;
+  box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
-  box-sizing: border-box;
   padding: 0 22px;
   border: 1px solid transparent;
   cursor: pointer;
   font: inherit;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 800;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   text-decoration: none;
   text-transform: uppercase;
   transition:
-    transform 180ms ease,
     background 180ms ease,
     border-color 180ms ease,
-    color 180ms ease;
+    color 180ms ease,
+    transform 180ms ease;
+
+  &:hover {
+    transform: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 3px;
+  }
 }
 
 .primary-action {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #101820;
+  background: var(--copper);
+  color: #ffffff;
 
   &:hover {
-    background: #dfbd79;
-    color: #101820;
-    transform: translateY(-2px);
+    background: #b6563e;
   }
 }
 
 .ghost-action {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(255, 255, 255, 0.42);
-  color: var(--white);
+  border-color: rgba(255, 255, 255, 0.48);
+  background: rgba(5, 18, 26, 0.24);
+  color: #ffffff;
 
   &:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    transform: translateY(-2px);
+    border-color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
   }
 }
 
+.profile-action {
+  min-height: 52px;
+  box-sizing: border-box;
+  display: inline-flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 22px;
+  border: 1px solid rgba(255, 255, 255, 0.52);
+  background: rgba(5, 18, 26, 0.36);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    background 180ms ease,
+    border-color 180ms ease;
+
+  &:hover {
+    border-color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 3px;
+  }
+
+  .profile-pdf-icon {
+    width: 22px;
+    height: 22px;
+    flex: 0 0 22px;
+    display: block;
+  }
+}
+
+.hero-actions .primary-action {
+  font-size: 14px;
+}
+
+.hero-film {
+  position: relative;
+  width: min(100%, 520px);
+  display: grid;
+  justify-self: end;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  background: #f3f0e9;
+  box-shadow: 0 34px 90px rgba(0, 0, 0, 0.48);
+  color: var(--ink);
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  transition:
+    box-shadow 400ms ease,
+    transform 400ms ease;
+
+  &:hover {
+    box-shadow: 0 44px 116px rgba(0, 0, 0, 0.56);
+    transform: translateY(-4px);
+  }
+
+  &:hover .hero-film-frame>img {
+    filter: saturate(1) contrast(1.04);
+    transform: scale(1.025);
+  }
+
+  &:hover .hero-film-play {
+    background: #ffffff;
+    color: var(--deep);
+    transform: scale(1.06);
+  }
+
+  &:focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: 4px;
+  }
+}
+
+.hero-film-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  display: block;
+  overflow: hidden;
+  background: #071821;
+
+  >img,
+  .hero-film-shade {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  >img {
+    display: block;
+    object-fit: cover;
+    filter: saturate(0.92) contrast(1.02);
+    transition:
+      filter 450ms ease,
+      transform 600ms ease;
+  }
+}
+
+.hero-film-shade {
+  background: linear-gradient(180deg, rgba(3, 18, 27, 0.02) 45%, rgba(3, 18, 27, 0.46) 100%);
+}
+
+.hero-film-copy {
+  min-height: 122px;
+  box-sizing: border-box;
+  display: block;
+  padding: 24px 30px 28px;
+  background: #f3f0e9;
+}
+
+.hero-film-copy-text {
+  min-width: 0;
+
+  small {
+    display: block;
+    margin-bottom: 9px;
+    color: var(--copper-dark);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  strong {
+    max-width: 440px;
+    display: block;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 25px;
+    font-weight: 500;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+}
+
+.hero-film-play {
+  position: absolute;
+  right: 26px;
+  bottom: 24px;
+  z-index: 1;
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: var(--copper);
+  color: #ffffff;
+  font-size: 22px;
+  transition:
+    background 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.compact {
+  min-height: 48px;
+}
+
 .hero-metrics {
-  grid-column: 1 / -1;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   border-top: 1px solid var(--line-light);
@@ -623,19 +998,20 @@ const handleDialogClose = () => {
 }
 
 .metric-item {
-  min-height: 104px;
+  min-height: 148px;
+  box-sizing: border-box;
   display: grid;
   align-content: center;
-  gap: 10px;
+  gap: 8px;
   padding: 22px 34px;
-  border-right: 1px solid var(--line-light);
+  border-left: 1px solid var(--line-light);
 
-  &:last-child {
-    border-right: 0;
+  &:first-child {
+    border-left: 0;
   }
 
   strong {
-    font-family: Georgia, "Times New Roman", serif;
+    font-family: Georgia, 'Times New Roman', serif;
     font-size: 36px;
     font-weight: 500;
     line-height: 1;
@@ -646,637 +1022,803 @@ const handleDialogClose = () => {
     font-size: 12px;
     font-weight: 800;
     letter-spacing: 0.09em;
+    line-height: 2;
     text-transform: uppercase;
-  }
-}
-
-.hero-ppt-panel {
-  position: relative;
-  width: min(100%, 1040px);
-  aspect-ratio: 2.12;
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto;
-  gap: 14px;
-  padding: 18px;
-  overflow: hidden;
-  border: 1px solid rgba(17, 24, 31, 0.12);
-  border-bottom-color: rgba(201, 163, 94, 0.58);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(248, 244, 234, 0.98));
-  color: var(--ink);
-  box-shadow:
-    0 34px 94px rgba(17, 24, 31, 0.18),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.56);
-}
-
-.ppt-panel-head,
-.ppt-panel-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-}
-
-.ppt-panel-head {
-  strong {
-    display: block;
-    max-width: 520px;
-    color: var(--ink);
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 28px;
-    font-weight: 500;
-    line-height: 1.08;
-  }
-}
-
-.ppt-panel-kicker {
-  display: inline-flex;
-  margin-bottom: 8px;
-  color: #9c7730;
-  font-size: 11px;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  line-height: 1;
-  text-transform: uppercase;
-}
-
-.ppt-panel-play {
-  width: 48px;
-  height: 48px;
-  display: grid;
-  place-items: center;
-  flex: none;
-  border: 1px solid rgba(201, 163, 94, 0.58);
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.74);
-  color: #9c7730;
-  transition:
-    border-color 180ms ease,
-    background 180ms ease,
-    color 180ms ease,
-    transform 180ms ease;
-
-  .el-icon {
-    font-size: 24px;
-  }
-
-  &:hover {
-    border-color: rgba(201, 163, 94, 0.9);
-    background: #fff;
-    color: #7d5b19;
-    transform: translateY(-1px);
-  }
-}
-
-.ppt-stage {
-  min-height: 0;
-  overflow: hidden;
-  border: 1px solid rgba(17, 24, 31, 0.08);
-  border-radius: 16px;
-  background:
-    radial-gradient(circle at 50% 0%, rgba(217, 189, 122, 0.12), transparent 36%),
-    linear-gradient(180deg, #f5f1e8, #ede7db);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.7),
-    inset 0 -20px 50px rgba(17, 24, 31, 0.05);
-
-  :deep(.el-carousel) {
-    width: 100%;
-    height: 100%;
-  }
-
-  :deep(.el-carousel__container) {
-    height: 100%;
-  }
-}
-
-.ppt-slide {
-  position: relative;
-  height: 100%;
-  margin: 0;
-  display: grid;
-  align-items: stretch;
-  overflow: hidden;
-
-  img {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: contain;
-    object-position: center;
-    background: #f3efe6;
-  }
-
-  figcaption {
-    position: absolute;
-    right: 22px;
-    bottom: 22px;
-    left: 22px;
-    display: grid;
-    gap: 6px;
-    max-width: 420px;
-    padding: 16px 18px;
-    border: 1px solid rgba(17, 24, 31, 0.1);
-    border-left: 2px solid var(--champagne);
-    border-radius: 14px;
-    background: rgba(255, 255, 255, 0.88);
-    color: var(--ink);
-    box-shadow: 0 16px 40px rgba(17, 24, 31, 0.1);
-
-    span {
-      color: #9c7730;
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    strong {
-      color: var(--ink);
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 24px;
-      font-weight: 500;
-      line-height: 1.1;
-    }
-  }
-}
-
-.ppt-panel-foot {
-  min-height: 54px;
-
-  span {
-    display: inline-flex;
-    margin-bottom: 6px;
-    color: #9c7730;
-    font-size: 11px;
-    font-weight: 900;
-    letter-spacing: 0.08em;
-    line-height: 1;
-    text-transform: uppercase;
-  }
-
-  strong {
-    display: block;
-    color: var(--ink);
-    font-size: 15px;
-    line-height: 1.32;
-  }
-}
-
-.ppt-panel-pagination {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex: none;
-
-  span {
-    margin: 0;
-    color: #6a7178;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0;
-    text-transform: none;
-  }
-}
-
-.ppt-dot {
-  width: 8px;
-  height: 8px;
-  padding: 0;
-  border: 0;
-  border-radius: 999px;
-  background: rgba(17, 24, 31, 0.2);
-  cursor: pointer;
-  transition:
-    transform 180ms ease,
-    background 180ms ease,
-    width 180ms ease;
-
-  &.active {
-    width: 24px;
-    background: var(--champagne);
-  }
-
-  &:hover {
-    transform: translateY(-1px);
-  }
-}
-
-.hero-ppt-panel:hover .ppt-panel-play {
-  transform: translateY(-1px);
-}
-
-.hero-video-panel {
-  position: relative;
-  width: min(100%, 470px);
-  aspect-ratio: 1.36;
-  align-self: end;
-  justify-self: end;
-  display: grid;
-  padding: 0;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  border-bottom-color: rgba(201, 163, 94, 0.62);
-  background: rgba(7, 21, 34, 0.42);
-  color: var(--white);
-  cursor: pointer;
-  font: inherit;
-  text-align: left;
-  box-shadow:
-    0 38px 110px rgba(0, 0, 0, 0.38),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
-  transition:
-    border-color 200ms ease,
-    box-shadow 200ms ease,
-    transform 200ms ease;
-
-  picture,
-  img {
-    width: 100%;
-    height: 100%;
-    display: block;
-  }
-
-  picture {
-    position: absolute;
-    inset: 0;
-  }
-
-  img {
-    object-fit: cover;
-    object-position: center;
-    filter: saturate(0.98) contrast(1.06);
-    transform: scale(1.03);
-    transition:
-      filter 240ms ease,
-      transform 240ms ease;
-  }
-
-  &:hover {
-    border-color: rgba(201, 163, 94, 0.78);
-    box-shadow:
-      0 44px 130px rgba(0, 0, 0, 0.46),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-    transform: translateY(-4px);
-
-    img {
-      filter: saturate(1.08) contrast(1.08);
-      transform: scale(1.06);
-    }
-
-    .video-panel-play {
-      background: var(--accent);
-      color: #101820;
-      transform: scale(1.04);
-    }
-  }
-}
-
-.video-panel-shade {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(180deg, rgba(5, 13, 22, 0.06), rgba(5, 13, 22, 0.2) 42%, rgba(5, 13, 22, 0.92)),
-    linear-gradient(90deg, rgba(5, 13, 22, 0.5), rgba(5, 13, 22, 0.06) 58%);
-}
-
-.video-panel-rail {
-  position: absolute;
-  top: 18px;
-  right: 20px;
-  left: 20px;
-  display: flex;
-  justify-content: space-between;
-  gap: 18px;
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  line-height: 1;
-  text-transform: uppercase;
-}
-
-.video-panel-content {
-  position: absolute;
-  right: 24px;
-  bottom: 24px;
-  left: 24px;
-  display: grid;
-  grid-template-columns: 58px 1fr;
-  gap: 16px;
-  align-items: end;
-}
-
-.video-panel-play {
-  width: 58px;
-  height: 58px;
-  display: grid;
-  place-items: center;
-  border: 1px solid rgba(201, 163, 94, 0.9);
-  border-radius: 50%;
-  background: rgba(7, 21, 34, 0.64);
-  color: var(--accent);
-  transition:
-    background 200ms ease,
-    color 200ms ease,
-    transform 200ms ease;
-
-  .el-icon {
-    font-size: 30px;
-  }
-}
-
-.video-panel-copy {
-  display: grid;
-  gap: 8px;
-
-  span {
-    color: var(--accent);
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  strong {
-    max-width: 360px;
-    color: var(--white);
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 24px;
-    font-weight: 500;
-    line-height: 1.08;
   }
 }
 
 .recognition-section {
-  background: var(--paper);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #f8f9f8;
   border-bottom: 1px solid var(--line);
+
+  &::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    width: 52%;
+    background-image:
+      linear-gradient(rgba(24, 38, 48, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(24, 38, 48, 0.035) 1px, transparent 1px);
+    background-size: 64px 64px;
+    content: '';
+  }
+
+  &::after {
+    position: absolute;
+    top: 0;
+    right: 6%;
+    width: 150px;
+    height: 4px;
+    background: var(--copper);
+    content: '';
+  }
 }
 
 .recognition-shell {
-  width: min(1240px, calc(100% - 56px));
-  margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(340px, 0.42fr) minmax(560px, 1fr);
-  gap: 56px;
+  grid-template-columns: minmax(300px, 0.38fr) minmax(0, 0.62fr);
+  gap: 48px;
   align-items: center;
-  padding: 28px 0;
+  padding: 38px 0;
 }
 
 .recognition-copy {
-  p {
-    margin: 0;
-    color: var(--ink);
-    font-size: 18px;
-    line-height: 1.5;
+  h2 {
+    margin: 10px 0 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.05;
   }
 
-  .section-eyebrow {
-    margin-bottom: 12px;
+  p {
+    max-width: 410px;
+    margin: 12px 0 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.55;
   }
 }
 
 .recognition-logos {
   display: grid;
-  grid-template-columns: repeat(6, minmax(88px, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   border-left: 1px solid var(--line);
 }
 
 .logo-cell {
-  min-height: 88px;
+  min-height: 90px;
   display: grid;
   place-items: center;
-  padding: 18px;
+  padding: 14px;
   border-right: 1px solid var(--line);
 
   img {
-    max-width: 100px;
+    max-width: 100%;
     max-height: 58px;
     object-fit: contain;
-    filter: grayscale(0.08) saturate(0.95);
   }
 }
 
-.position-section,
-.portfolio-section,
-.field-section {
-  padding: 60px 0;
-}
-
-.position-section {
+.capabilities-section {
   position: relative;
+  padding: 116px 0 128px;
   overflow: hidden;
-  background:
-    linear-gradient(90deg, rgba(17, 24, 31, 0.045) 1px, transparent 1px),
-    linear-gradient(180deg, #fbfaf6 0%, var(--ivory) 60%, #efe9dc 100%);
-  background-size: 112px 100%, auto;
-  color: var(--ink);
-  border-top: 1px solid rgba(16, 24, 32, 0.08);
-  border-bottom: 1px solid rgba(16, 24, 32, 0.08);
-
-  &::before,
-  &::after {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    content: "";
-  }
+  background: #071d27;
+  color: #ffffff;
 
   &::before {
-    opacity: 1;
-    background:
-      linear-gradient(115deg, transparent 0 64%, rgba(17, 24, 31, 0.045) 64% 100%),
-      radial-gradient(circle at 84% 16%, rgba(217, 189, 122, 0.18), transparent 34%);
-  }
-
-  &::after {
-    top: auto;
-    height: 1px;
-    background: rgba(16, 24, 32, 0.12);
+    position: absolute;
+    inset: 0;
+    opacity: 0.12;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 96px 96px;
+    content: '';
   }
 }
 
-.position-layout {
+.capabilities-heading {
   position: relative;
-  z-index: 1;
   display: grid;
-  grid-template-columns: minmax(480px, 0.78fr) minmax(560px, 0.92fr);
-  gap: 68px;
+  grid-template-columns: minmax(220px, 0.27fr) minmax(0, 0.73fr);
+  gap: 72px;
+  align-items: stretch;
+  margin-bottom: 72px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(255, 255, 255, 0.24);
+
+  .capability-signature {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 12px 14px;
+    align-content: start;
+    padding-right: 38px;
+    border-right: 1px solid rgba(255, 255, 255, 0.18);
+
+    .semantic-icon {
+      grid-row: 1 / span 2;
+      color: #ef896a;
+    }
+
+    .section-eyebrow {
+      align-self: center;
+    }
+
+    strong {
+      margin-top: 16px;
+      font-family: var(--display-font);
+      font-size: 28px;
+      font-weight: 450;
+      line-height: 1.08;
+    }
+  }
+
+  .capability-heading-main {
+    h2 {
+      max-width: 900px;
+      margin: 0;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 64px;
+      font-weight: 500;
+      line-height: 0.96;
+    }
+  }
+
+  .capability-heading-summary {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 44px;
+    align-items: end;
+    margin-top: 36px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+
+    p {
+      max-width: 620px;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    .inline-action {
+      margin-bottom: 2px;
+    }
+  }
+}
+
+.inline-action {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 0 9px;
+  border-bottom: 1px solid currentColor;
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+
+  &.light {
+    color: #ffffff;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--copper);
+    outline-offset: 4px;
+  }
+}
+
+.semantic-icon {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  color: var(--copper-dark);
+  font-size: 22px;
+}
+
+.capability-stage {
+  position: relative;
+  width: min(1360px, calc(100% - 72px));
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(420px, 0.92fr);
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.capability-lead {
+  position: relative;
+  min-height: 660px;
+  overflow: hidden;
+
+  >img,
+  .capability-lead-shade {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  >img {
+    display: block;
+    object-fit: cover;
+  }
+}
+
+.capability-lead-shade {
+  background: linear-gradient(180deg, rgba(4, 18, 19, 0.05), rgba(4, 18, 19, 0.94));
+}
+
+.capability-lead-copy {
+  position: absolute;
+  right: 54px;
+  bottom: 52px;
+  left: 54px;
+
+  .capability-kicker {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .semantic-icon {
+      color: #ef896a;
+    }
+
+    span {
+      color: #ef896a;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+  }
+
+  h3 {
+    max-width: 600px;
+    margin: 14px 0 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 52px;
+    font-weight: 500;
+    line-height: 0.98;
+  }
+
+  p {
+    max-width: 620px;
+    margin: 20px 0 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  ul {
+    margin: 22px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 22px;
+    padding: 17px 0 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.22);
+    list-style: none;
+  }
+
+  li {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+}
+
+.capability-index {
+  border-left: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.capability-row {
+  min-height: 220px;
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  figure {
+    position: relative;
+    min-height: 100%;
+    margin: 0;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    figcaption {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: rgba(3, 24, 28, 0.76);
+
+      .semantic-icon {
+        color: #ffffff;
+      }
+    }
+  }
+
+  >div {
+    padding: 30px 28px;
+  }
+
+  >div>span {
+    color: #ef896a;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  h3 {
+    margin: 10px 0 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 27px;
+    font-weight: 500;
+    line-height: 1.06;
+  }
+
+  p {
+    margin: 13px 0 0;
+    color: rgba(255, 255, 255, 0.58);
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  ul {
+    margin: 15px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px 14px;
+    padding: 12px 0 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    list-style: none;
+  }
+
+  li {
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+}
+
+.pathways-section {
+  padding: 54px 0;
+  background: #f6f3ed;
+}
+
+.pathways-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(440px, 0.95fr);
+  gap: clamp(54px, 6vw, 86px);
   align-items: center;
 }
 
-.position-copy h2,
-.portfolio-heading h2,
-.delivery-copy h2,
-.field-heading h2,
-.records-copy h2 {
-  margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
-  font-weight: 500;
-  letter-spacing: 0;
-  line-height: 1;
-}
-
-.position-copy {
+.pathways-visual {
   position: relative;
-  padding: 42px 0;
-
-  &::before {
-    display: block;
-    width: 96px;
-    height: 2px;
-    margin-bottom: 28px;
-    background: linear-gradient(90deg, var(--charcoal), var(--champagne));
-    content: "";
-  }
-}
-
-.position-copy h2 {
-  max-width: 780px;
-  color: var(--ink);
-  font-size: clamp(54px, 5vw, 76px);
-  line-height: 0.98;
-}
-
-.position-visual {
-  position: relative;
-  min-height: 620px;
+  aspect-ratio: 3 / 4;
   margin: 0;
   overflow: hidden;
-  background: #071522;
-  border: 1px solid rgba(17, 24, 31, 0.12);
-  box-shadow:
-    0 46px 110px rgba(17, 24, 31, 0.18),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+  background: var(--deep);
+  box-shadow: 0 24px 62px rgba(43, 48, 45, 0.14);
+
+  &::after {
+    position: absolute;
+    inset: 22px;
+    border: 1px solid rgba(230, 184, 107, 0.46);
+    pointer-events: none;
+    content: '';
+  }
 
   img {
-    position: absolute;
-    inset: 0;
     width: 100%;
     height: 100%;
     display: block;
     object-fit: cover;
     object-position: center;
-    filter: saturate(0.9) contrast(1.04) brightness(0.96);
-    transition:
-      filter 220ms ease,
-      transform 220ms ease;
   }
 
-  &:hover img {
-    filter: saturate(0.98) contrast(1.06) brightness(0.98);
-    transform: scale(1.025);
+  figcaption {
+    position: absolute;
+    right: 23px;
+    bottom: 23px;
+    left: 23px;
+    z-index: 1;
+    padding: 48px 20px 18px;
+    background: linear-gradient(180deg, transparent, rgba(4, 21, 27, 0.82));
+    color: #ffffff;
+
+    span {
+      display: block;
+      color: #efb66d;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    strong {
+      display: block;
+      margin-top: 6px;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 19px;
+      font-weight: 500;
+      line-height: 1.2;
+    }
+  }
+}
+
+.pathways-content {
+  min-width: 0;
+}
+
+.pathways-copy {
+  h2 {
+    max-width: 600px;
+    margin: 18px 0 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(46px, 4.2vw, 66px);
+    font-weight: 500;
+    line-height: 0.96;
+  }
+
+  p {
+    max-width: 590px;
+    margin: 26px 0 0;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .inline-action {
+    margin-top: 22px;
+  }
+}
+
+.section-visual {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  margin: 44px 0 0;
+  overflow: hidden;
+  border-top: 1px solid rgba(20, 38, 35, 0.28);
+  border-bottom: 1px solid rgba(20, 38, 35, 0.28);
+  background: var(--deep);
+
+  img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transition: transform 300ms ease;
   }
 
   &::after {
     position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(180deg, rgba(5, 13, 22, 0) 34%, rgba(5, 13, 22, 0.84)),
-      linear-gradient(90deg, rgba(17, 24, 31, 0.64), rgba(5, 13, 22, 0.02) 64%);
-    content: "";
+    inset: 36% 0 0;
+    background: linear-gradient(180deg, transparent, rgba(3, 24, 28, 0.9));
+    content: '';
   }
 
-  &::before {
+  figcaption {
     position: absolute;
-    inset: 26px;
+    right: 24px;
+    bottom: 24px;
+    left: 24px;
     z-index: 1;
-    pointer-events: none;
-    background:
-      linear-gradient(rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0.38)) 0 0 / 100% 1px no-repeat,
-      linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)) 100% 0 / 74px 1px no-repeat,
-      linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)) 100% 0 / 1px 74px no-repeat,
-      linear-gradient(rgba(201, 163, 94, 0.72), rgba(201, 163, 94, 0.72)) 0 100% / 74px 1px no-repeat,
-      linear-gradient(rgba(201, 163, 94, 0.72), rgba(201, 163, 94, 0.72)) 0 100% / 1px 74px no-repeat;
-    content: "";
+    color: #ffffff;
+
+    span {
+      display: block;
+      color: #ef896a;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    strong {
+      max-width: 360px;
+      display: block;
+      margin-top: 9px;
+      font-family: var(--display-font);
+      font-size: 23px;
+      font-weight: 450;
+      line-height: 1.08;
+    }
   }
 }
 
-.position-visual figcaption {
-  position: absolute;
-  right: 34px;
-  bottom: 32px;
-  left: 34px;
-  z-index: 1;
+.delivery-visual {
+  aspect-ratio: 5 / 4;
+
+  img {
+    object-position: center 38%;
+  }
+}
+
+.pathway-list {
   display: grid;
-  gap: 12px;
-  max-width: 520px;
-  color: var(--white);
+  gap: 14px;
+  margin-top: 42px;
+}
 
-  span {
-    color: var(--accent);
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
+.pathway-item {
+  min-height: 112px;
+  display: grid;
+  grid-template-columns: 128px minmax(0, 1fr);
+  gap: 20px;
+  align-items: center;
+  padding: 14px;
+  border: 1px solid rgba(31, 46, 51, 0.11);
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 12px 32px rgba(37, 43, 40, 0.07);
 
-  strong {
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 30px;
-    font-weight: 500;
-    line-height: 1.12;
-  }
-
-  &::before {
+  .pathway-image {
+    width: 128px;
+    height: 86px;
     display: block;
-    width: 46px;
-    height: 2px;
-    margin-bottom: 4px;
-    background: var(--accent);
-    content: "";
+    object-fit: cover;
   }
-}
 
-.position-brief {
-  display: grid;
-  gap: 16px;
-  margin-top: 38px;
-  padding: 0 0 0 24px;
-  border-left: 2px solid var(--champagne);
-  color: var(--ink);
-
-  span {
-    color: #9c7730;
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-    line-height: 1;
+  .pathway-label {
+    display: block;
+    color: var(--copper-dark);
+    font-size: 9px;
+    font-weight: 900;
     text-transform: uppercase;
   }
 
-  strong {
-    font-family: Georgia, "Times New Roman", serif;
-    max-width: 700px;
-    color: var(--ink);
-    font-size: 30px;
-    font-weight: 500;
-    line-height: 1.12;
+  h3 {
+    margin: 5px 0 0;
+    font-size: 17px;
+    line-height: 1.2;
+  }
+
+  p {
+    margin: 7px 0 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.5;
   }
 }
 
-.position-copy p {
-  margin: 28px 0 0;
-  max-width: 700px;
-  color: var(--muted);
-  font-size: 18px;
-  line-height: 1.76;
+.pathways-section .pathways-copy h2,
+.pathways-section .pathway-item h3 {
+  font-family: Georgia, 'Times New Roman', serif;
 }
 
-.position-tracks {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 28px;
+.evidence-section {
+  padding: 96px 0 104px;
+  background: var(--paper);
+}
 
-  span {
-    display: inline-flex;
-    min-height: 36px;
-    align-items: center;
-    padding: 0 12px;
-    border: 1px solid rgba(17, 24, 31, 0.12);
-    background: rgba(255, 255, 255, 0.72);
-    color: var(--ink);
+.evidence-heading {
+  width: min(1360px, calc(100% - 72px));
+  min-height: 300px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.38fr) minmax(340px, 0.62fr);
+  gap: 0;
+  align-items: stretch;
+  overflow: hidden;
+  background: #08232c;
+  box-shadow: 0 26px 70px rgba(16, 32, 36, 0.12);
+
+  h2 {
+    max-width: 840px;
+    margin: 24px 0 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(52px, 4.4vw, 66px);
+    font-weight: 500;
+    line-height: 0.96;
+    color: #ffffff;
+  }
+
+  .section-eyebrow {
+    color: #efb66d;
+  }
+}
+
+.evidence-heading-copy {
+  display: grid;
+  align-content: center;
+  padding: 54px 64px 58px;
+}
+
+.evidence-principle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 42px;
+  padding: 52px 56px;
+  background: transparent;
+
+  .semantic-icon {
+    width: 34px;
+    height: 34px;
+    color: #efb66d;
+    font-size: 30px;
+  }
+
+  p {
+    max-width: 360px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.74);
+    font-family: Aptos, 'Gill Sans', 'Trebuchet MS', sans-serif;
+    font-size: 17px;
+    line-height: 1.7;
+  }
+}
+
+.evidence-section .evidence-heading h2 {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 500;
+}
+
+.evidence-layout {
+  width: min(1360px, calc(100% - 72px));
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(360px, 0.85fr);
+  margin-top: 38px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.evidence-media {
+  position: relative;
+  min-height: 560px;
+  margin: 0;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  &::after {
+    position: absolute;
+    inset: 40% 0 0;
+    background: linear-gradient(180deg, transparent, rgba(4, 19, 22, 0.9));
+    content: '';
+  }
+
+  figcaption {
+    position: absolute;
+    right: 44px;
+    bottom: 42px;
+    left: 44px;
+    z-index: 1;
+    color: #ffffff;
+
+    span {
+      color: #ef896a;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    strong {
+      max-width: 620px;
+      display: block;
+      margin-top: 10px;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 35px;
+      font-weight: 500;
+      line-height: 1.05;
+    }
+  }
+}
+
+.evidence-log {
+  border-left: 1px solid var(--line);
+}
+
+.evidence-entry {
+  min-height: 186px;
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 22px;
+  padding: 30px 32px;
+  border-bottom: 1px solid var(--line);
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  .evidence-icon {
+    margin-top: 2px;
+  }
+
+  small {
+    color: var(--copper-dark);
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  h3 {
+    margin: 10px 0 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 29px;
+    font-weight: 500;
+    line-height: 1.05;
+  }
+
+  p {
+    margin: 15px 0 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+}
+
+.rig-section {
+  background: var(--petrol);
+  color: #ffffff;
+}
+
+.rig-layout {
+  width: min(1440px, 100%);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(560px, 1fr);
+  margin: 0 auto;
+}
+
+.rig-visual {
+  position: relative;
+  min-height: 760px;
+  margin: 0;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  &::after {
+    position: absolute;
+    inset: 55% 0 0;
+    background: linear-gradient(180deg, transparent, rgba(3, 24, 28, 0.82));
+    content: '';
+  }
+
+  figcaption {
+    position: absolute;
+    right: 32px;
+    bottom: 28px;
+    left: 32px;
+    z-index: 1;
+    color: rgba(255, 255, 255, 0.78);
     font-size: 11px;
     font-weight: 800;
     letter-spacing: 0.08em;
@@ -1284,728 +1826,279 @@ const handleDialogClose = () => {
   }
 }
 
-.position-body {
-  grid-column: 1 / -1;
-  padding: 0;
-  border-top: 0;
-  background: #141b22;
-  color: var(--white);
-  box-shadow: 0 28px 80px rgba(17, 24, 31, 0.14);
-}
-
-.position-points {
-  counter-reset: position-point;
+.rig-content {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-content: center;
+  padding: 76px clamp(40px, 5vw, 80px);
+  background: #08232c;
 }
 
-.point-item {
-  counter-increment: position-point;
-  position: relative;
-  display: grid;
-  gap: 13px;
-  min-height: 156px;
-  padding: 28px 34px;
-  border-right: 1px solid rgba(255, 255, 255, 0.12);
-
-  &:last-child {
-    padding-right: 0;
-    border-right: 0;
-  }
-
-  &::before {
-    color: rgba(201, 163, 94, 0.86);
-    font-size: 12px;
-    font-weight: 900;
-    letter-spacing: 0.16em;
-    line-height: 1;
-    content: "0" counter(position-point);
-  }
-
-  strong {
-    color: var(--white);
-    font-size: 20px;
-    line-height: 1.32;
-  }
-
-  span {
-    color: rgba(255, 255, 255, 0.66);
-    line-height: 1.6;
-  }
-}
-
-.portfolio-section {
-  position: relative;
-  overflow: hidden;
-  background:
-    linear-gradient(180deg, #fbfaf6 0%, #f4efe4 62%, #eee6d6 100%);
-  border-top: 1px solid rgba(17, 24, 31, 0.08);
-  color: var(--ink);
-
-  &::before,
-  &::after {
-    position: absolute;
-    pointer-events: none;
-    content: "";
-  }
-
-  &::before {
-    top: 86px;
-    right: -9vw;
-    width: 48vw;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(217, 189, 122, 0.72), transparent);
-    transform: rotate(-12deg);
-    transform-origin: right center;
-  }
-
-  &::after {
-    right: 0;
-    bottom: 0;
-    left: 0;
-    height: 42%;
-    background: linear-gradient(180deg, transparent, rgba(17, 24, 31, 0.035));
-  }
-}
-
-.portfolio-heading {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: minmax(0, 0.68fr) minmax(320px, 0.32fr);
-  gap: 40px;
-  align-items: start;
-  margin-bottom: 66px;
-
+.rig-copy {
   h2 {
-    grid-column: 1;
-    max-width: 900px;
-    color: var(--ink);
-    font-size: 64px;
-  }
-
-  p {
-    grid-column: 2;
-    margin: 42px 0 0;
-    color: var(--muted);
-    font-size: 16px;
-    line-height: 1.68;
-  }
-
-  .inline-action {
-    grid-column: 2;
-    justify-self: start;
-    margin-top: 28px;
-  }
-}
-
-.portfolio-kicker {
-  grid-column: 1;
-  display: grid;
-  gap: 10px;
-  margin-bottom: 22px;
-
-  .section-eyebrow {
-    margin-bottom: 0;
-  }
-
-  strong {
-    color: var(--ink);
-    font-size: 15px;
-    font-weight: 900;
-    letter-spacing: 0.08em;
-    line-height: 1.45;
-    text-transform: uppercase;
-  }
-}
-
-.inline-action {
-  min-height: auto;
-  padding: 0 0 8px;
-  border-bottom: 1px solid currentColor;
-  color: inherit;
-
-  &:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-}
-
-.portfolio-grid {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-auto-rows: 232px;
-  gap: 14px;
-}
-
-.course-tile {
-  position: relative;
-  grid-column: span 4;
-  min-height: auto;
-  display: grid;
-  align-items: end;
-  overflow: hidden;
-  border: 1px solid rgba(17, 24, 31, 0.1);
-  background: #11181f;
-  color: var(--white);
-  text-decoration: none;
-  isolation: isolate;
-  box-shadow: 0 24px 68px rgba(17, 24, 31, 0.14);
-  transition:
-    border-color 220ms ease,
-    box-shadow 220ms ease,
-    transform 220ms ease;
-
-  &.featured {
-    grid-column: span 6;
-    grid-row: span 2;
-
-    .course-content strong {
-      font-size: 43px;
-    }
-
-    .course-content b,
-    .course-content small {
-      display: block;
-    }
-  }
-
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background:
-      linear-gradient(180deg, rgba(5, 13, 22, 0) 26%, rgba(5, 13, 22, 0.26) 58%, rgba(5, 13, 22, 0.84)),
-      linear-gradient(90deg, rgba(8, 20, 32, 0.34), rgba(8, 20, 32, 0.02) 62%);
-  }
-
-  &::before {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 1;
-    width: 58px;
-    height: 58px;
-    border-top: 1px solid rgba(217, 189, 122, 0.72);
-    border-right: 1px solid rgba(217, 189, 122, 0.72);
-    content: "";
-  }
-
-  img {
-    position: absolute;
-    inset: 0;
-    z-index: -2;
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-    filter: saturate(0.82) contrast(1.04) brightness(0.88);
-    transition:
-      filter 500ms ease,
-      transform 600ms ease;
-  }
-
-  &:hover {
-    border-color: rgba(201, 163, 94, 0.52);
-    box-shadow: 0 32px 86px rgba(17, 24, 31, 0.2);
-    transform: translateY(-4px);
-
-    img {
-      filter: saturate(0.94) contrast(1.06) brightness(0.92);
-      transform: scale(1.055);
-    }
-  }
-}
-
-.course-index {
-  position: absolute;
-  top: 22px;
-  left: 22px;
-  z-index: 1;
-  min-height: 30px;
-  display: inline-flex;
-  align-items: center;
-  padding: 0 11px;
-  border: 1px solid rgba(244, 213, 138, 0.46);
-  background: rgba(5, 13, 22, 0.78);
-  color: #f4d58a;
-  font-size: 12px;
-  font-weight: 900;
-  letter-spacing: 0.12em;
-  line-height: 1;
-  box-shadow:
-    0 12px 28px rgba(0, 0, 0, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.14);
-}
-
-.course-content {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  gap: 9px;
-  align-self: end;
-  padding: 30px;
-  text-shadow: 0 3px 18px rgba(0, 0, 0, 0.58);
-
-  em {
-    width: fit-content;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: #f4d58a;
-    font-style: normal;
-    font-size: 12px;
-    font-weight: 900;
-    letter-spacing: 0.11em;
-    line-height: 1;
-    text-transform: uppercase;
-
-    &::before {
-      width: 18px;
-      height: 1px;
-      background: rgba(244, 213, 138, 0.82);
-      content: "";
-    }
-  }
-
-  strong {
     max-width: 560px;
-    color: #fff7ea;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 29px;
+    margin: 22px 0 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 52px;
     font-weight: 500;
-    line-height: 1.08;
-    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.42);
-  }
-
-  b {
-    display: none;
-    width: fit-content;
-    max-width: 100%;
-    padding-left: 12px;
-    border-left: 2px solid rgba(244, 213, 138, 0.72);
-    color: #f4e4bf;
-    font-size: 12px;
-    font-weight: 900;
-    letter-spacing: 0.08em;
-    line-height: 1.35;
-    text-transform: uppercase;
-  }
-
-  small {
-    display: none;
-    max-width: 540px;
-    color: rgba(232, 239, 243, 0.8);
-    font-size: 14px;
-    line-height: 1.62;
-  }
-}
-
-.delivery-section {
-  padding: 60px 0;
-  background:
-    linear-gradient(180deg, #fbfaf6 0%, #f3efe5 100%);
-  color: var(--ink);
-}
-
-.delivery-layout {
-  display: grid;
-  grid-template-columns: minmax(520px, 0.86fr) minmax(430px, 0.74fr);
-  gap: 76px;
-  align-items: center;
-}
-
-.delivery-visual {
-  position: relative;
-  min-height: 680px;
-  overflow: hidden;
-  border: 1px solid rgba(17, 24, 31, 0.1);
-  box-shadow: 0 36px 95px rgba(17, 24, 31, 0.16);
-
-  img {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-  }
-
-  &::after {
-    position: absolute;
-    inset: 22px;
-    border: 1px solid rgba(255, 255, 255, 0.48);
-    border-bottom-color: rgba(201, 163, 94, 0.8);
-    pointer-events: none;
-    content: "";
-  }
-}
-
-.delivery-copy {
-  h2 {
-    max-width: 640px;
-    font-size: 62px;
-    color: var(--ink);
+    line-height: 0.94;
   }
 
   p {
+    max-width: 540px;
     margin: 28px 0 0;
-    color: var(--muted);
-    font-size: 18px;
-    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 17px;
+    line-height: 1.7;
+  }
+
+  .primary-action {
+    margin-top: 34px;
   }
 }
 
-.delivery-list {
+.rig-services {
   display: grid;
-  gap: 14px;
-  margin-top: 42px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 52px;
+  border-top: 1px solid rgba(255, 255, 255, 0.28);
+  border-left: 1px solid rgba(255, 255, 255, 0.18);
 }
 
-.delivery-item {
-  display: grid;
-  grid-template-columns: 118px 1fr;
-  gap: 20px;
-  align-items: center;
-  margin: 0;
-  padding: 18px;
-  border: 1px solid rgba(17, 24, 31, 0.1);
-  background: rgba(255, 255, 255, 0.74);
-  box-shadow: 0 14px 40px rgba(17, 24, 31, 0.06);
+.rig-service {
+  min-height: 172px;
+  display: block;
+  padding: 24px;
+  border-right: 1px solid rgba(255, 255, 255, 0.18);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 
-  img {
-    width: 118px;
-    height: 82px;
-    object-fit: cover;
+  .rig-service-icon {
+    color: #ef896a;
   }
 
-  span {
-    display: grid;
-    gap: 8px;
+  h3 {
+    margin: 24px 0 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 24px;
+    font-weight: 500;
   }
 
-  strong {
-    color: var(--ink);
-    line-height: 1.3;
-  }
-
-  small {
-    color: var(--muted);
-    font-size: 14px;
+  p {
+    max-width: 470px;
+    margin: 8px 0 0;
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 13px;
     line-height: 1.55;
   }
 }
 
-.field-section {
-  position: relative;
-  overflow: hidden;
-  background:
-    linear-gradient(180deg, #101820 0%, #14232b 100%);
-  color: var(--white);
-
-  &::before {
-    position: absolute;
-    top: 88px;
-    right: 0;
-    left: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(217, 189, 122, 0.34), transparent);
-    content: "";
-  }
-
-  &::after {
-    position: absolute;
-    right: -12vw;
-    bottom: -22vw;
-    width: 46vw;
-    aspect-ratio: 1;
-    border: 1px solid rgba(217, 189, 122, 0.12);
-    border-radius: 50%;
-    content: "";
-  }
+.delivery-section {
+  padding: 96px 0 104px;
+  background: var(--mineral);
 }
 
-.field-heading {
-  position: relative;
-  z-index: 1;
+.delivery-layout {
   display: grid;
-  grid-template-columns: minmax(280px, 0.34fr) minmax(620px, 1fr);
-  gap: 70px;
-  align-items: end;
-  margin-bottom: 58px;
+  grid-template-columns: minmax(320px, 0.78fr) minmax(0, 1.22fr);
+  gap: 90px;
+}
 
+.delivery-copy {
   h2 {
-    grid-column: 2;
-    max-width: 900px;
-    color: var(--white);
-    font-size: 62px;
-  }
-}
-
-.field-grid {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  grid-auto-rows: 260px;
-  gap: 18px;
-}
-
-.field-tile {
-  position: relative;
-  display: flex;
-  align-items: end;
-  margin: 0;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  color: var(--white);
-  isolation: isolate;
-  box-shadow:
-    0 24px 70px rgba(0, 0, 0, 0.24),
-    0 1px 0 rgba(255, 255, 255, 0.12) inset;
-
-  &.large {
-    grid-column: span 2;
-    grid-row: span 2;
-
-    strong {
-      font-size: 44px;
-    }
-  }
-
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background:
-      linear-gradient(0deg, rgba(5, 15, 25, 0.78), rgba(5, 15, 25, 0.08) 68%),
-      linear-gradient(90deg, rgba(5, 13, 22, 0.34), rgba(5, 15, 25, 0.02));
-  }
-
-  img {
-    position: absolute;
-    inset: 0;
-    z-index: -2;
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-    filter: saturate(0.86) contrast(1.04) brightness(0.9);
-    transition:
-      filter 500ms ease,
-      transform 600ms ease;
-  }
-
-  &:hover {
-    img {
-      filter: saturate(0.98) contrast(1.06) brightness(0.94);
-      transform: scale(1.055);
-    }
-  }
-
-  figcaption {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    gap: 10px;
-    padding: 10px;
-    text-shadow: 0 3px 18px rgba(0, 0, 0, 0.6);
-
-
-  }
-
-  span {
-    width: fit-content;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: #f4d58a;
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 0.11em;
-    line-height: 1;
-    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.42);
-    text-transform: uppercase;
-
-  }
-
-  strong {
     max-width: 560px;
-    color: #fff7ea;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 30px;
+    margin: 22px 0 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 52px;
     font-weight: 500;
-    line-height: 1.05;
-    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.44);
-  }
-}
-
-.records-section {
-  padding: 0;
-  background: #11181f;
-  color: var(--white);
-}
-
-.records-layout {
-  display: grid;
-  grid-template-columns: minmax(620px, 1fr) auto;
-  gap: 52px;
-  align-items: end;
-  border-top: 1px solid rgba(217, 189, 122, 0.18);
-  border-bottom: 1px solid rgba(217, 189, 122, 0.18);
-  padding: 74px 0;
-}
-
-.records-copy {
-  h2 {
-    max-width: 820px;
-    color: var(--white);
-    font-size: 58px;
+    line-height: 0.98;
   }
 
   p {
-    max-width: 720px;
+    max-width: 510px;
+    margin: 30px 0 0;
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+}
+
+.delivery-modes {
+  border-top: 1px solid rgba(20, 38, 35, 0.24);
+}
+
+.delivery-mode {
+  min-height: 96px;
+  display: grid;
+  grid-template-columns: 42px minmax(180px, 0.72fr) minmax(220px, 1fr);
+  gap: 22px;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--line);
+
+  .delivery-icon {
+    align-self: start;
+    margin-top: 1px;
+  }
+
+  h3 {
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.1;
+  }
+
+  p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+}
+
+.closing-section {
+  padding: 20px 0;
+  background: #071821;
+  color: #ffffff;
+}
+
+.assurance-panel {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.assurance-copy,
+.closing-copy {
+  min-height: 540px;
+  display: grid;
+  align-content: center;
+  padding: 76px 64px;
+
+  h2 {
+    max-width: 520px;
+    margin: 20px 0 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 45px;
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  p {
+    max-width: 520px;
     margin: 24px 0 0;
-    color: rgba(255, 255, 255, 0.66);
-    font-size: 17px;
-    line-height: 1.72;
+    color: rgba(255, 255, 255, 0.64);
+    font-size: 15px;
+    line-height: 1.65;
   }
 }
 
-.records-action {
-  min-width: 230px;
-  border-color: rgba(255, 255, 255, 0.36);
-  color: var(--white);
-
-  &:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    transform: translateY(-2px);
-  }
+.assurance-copy {
+  border-right: 1px solid rgba(255, 255, 255, 0.16);
+  background: #0d2a33;
 }
 
-.video-dialog {
-  :deep(.el-dialog__body) {
-    padding: 0;
-  }
+.verify-action {
+  width: fit-content;
+  margin-top: 32px;
+  border-color: rgba(255, 255, 255, 0.38);
+  color: #ffffff;
+}
+
+.recognition-copy h2,
+.capabilities-heading h2,
+.capability-lead-copy h3,
+.capability-row h3,
+.pathways-copy h2,
+.pathway-item h3,
+.evidence-heading h2,
+.evidence-media figcaption strong,
+.evidence-entry h3,
+.rig-copy h2,
+.rig-service h3,
+.delivery-copy h2,
+.delivery-mode h3,
+.assurance-copy h2,
+.closing-copy h2 {
+  font-family: var(--display-font);
+  font-weight: 450;
+}
+
+.capability-kicker span,
+.capability-row>div>span,
+.pathway-label,
+.evidence-entry small {
+  font-weight: 700;
 }
 
 .video-player {
   width: 100%;
   max-height: 72vh;
   display: block;
-  background: #000;
+  background: #000000;
 }
 
 @keyframes hero-drift {
   from {
-    transform: scale(1.06) translate3d(-1.2%, -0.8%, 0);
+    transform: scale(1.03);
   }
 
   to {
-    transform: scale(1.14) translate3d(1.4%, 1%, 0);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-  *,
-  *::before,
-  *::after {
-    animation-duration: 1ms !important;
-    transition-duration: 1ms !important;
-  }
-
-  .hero-media img {
-    animation: none;
-    transform: scale(1.06);
+    transform: scale(1.09) translate3d(1%, 0.6%, 0);
   }
 }
 
 @media (max-width: 1180px) {
+  .hero-composition {
+    grid-template-columns: minmax(0, 1.08fr) minmax(300px, 0.72fr);
+    gap: 44px;
+  }
+
+  .hero-copy h1 {
+    font-size: 110px;
+  }
 
   .recognition-shell,
-  .position-layout,
-  .delivery-layout,
-  .records-layout {
+  .capabilities-heading,
+  .pathways-layout,
+  .delivery-layout {
+    gap: 56px;
+  }
+
+  .recognition-shell {
     grid-template-columns: 1fr;
-  }
-
-  .hero-shell {
-    grid-template-columns: minmax(0, 1fr) minmax(360px, 0.44fr);
-    gap: 56px 36px;
-  }
-
-  .hero-section {
-    min-height: min(830px, calc(100svh - 68px));
-  }
-
-  .hero-ppt-panel {
-    width: min(100%, 400px);
-  }
-
-  .ppt-panel-head strong {
-    font-size: 23px;
   }
 
   .recognition-logos {
-    grid-template-columns: repeat(3, 1fr);
     border-top: 1px solid var(--line);
   }
 
-  .logo-cell {
-    border-bottom: 1px solid var(--line);
-  }
-
-  .position-layout {
-    gap: 48px;
-  }
-
-  .position-visual {
-    max-width: 760px;
-    min-height: 500px;
-  }
-
-  .position-body {
-    padding-top: 36px;
-  }
-
-  .portfolio-heading,
-  .field-heading {
+  .capability-stage {
     grid-template-columns: 1fr;
-
-    h2,
-    p {
-      grid-column: auto;
-    }
   }
 
-  .portfolio-heading .inline-action {
-    grid-column: auto;
-    margin-top: 0;
+  .capability-index {
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+    border-left: 0;
   }
 
-  .portfolio-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-auto-rows: auto;
+  .capability-row {
+    grid-template-columns: 220px 1fr;
   }
 
-  .course-tile,
-  .course-tile.featured {
-    grid-column: auto;
-    grid-row: auto;
-    min-height: 360px;
+  .evidence-layout {
+    grid-template-columns: 1fr;
+  }
 
-    .course-content strong {
-      font-size: 32px;
-    }
+  .evidence-log {
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
 
-    .course-content b,
-    .course-content small {
-      display: block;
-    }
+  .rig-layout {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .delivery-layout {
+    grid-template-columns: 0.8fr 1.2fr;
   }
 }
 
@@ -2014,7 +2107,7 @@ const handleDialogClose = () => {
   .section-shell,
   .hero-shell,
   .recognition-shell {
-    width: min(100% - 32px, 560px);
+    width: min(100% - 32px, 580px);
   }
 
   .hero-section {
@@ -2022,280 +2115,406 @@ const handleDialogClose = () => {
   }
 
   .hero-shell {
-    display: grid;
+    grid-template-rows: auto auto;
+    padding-top: 34px;
+  }
+
+  .hero-composition {
     grid-template-columns: 1fr;
-    gap: 24px;
-    padding: 42px 0 20px;
+    gap: 34px;
+    padding: 36px 0 40px;
   }
 
   .hero-copy h1 {
-    font-size: 62px;
-    line-height: 0.9;
+    font-size: 88px;
   }
 
   .hero-statement {
-    font-size: 18px;
-    margin-top: 18px;
+    font-size: 17px;
   }
 
   .hero-actions {
-    margin-top: 24px;
+    display: flex;
   }
 
-  .hero-actions {
-    flex-direction: column;
-  }
-
-  .primary-action,
-  .ghost-action {
+  .hero-film {
     width: 100%;
-  }
-
-  .hero-ppt-panel {
-    width: 100%;
-    aspect-ratio: 1.55;
+    max-width: none;
     justify-self: stretch;
-    transform: none;
   }
 
-  .ppt-panel-head {
-    align-items: flex-start;
-  }
-
-  .ppt-panel-head strong {
-    font-size: 22px;
-  }
-
-  .ppt-panel-foot {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .ppt-panel-pagination {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .hero-metrics {
-    grid-template-columns: 1fr;
-    margin-top: 0;
+  .section-eyebrow {
+    font-size: 12px;
   }
 
   .metric-item {
-    min-height: auto;
-    padding: 13px 0;
-    border-right: 0;
-    border-bottom: 1px solid var(--line-light);
+    min-height: 108px;
+    gap: 7px;
+    padding: 14px 10px;
 
-    &:last-child {
-      border-bottom: 0;
+    strong {
+      font-size: 19px;
+      line-height: 1.15;
+    }
+
+    span {
+      font-size: 12px;
+      letter-spacing: 0;
     }
   }
 
-  .recognition-shell {
-    gap: 24px;
-    padding: 34px 0 24px;
+  .recognition-section::before {
+    width: 70%;
   }
 
   .recognition-logos {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .position-section,
-  .portfolio-section,
-  .delivery-section,
-  .field-section {
-    padding: 72px 0;
+  .capabilities-section,
+  .pathways-section,
+  .evidence-section,
+  .delivery-section {
+    padding: 76px 0 82px;
   }
 
-  .records-section {
-    padding: 0;
-  }
-
-  .position-copy h2,
-  .portfolio-heading h2,
-  .delivery-copy h2,
-  .field-heading h2,
-  .records-copy h2 {
-    font-size: 40px;
-  }
-
-  .position-visual {
-    margin-top: 32px;
-    min-height: 420px;
-  }
-
-  .position-copy {
-    padding: 0;
-  }
-
-  .position-brief {
-    margin-top: 30px;
-    padding: 0 0 0 20px;
-
-    strong {
-      font-size: 26px;
-    }
-  }
-
-  .position-tracks span {
-    min-height: 32px;
-  }
-
-  .position-copy p {
-    margin-top: 24px;
-  }
-
-  .position-body {
-    padding-top: 0;
-  }
-
-  .position-points {
+  .capabilities-heading,
+  .pathways-layout,
+  .evidence-heading,
+  .rig-layout,
+  .delivery-layout,
+  .assurance-panel {
     grid-template-columns: 1fr;
   }
 
-  .point-item {
-    gap: 8px;
-    min-height: auto;
-    padding: 20px 0;
-    border-right: 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-
-    &:last-child {
-      padding-right: 0;
-      border-bottom: 0;
-    }
+  .capabilities-heading,
+  .evidence-heading {
+    gap: 40px;
   }
 
-  .portfolio-heading {
-    gap: 22px;
-    margin-bottom: 38px;
+  .capabilities-heading .capability-signature {
+    padding: 0 0 30px;
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .capabilities-heading .capability-heading-summary {
+    grid-template-columns: 1fr;
+    gap: 24px;
 
     p {
-      margin-top: 0;
-      font-size: 15px;
+      max-width: 100%;
     }
   }
 
-  .portfolio-grid {
+  .evidence-heading-copy {
+    padding: 44px 34px 48px;
+  }
+
+  .evidence-principle {
+    gap: 26px;
+    padding: 34px;
+
+    p {
+      max-width: 100%;
+      font-size: 17px;
+    }
+  }
+
+  .capabilities-heading h2,
+  .pathways-copy h2,
+  .evidence-heading h2,
+  .rig-copy h2,
+  .delivery-copy h2 {
+    font-size: 44px;
+  }
+
+  .capability-lead {
+    min-height: 600px;
+  }
+
+  .capability-lead-copy {
+    right: 26px;
+    bottom: 30px;
+    left: 26px;
+
+    h3 {
+      font-size: 38px;
+    }
+  }
+
+  .capability-row {
     grid-template-columns: 1fr;
-    grid-auto-rows: auto;
-  }
 
-  .course-tile,
-  .course-tile.featured {
-    grid-column: auto;
-    min-height: 390px;
-
-    .course-content {
-      padding: 24px;
-    }
-
-    .course-content strong {
-      font-size: 28px;
-    }
-
-    .course-content b {
-      font-size: 11px;
+    figure {
+      min-height: 210px;
     }
   }
 
-  .delivery-visual {
-    min-height: 390px;
+  .pathways-copy {
+    margin-bottom: 0;
   }
 
-  .delivery-item {
-    padding: 12px;
-  }
-
-  .delivery-item {
-    grid-template-columns: 96px 1fr;
-
-    img {
-      width: 96px;
-      height: 76px;
-    }
-  }
-
-  .field-heading {
-    gap: 22px;
-    margin-bottom: 34px;
-  }
-
-  .field-grid {
-    grid-template-columns: 1fr;
-    grid-auto-rows: auto;
-  }
-
-  .field-tile,
-  .field-tile.large {
-    grid-column: auto;
-    grid-row: auto;
-    min-height: 360px;
-
-    strong {
-      font-size: 30px;
-    }
-
-    figcaption {
-      padding: 24px;
-    }
-  }
-
-  .records-layout {
-    padding: 48px 0;
-  }
-
-  .records-action {
-    width: 100%;
-  }
-}
-
-@media (max-width: 460px) {
-  .hero-copy h1 {
-    font-size: 54px;
-  }
-
-  .ppt-panel-foot strong {
-    font-size: 20px;
-  }
-
-  .position-visual {
-    min-height: 340px;
+  .section-visual {
+    margin-top: 36px;
 
     figcaption {
       right: 22px;
       bottom: 22px;
       left: 22px;
 
+      span {
+        font-size: 12px;
+        letter-spacing: 0;
+      }
+
       strong {
-        font-size: 24px;
+        font-size: 22px;
       }
     }
   }
 
-  .course-tile,
-  .course-tile.featured,
-  .field-tile,
-  .field-tile.large {
-    min-height: 320px;
+  .delivery-visual {
+    aspect-ratio: 4 / 3;
   }
 
-  .course-content,
-  .field-tile figcaption {
-    padding: 20px;
+  .pathway-item {
+    min-height: 0;
+    grid-template-columns: 112px minmax(0, 1fr);
+    gap: 16px;
+    padding: 12px;
+
+    .pathway-image {
+      width: 112px;
+      height: 92px;
+    }
   }
 
-  .course-content em,
-  .field-tile span {
-    font-size: 11px;
-    letter-spacing: 0.08em;
+  .evidence-layout {
+    margin-top: 44px;
   }
 
-  .course-content strong,
-  .field-tile strong,
-  .field-tile.large strong {
-    font-size: 24px;
+  .evidence-media {
+    min-height: 500px;
+
+    figcaption {
+      right: 24px;
+      bottom: 26px;
+      left: 24px;
+
+      strong {
+        font-size: 29px;
+      }
+    }
+  }
+
+  .evidence-entry {
+    min-height: 0;
+    padding: 28px 22px;
+  }
+
+  .rig-visual {
+    min-height: 430px;
+  }
+
+  .rig-content {
+    padding: 64px 16px 72px;
+  }
+
+  .rig-services {
+    grid-template-columns: 1fr;
+    margin-top: 42px;
+  }
+
+  .rig-service {
+    min-height: 0;
+    padding: 24px;
+  }
+
+  .delivery-mode {
+    grid-template-columns: 38px 1fr;
+    gap: 8px 14px;
+    align-items: start;
+
+    .delivery-icon {
+      grid-row: 1 / span 2;
+      padding-top: 5px;
+    }
+
+    h3,
+    p {
+      grid-column: 2;
+    }
+  }
+
+  .assurance-copy,
+  .closing-copy {
+    min-height: 0;
+    padding: 64px 28px;
+  }
+
+  .assurance-copy {
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  }
+
+  .recognition-copy p,
+  .capability-lead-copy p,
+  .capability-row p,
+  .pathway-item p,
+  .evidence-entry p,
+  .rig-copy p,
+  .rig-service p,
+  .delivery-mode p,
+  .assurance-copy p,
+  .closing-copy p {
+    font-size: 16px;
+  }
+
+  .capability-kicker span,
+  .capability-lead-copy li,
+  .capability-row>div>span,
+  .capability-row li,
+  .pathway-label,
+  .evidence-media figcaption span,
+  .evidence-entry small {
+    font-size: 12px;
+    letter-spacing: 0;
+  }
+}
+
+@media (max-width: 460px) {
+  .hero-shell {
+    padding-top: 22px;
+  }
+
+  .hero-composition {
+    padding-top: 28px;
+  }
+
+  .hero-copy h1 {
+    font-size: 78px;
+  }
+
+  .hero-actions {
+    display: grid;
+  }
+
+  .primary-action,
+  .profile-action {
+    width: 100%;
+  }
+
+  .hero-film-copy strong {
+    font-size: 21px;
+  }
+
+  .hero-film-copy {
+    min-height: 112px;
+    padding: 20px 22px 23px;
+  }
+
+  .hero-film-play {
+    width: 56px;
+    height: 56px;
+    right: 18px;
+    bottom: 18px;
+  }
+
+  .capabilities-heading h2,
+  .pathways-copy h2,
+  .evidence-heading h2,
+  .rig-copy h2,
+  .delivery-copy h2 {
+    font-size: 39px;
+  }
+
+  .evidence-heading-copy {
+    padding: 38px 24px 30px;
+  }
+
+  .evidence-principle {
+    gap: 22px;
+    padding: 0 24px 30px;
+  }
+
+  .capability-lead {
+    min-height: 560px;
+  }
+
+  .capability-lead-copy h3 {
+    font-size: 34px;
+  }
+
+  .pathways-section {
+    padding: 38px 0 46px;
+  }
+
+  .pathways-visual {
+    aspect-ratio: 4 / 5;
+
+    &::after {
+      inset: 14px;
+    }
+
+    figcaption {
+      right: 15px;
+      bottom: 15px;
+      left: 15px;
+      padding: 42px 14px 14px;
+    }
+  }
+
+  .pathway-list {
+    margin-top: 34px;
+  }
+
+  .pathway-item {
+    grid-template-columns: 92px minmax(0, 1fr);
+    gap: 12px;
+    padding: 10px;
+
+    .pathway-image {
+      width: 92px;
+      height: 92px;
+    }
+
+    h3 {
+      font-size: 18px;
+    }
+
+    p {
+      font-size: 13px;
+    }
+  }
+
+  .pathway-item h3 {
+    font-size: 18px;
+  }
+
+  .evidence-media {
+    min-height: 450px;
+  }
+
+  .assurance-copy h2,
+  .closing-copy h2 {
+    font-size: 38px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+
+  .hero-media img {
+    animation: none;
   }
 }
 </style>

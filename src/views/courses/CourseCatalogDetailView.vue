@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import course from "/images/certificate-verificate.webp";
-import { ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
+import { Document } from '@element-plus/icons-vue'
 
 const route = useRoute();
 

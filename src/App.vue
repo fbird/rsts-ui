@@ -1,24 +1,27 @@
 <script setup lang="ts">
+import { computed, onBeforeUnmount, ref } from 'vue'
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
+
 import Layout from '@/components/layouts/LayoutIndex.vue'
 import LayoutMobile from '@/components/layouts/LayoutMobileIndex.vue'
-import { useBreakpoints } from '@vueuse/core';
 
-const breakpoints = useBreakpoints({
-  mobile: 0,
-  tablet: 768,
-  laptop: 1024,
-  desktop: 1280,
-});
+const mobileMedia = window.matchMedia('(max-width: 767px)')
+const isMobileViewport = ref(mobileMedia.matches)
+const isMobile = computed(() => isMobileViewport.value)
 
-const isMobile = breakpoints.smaller('tablet');
+const updateViewport = (event: MediaQueryListEvent) => {
+  isMobileViewport.value = event.matches
+}
 
-
-
+mobileMedia.addEventListener('change', updateViewport)
+onBeforeUnmount(() => mobileMedia.removeEventListener('change', updateViewport))
 </script>
 
 <template>
-  <Layout v-if="!isMobile" />
-  <LayoutMobile v-else />
+  <el-config-provider :locale="zhCn">
+    <Layout v-if="!isMobile" />
+    <LayoutMobile v-else />
+  </el-config-provider>
 </template>
 
 <style scoped></style>

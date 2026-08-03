@@ -1,15 +1,3 @@
-import { icon, text } from "@fortawesome/fontawesome-svg-core"
-import { solid } from "@fortawesome/fontawesome-svg-core/import.macro"
-import { width } from "@fortawesome/free-regular-svg-icons/faAddressBook"
-import button from "element-plus/es/components/button/index.mjs"
-import card from "element-plus/es/components/card/index.mjs"
-import color from "element-plus/es/components/color-picker/src/utils/color.mjs"
-import form from "element-plus/es/components/form/index.mjs"
-import input from "element-plus/es/components/input/index.mjs"
-import loading from "element-plus/es/components/loading/index.mjs"
-import message from "element-plus/es/components/message/index.mjs"
-import { el } from "element-plus/es/locales.mjs"
-
 <template>
     <div class="login-card">
         <div class="card">
@@ -55,11 +43,14 @@ import { el } from "element-plus/es/locales.mjs"
 </template>
 
 <script lang="ts" setup>
-import { FormInstance, FormRules } from 'element-plus'
+import { onMounted, onUnmounted, reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { Lock } from '@element-plus/icons-vue'
+
 import { doLogin } from '@/apis/userApi'
 import { useTokenStore } from '@/stores/token'
-import { ref, reactive, onMounted, onUnmounted } from 'vue'
-import { useRouter } from 'vue-router'
+
+import type { FormInstance, FormRules } from 'element-plus'
 
 const loading = ref(false)
 const loginForm = ref<FormInstance>()
